@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('dose_vacina_covid', function (Blueprint $table) {
             $table->id();
             $table->string('idFuncionario');
-            $table->timestamp('dtDoseCovid');
+            $table->string('dtDoseCovid', 19);
             $table->string('nome');
             $table->string('lote');
-            $table->timestamp('dtValidade')->nullable();
+            $table->string('dtValidade', 19);
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('dose_vacina_covid');
     }
 };

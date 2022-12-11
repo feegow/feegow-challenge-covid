@@ -6,3 +6,21 @@ export const cpfMask = value => {
       .replace(/(\d{3})(\d{1,2})/, '$1-$2')
       .replace(/(-\d{2})\d+?$/, '$1') // captura 2 numeros seguidos de um traço e não deixa ser digitado mais nada
   }
+
+  
+  export function formatDate (input) {
+    if(input === undefined)
+    {
+      return "data invalida!";
+    }
+    else
+    {
+      var datePart = input.match(/\d+/g),
+      year = datePart[0], // get only two digits
+      month = datePart[1], day = datePart[2];
+    
+      return day+'/'+month+'/'+year;
+
+    }
+  
+  }

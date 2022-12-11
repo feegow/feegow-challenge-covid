@@ -16,10 +16,14 @@ use App\Http\Controllers\DoseVacinaCovidController;
 |
 */
 
-Route::post('setFuncionario', [FuncionarioController::class, 'create']);
-Route::get('getFuncionarioById', [FuncionarioController::class, 'find']);
+Route::post('setColaborador', [FuncionarioController::class, 'create']);
+Route::put('updateColaborador', [FuncionarioController::class, 'update']);
+Route::get('getColaboradorById', [FuncionarioController::class, 'find']);
+Route::get('getColaboradorAll', [FuncionarioController::class, 'findAll']);
+Route::get('getColaboradorAllFilter', [FuncionarioController::class, 'findAllLike']);
 
 Route::post('setDoseCovid', [DoseVacinaCovidController::class, 'create']);
+Route::post('updateDoseCovid', [DoseVacinaCovidController::class, 'update']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

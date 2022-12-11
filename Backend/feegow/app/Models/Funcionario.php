@@ -17,7 +17,7 @@ class Funcionario extends Model
         'dtNascimento',
         'idPrimeiraDoseCovid',
         'idSegundaDoseCovid',
-        'idTereceiraDoseCovid',
+        'idTerceiraDoseCovid',
         'comorbidade',
     ];
 

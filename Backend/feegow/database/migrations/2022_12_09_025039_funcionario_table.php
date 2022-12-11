@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->string('cpf', 14)->unique();
-            $table->timestamp('dtNascimento');
-            $table->timestamp('idPrimeiraDoseCovid')->nullable();
-            $table->timestamp('idSegundaDoseCovid')->nullable();
-            $table->timestamp('idTereceiraDoseCovid')->nullable();
-            $table->boolean('comorbidade');
+            $table->string('dtNascimento', 19);
+            $table->string('idPrimeiraDoseCovid')->nullable();
+            $table->string('idSegundaDoseCovid')->nullable();
+            $table->string('idTerceiraDoseCovid')->nullable();
+            $table->boolean('comorbidade')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('funcionario');
     }
 };

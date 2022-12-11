@@ -8,6 +8,7 @@ import ListagemFuncionarios from './views/listagem/ListagemFuncionarios';
 import Navbar from './components/Navbar'; 
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Footer from './components/Footer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -37,11 +38,12 @@ function PrivateRoute()
 root.render(
   <>
   <BrowserRouter>
-    <div className='wrapper bg-light'>
+    <div className='wrapper bg-dark'>
     <Navbar />
-        <div className='main bg-light'>
+        <div className='main bg-dark'>
           <PrivateRoute />
         </div>
+    <Footer />
     </div>
   </BrowserRouter>
   </>

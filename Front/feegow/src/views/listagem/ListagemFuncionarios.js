@@ -365,7 +365,7 @@ function ListagemFuncionarios() {
         <div className="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" >
             <h1 className="col-12 mt-4 mb-4 text-white">LISTAGEM DE COLABORADORES</h1>
 
-            <div className="div card text-center text-white" style={{ borderRadius: "20px", padding: "30px", margin: 10, backgroundColor: "#2C3B3F" }}>
+            <div className="div card text-center text-white" style={{ borderRadius: "20px", padding: "30px 10px 500px", margin: 0, backgroundColor: "#2C3B3F" }}>
             
               {totalColaboradores > 0 ? 
               <h6 className="col-12 mt-2 mb-2 text-start"> {totalColaboradores} COLABORADORES CADASTRADOS </h6>

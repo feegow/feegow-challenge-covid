@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import ReactDOM from 'react-dom/client';
 import './index.css';
+import ReactDOM from 'react-dom';
 import App from './views/home/App';
 import CadastrarFuncionario from './views/cadastro/CadastrarFuncionario';
 import ListagemFuncionarios from './views/listagem/ListagemFuncionarios';
@@ -9,9 +9,6 @@ import Navbar from './components/Navbar';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from './components/Footer';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-
 
 function PrivateRoute()
 {
@@ -35,7 +32,7 @@ function PrivateRoute()
 
 }
 
-root.render(
+ReactDOM.render(
   <>
   <BrowserRouter>
     <div className='wrapper bg-dark'>

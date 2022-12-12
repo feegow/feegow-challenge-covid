@@ -25,7 +25,9 @@ const Paginate = (props: any) => {
         props.onPaginate(queryString);
     }
 
-    return (<>
+    return (
+    
+    <>
         <ul className="pagination">
             {props.links.length > 0 && props.links.map((val: any, i: any) =>
                 <li key={i} className={classnames({ 'page-item': true, 'active': val.active, 'disabled': (val.url == null), 'text': 'align' })}>
@@ -35,7 +37,9 @@ const Paginate = (props: any) => {
                 </li>
             )}
         </ul>
-    </>)
+    </>
+    
+    )
 }
 
 export default Paginate;

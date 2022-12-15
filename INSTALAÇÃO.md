@@ -1,8 +1,7 @@
 # Case Técnico Feegow
 ## _Cadastro e controle dos seus colaboradores que foram vacinados contra a COVID-19_
 Esse projeto foi desenvolvido pensando nas tecnologias abordadas na primeira conversa.
-Foi desenvolvido um painel onde podemos está visualizando e editando as informações dos funcionários ou das vacinas,
-Foi utilizada certas tecnologia para esse case. São elas:
+Foi desenvolvido um painel para gerenciar os funcionários ou as vacinas, utilizando certas tecnologia para esse case. São elas:
 - Laravel
 - Docker
 - Bootstrap
@@ -12,7 +11,18 @@ Foi utilizada certas tecnologia para esse case. São elas:
 - CRUD Vacina
 
 ## Instalação
-O projeto requer docker v4+ para rodar
+- O projeto requer docker v4+ para rodar
+
+No arquivo src/.env iremos informar os dados de acesso para o banco
+- Fazer a troca do DB_HOST pelo ipv4 exemplo (192.168.0.59)
+```sh
+DB_CONNECTION=mysql
+DB_HOST=IPV4_DA_SUA_MAQUINA
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=laravel
+DB_PASSWORD=laravel
+```
 
 Execute o comando na pasta raiz do projeto.
 

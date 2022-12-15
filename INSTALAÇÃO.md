@@ -54,17 +54,19 @@ Após acessar o banco iremos rodar os seguintes inserts na aba SQL do phpMyAdmin
 
 ![ER](https://i.imgur.com/vlBdn9K.png "ER")
 
+Tem que seguir a ordem, primeiro os inserts das vacinas e depois os funcionarios
+```sh
+INSERT INTO `vacinas` ( `id`, `nome`, `lote`, `dataValidade`, `created_at`, `updated_at`) VALUES
+(5, 'Pfizer', 26539, '2023-06-03', NULL, NULL),
+(6, 'Coronavac', 26539, '2023-03-14', NULL, NULL),
+(7, 'Oxford', 26539, '2023-11-25', NULL, NULL);
+```
+
 ```sh
 INSERT INTO `funcionarios` (`vacinaAplicada_id`, `vacinaAplicada`, `nomeCompleto`, `cpf`, `portadorComorbidade`, `dataNascimento`, `dataPrimeiraDose`, `dataSegundaDose`, `dataTerceiraDose`, `created_at`, `updated_at`) VALUES
 (5, 1, 'João batista', '339.173.430-29', 0, '2022-05-13', '2022-12-15', NULL, NULL, '2022-12-15 07:35:35', '2022-12-15 07:35:35'),
 (6, 1, 'Simão', '769.606.650-19', 1, '2021-06-03', '2022-08-12', '2022-11-09', NULL, '2022-12-15 07:37:37', '2022-12-15 07:37:37'),
 (7, 1, 'Matheus', '111.648.160-04', 1, '2021-11-11', '2022-10-06', '2022-11-02', '2022-12-12', '2022-12-15 07:38:28', '2022-12-15 07:38:28');
-```
-```sh
-INSERT INTO `vacinas` ( `nome`, `lote`, `dataValidade`, `created_at`, `updated_at`) VALUES
-('Pfizer', 26539, '2023-06-03', NULL, NULL),
-('Coronavac', 26539, '2023-03-14', NULL, NULL),
-('Oxford', 26539, '2023-11-25', NULL, NULL);
 ```
 
 E pronto, agora é só acessar localhost:8000

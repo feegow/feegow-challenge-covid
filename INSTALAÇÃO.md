@@ -24,15 +24,16 @@ DB_USERNAME=laravel
 DB_PASSWORD=laravel
 ```
 
-Execute o comando na pasta raiz do projeto.
+Execute o comando pelo terminal na pasta raiz do projeto.
 
 ```sh
 docker-compose up -d
 ```
 
-Após execute
+acesse a pasta src e execute os comandos
 
 ```sh
+composer install
 php artisan migrate
 ```
 Após esse comando as tabelas serão criadas

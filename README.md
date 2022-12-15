@@ -1,67 +1,45 @@
 # Case Técnico Feegow
-## _Cadastro e controle dos seus colaboradores que foram vacinados contra a COVID-19_
-Esse projeto foi desenvolvido pensando nas tecnologias abordadas na primeira conversa.
-Foi desenvolvido um painel para gerenciar os funcionários ou as vacinas, utilizando certas tecnologia para esse case. São elas:
-- Laravel
-- Docker
-- Bootstrap
 
-## Características
-- CRUD funcionários
-- CRUD Vacina
+## Apresentação do problema
+  A Feegow Clinic empresa do ramo de tecnologia para o segmento médico solicita um sistema web **desenvolvido na linguagem PHP**, para cadastro e controle dos seus colaboradores que foram vacinados contra a COVID-19. 
+  O cadastro deve armazenar as seguintes informações:
 
-## Instalação
-- O projeto requer docker v4+ para rodar
+### Funcionários:
+- CPF  (Chave única);
+- Nome completo
+- Data de nascimento 
+- Data da primeira dose
+- Data da segunda dose
+- Data da terceira dose
+- Vacina Aplicada
+- Portador de comorbidade?
 
-No arquivo src/.env iremos informar os dados de acesso para o banco
-- Fazer a troca do DB_HOST pelo ipv4 exemplo (192.168.0.59)
-```sh
-DB_CONNECTION=mysql
-DB_HOST=IPV4_DA_SUA_MAQUINA
-DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=laravel
-DB_PASSWORD=laravel
-```
+### Vacinas:
+- Nome 
+- Lote
+- Data de validade
 
-Execute o comando na pasta raiz do projeto.
+> Sinta-se à vontade para definir os tipos e tamanhos dos campos, assim como normalizar as tabelas segundo seu julgamento de necessidade. Tenha em mente para isso que esta base de dados deveria manter a sua performance ótima mesmo chegando a centenas de milhares de registros.
+## Tecnologias usadas
+Os pré-requisitos para a aplicação:
+-	Use o PHP como linguagem backend.
+-	Usar Bootstrap ou algum framework front-end de sua preferência.
+-	O Banco de dados deve ser relacional, damos preferência para MySQL/PostgreSQL.
+-	Documentação sucinta e explicativa de como rodar seu código e levantar os ambientes (vídeo explicativo em um link acessível é aceito desde que o áudio e o vídeo estejam em boa qualidade).
 
-```sh
-docker-compose up -d
-```
+## Avaliação 
+Para nos enviar seu código, você poderá escolher **uma das três** opções abaixo:
+-	Fazer um fork deste repositório e nos mandar uma pull-request;
+-	Dar acesso ao seu repositório no Github para FeegowWelcomeTech;
+-	Enviar um git bundle do seu repositório para o e-mail welcome.tech@feegow.com.br
+> Caso opte por fazer um pull-request, deixe ele explicativo **apontando tudo que precisa ser feito para rodar a sua aplicação**.
+## Será indispensável para apresentação deste case:
+-	Anexar o código SQL necessário para a criação da estrutura de banco de dados (sql padrão ANSII) e os inserts dos dados iniciais mínimos para funcionamento do sistema (serão aceitas as migrations laravel).
+-	Anexar as instruções e requisitos mínimos de sistema para que a aplicação seja executada.
+-	Instruções básicas de utilização do sistema.
 
-Após execute
-
-```sh
-php artisan migrate
-```
-Após esse comando as tabelas serão criadas
-
-#### Banco de dados
-| Url | Server | login | senha |
-| -----  | ------|  ------| ------ |
-| http://localhost:8181 | mysql | laravel | laravel |
-
-Após acessar o banco iremos rodar os seguintes inserts na aba SQL do phpMyAdmin
-
-
-```sh
-INSERT INTO `funcionarios` (`vacinaAplicada_id`, `vacinaAplicada`, `nomeCompleto`, `cpf`, `portadorComorbidade`, `dataNascimento`, `dataPrimeiraDose`, `dataSegundaDose`, `dataTerceiraDose`, `created_at`, `updated_at`) VALUES
-(5, 1, 'João batista', '339.173.430-29', 0, '2022-05-13', '2022-12-15', NULL, NULL, '2022-12-15 07:35:35', '2022-12-15 07:35:35'),
-(6, 1, 'Simão', '769.606.650-19', 1, '2021-06-03', '2022-08-12', '2022-11-09', NULL, '2022-12-15 07:37:37', '2022-12-15 07:37:37'),
-(7, 1, 'Matheus', '111.648.160-04', 1, '2021-11-11', '2022-10-06', '2022-11-02', '2022-12-12', '2022-12-15 07:38:28', '2022-12-15 07:38:28');
-```
-```sh
-INSERT INTO `vacinas` ( `nome`, `lote`, `dataValidade`, `created_at`, `updated_at`) VALUES
-('Pfizer', 26539, '2023-06-03', NULL, NULL),
-('Coronavac', 26539, '2023-03-14', NULL, NULL),
-('Oxford', 26539, '2023-11-25', NULL, NULL);
-```
-
-## Bibliotecas
-
-Biblioteca utilizada no projeto
-
-| Biblioteca | README |
-| ------ | ------ |
-| pt-br-validator: Validações brasileiras para Laravel | [https://github.com/LaravelLegends/pt-br-validator#readme][PlDb] |
+## Será considerado um diferencial neste case:
+-	Validação lógica dos campos no lado do cliente **e** no lado do servidor.
+-	Usabilidade intuitiva e tratamento e exceções de sistema.
+-	Estruturação do banco de dados em sua **melhor forma normal**.
+-	Utilização de Docker.

@@ -20,7 +20,6 @@
 - Data de validade
 
 > Sinta-se à vontade para definir os tipos e tamanhos dos campos, assim como normalizar as tabelas segundo seu julgamento de necessidade. Tenha em mente para isso que esta base de dados deveria manter a sua performance ótima mesmo chegando a centenas de milhares de registros.
-
 ## Tecnologias usadas
 Os pré-requisitos para a aplicação:
 -	Use o PHP como linguagem backend.
@@ -34,7 +33,6 @@ Para nos enviar seu código, você poderá escolher **uma das três** opções a
 -	Dar acesso ao seu repositório no Github para FeegowWelcomeTech;
 -	Enviar um git bundle do seu repositório para o e-mail welcome.tech@feegow.com.br
 > Caso opte por fazer um pull-request, deixe ele explicativo **apontando tudo que precisa ser feito para rodar a sua aplicação**.
-
 ## Será indispensável para apresentação deste case:
 -	Anexar o código SQL necessário para a criação da estrutura de banco de dados (sql padrão ANSII) e os inserts dos dados iniciais mínimos para funcionamento do sistema (serão aceitas as migrations laravel).
 -	Anexar as instruções e requisitos mínimos de sistema para que a aplicação seja executada.

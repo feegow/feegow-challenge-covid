@@ -35,7 +35,8 @@ Acesse a pasta src e execute os comandos
 ```sh
 composer install
 ```
-Assim que terminar rode esse comando
+
+Assim que terminar permaneça em src e rode esse comando
 ```sh
 php artisan migrate
 ```

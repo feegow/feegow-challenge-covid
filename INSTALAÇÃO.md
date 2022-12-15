@@ -30,7 +30,7 @@ Execute o comando pelo terminal na pasta RAIZ do projeto.
 docker-compose up -d
 ```
 
-Acesse a pasta src e execute os comandos
+Acesse a pasta src e execute o comando
 
 ```sh
 composer install

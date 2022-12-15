@@ -66,6 +66,8 @@ INSERT INTO `vacinas` ( `nome`, `lote`, `dataValidade`, `created_at`, `updated_a
 ('Oxford', 26539, '2023-11-25', NULL, NULL);
 ```
 
+E pronto, agora é só acessar localhost:8000
+
 ## Bibliotecas
 
 Biblioteca utilizada no projeto

@@ -1,0 +1,57 @@
+# Case Técnico Feegow
+## _Cadastro e controle dos seus colaboradores que foram vacinados contra a COVID-19_
+Esse projeto foi desenvolvido pensando nas tecnologias abordadas na primeira conversa.
+Foi desenvolvido um painel onde podemos está visualizando e editando as informações dos funcionários ou das vacinas,
+Foi utilizada certas tecnologia para esse case. São elas:
+- Laravel
+- Docker
+- Bootstrap
+
+## Características
+- CRUD funcionários
+- CRUD Vacina
+
+## Instalação
+O projeto requer docker v4+ para rodar
+
+Execute o comando na pasta raiz do projeto.
+
+```sh
+docker-compose up -d
+```
+
+Após execute
+
+```sh
+php artisan migrate
+```
+Após esse comando as tabelas serão criadas
+
+#### Banco de dados
+| Url | Server | login | senha |
+| -----  | ------|  ------| ------ |
+| http://localhost:8181 | mysql | laravel | laravel |
+
+Após acessar o banco iremos rodar os seguintes inserts na aba SQL do phpMyAdmin
+
+
+```sh
+INSERT INTO `funcionarios` (`vacinaAplicada_id`, `vacinaAplicada`, `nomeCompleto`, `cpf`, `portadorComorbidade`, `dataNascimento`, `dataPrimeiraDose`, `dataSegundaDose`, `dataTerceiraDose`, `created_at`, `updated_at`) VALUES
+(5, 1, 'João batista', '339.173.430-29', 0, '2022-05-13', '2022-12-15', NULL, NULL, '2022-12-15 07:35:35', '2022-12-15 07:35:35'),
+(6, 1, 'Simão', '769.606.650-19', 1, '2021-06-03', '2022-08-12', '2022-11-09', NULL, '2022-12-15 07:37:37', '2022-12-15 07:37:37'),
+(7, 1, 'Matheus', '111.648.160-04', 1, '2021-11-11', '2022-10-06', '2022-11-02', '2022-12-12', '2022-12-15 07:38:28', '2022-12-15 07:38:28');
+```
+```sh
+INSERT INTO `vacinas` ( `nome`, `lote`, `dataValidade`, `created_at`, `updated_at`) VALUES
+('Pfizer', 26539, '2023-06-03', NULL, NULL),
+('Coronavac', 26539, '2023-03-14', NULL, NULL),
+('Oxford', 26539, '2023-11-25', NULL, NULL);
+```
+
+## Bibliotecas
+
+Biblioteca utilizada no projeto
+
+| Biblioteca | README |
+| ------ | ------ |
+| pt-br-validator: Validações brasileiras para Laravel | [https://github.com/LaravelLegends/pt-br-validator#readme][PlDb] |

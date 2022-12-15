@@ -52,6 +52,7 @@ Após esses comandos as tabelas serão criadas e as dependências baixadas
 
 Após acessar o banco iremos rodar os seguintes inserts na aba SQL do phpMyAdmin
 
+![ER](https://i.imgur.com/vlBdn9K.png "ER")
 
 ```sh
 INSERT INTO `funcionarios` (`vacinaAplicada_id`, `vacinaAplicada`, `nomeCompleto`, `cpf`, `portadorComorbidade`, `dataNascimento`, `dataPrimeiraDose`, `dataSegundaDose`, `dataTerceiraDose`, `created_at`, `updated_at`) VALUES

@@ -1,0 +1,180 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Funcionários",
+        "description": "Uma API para gestão de funcionários e suas vacinações contra a COVID-19.",
+        "contact": {
+            "name": "Suporte Técnico",
+            "email": "suporte@empresa.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/funcionarios": {
+            "get": {
+                "tags": [
+                    "Funcionarios"
+                ],
+                "summary": "Lista todos os funcionários",
+                "operationId": "ea699d46fc67c0fbfd4a5b47e692c7bd",
+                "responses": {
+                    "200": {
+                        "description": "Operação bem-sucedida"
+                    },
+                    "404": {
+                        "description": "Nenhum Funcionário encontrado."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Funcionarios"
+                ],
+                "summary": "Cria um novo funcionário",
+                "operationId": "1243a4b3afb8f96b38e6d64d1830072e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreFuncionarioRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Funcionário criado com sucesso"
+                    },
+                    "404": {
+                        "description": "Funcionário não encontrado."
+                    }
+                }
+            }
+        },
+        "/api/funcionarios/{id}": {
+            "get": {
+                "tags": [
+                    "Funcionarios"
+                ],
+                "summary": "Exibe um funcionário específico",
+                "operationId": "37d4fbf9d87bd6edf167e2014fbdcccc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operação bem-sucedida"
+                    },
+                    "404": {
+                        "description": "Funcionário não encontrado."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Funcionarios"
+                ],
+                "summary": "Deleta um funcionário específico",
+                "operationId": "68308abb641f5b9baadbbca03fbb39d9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Funcionário deletado com sucesso"
+                    },
+                    "404": {
+                        "description": "Funcionário não encontrado."
+                    }
+                }
+            }
+        },
+        "/api/funcionarios/{funcionario}": {
+            "put": {
+                "tags": [
+                    "Funcionarios"
+                ],
+                "summary": "Atualiza um funcionário específico",
+                "operationId": "8539ecc3d84efbd05807d375bb561207",
+                "parameters": [
+                    {
+                        "name": "funcionario",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateFuncionarioRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Funcionário atualizado com sucesso"
+                    },
+                    "404": {
+                        "description": "Funcionário não encontrado."
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "StoreFuncionarioRequest": {
+                "properties": {
+                    "cpf": {
+                        "description": "CPF do Funcionário",
+                        "type": "string",
+                        "format": "regex:/^\\d{11}$/"
+                    },
+                    "nome_completo": {
+                        "description": "Nome completo do Funcionário",
+                        "type": "string"
+                    },
+                    "data_nascimento": {
+                        "description": "Data de nascimento do Funcionário",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "portador_comorbidade": {
+                        "description": "Indica se o funcionário é portador de comorbidades",
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateFuncionarioRequest": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/StoreFuncionarioRequest"
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -16,9 +16,9 @@ class FuncionarioRepository
         return Funcionario::create($data);
     }
 
-    public function findOrFail($id)
+    public function find($id)
     {
-        return Funcionario::findOrFail($id);
+        return Funcionario::find($id);
     }
 
     public function update(Funcionario $funcionario, array $data)

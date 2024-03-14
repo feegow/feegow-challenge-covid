@@ -4,16 +4,18 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 
 class UpdateFuncionarioRequest extends FormRequest
 {
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     public function rules()
     {
+        Log::info('Entrei em, rules');
         return [
             'cpf' => ['required', 'string', 'regex:/^\d{11}$/', 'unique:funcionarios,cpf'],
             'nome_completo' => 'required|string|max:255',

@@ -8,6 +8,7 @@ use App\Http\Controllers\FuncionarioVacinaController;
 // Funcionários
 Route::apiResource('funcionarios', FuncionarioController::class);
 
+
 // Vacinas
 Route::apiResource('vacinas', VacinaController::class);
 

@@ -1,19 +1,16 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FuncionarioController;
+use App\Http\Controllers\VacinaController;
+use App\Http\Controllers\FuncionarioVacinaController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+// Funcionários
+Route::apiResource('funcionarios', FuncionarioController::class);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Vacinas
+Route::apiResource('vacinas', VacinaController::class);
+
+Route::post('funcionario-vacina', [FuncionarioVacinaController::class, 'store']);
+Route::patch('funcionario-vacina/{funcionario_cpf}/{vacina_id}/{dose}', [FuncionarioVacinaController::class, 'update']);
+Route::delete('funcionario-vacina/{funcionario_cpf}/{vacina_id}/{dose}', [FuncionarioVacinaController::class, 'destroy']);

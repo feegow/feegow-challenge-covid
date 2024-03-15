@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "API de Funcionários",
-        "description": "Uma API para gestão de funcionários e suas vacinações contra a COVID-19.",
+        "title": "API de Vacinação de Funcionários",
+        "description": "Uma API para registro de vacinação de funcionários contra a COVID-19.",
         "contact": {
             "name": "Suporte Técnico",
             "email": "suporte@empresa.com"
@@ -37,7 +37,33 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/StoreFuncionarioRequest"
+                                "required": [
+                                    "cpf",
+                                    "nome_completo",
+                                    "data_nascimento",
+                                    "portador_comorbidade"
+                                ],
+                                "properties": {
+                                    "cpf": {
+                                        "type": "string",
+                                        "format": "regex:/^\\d{11}$/",
+                                        "example": "12345678900"
+                                    },
+                                    "nome_completo": {
+                                        "type": "string",
+                                        "example": "João Silva"
+                                    },
+                                    "data_nascimento": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1990-01-01"
+                                    },
+                                    "portador_comorbidade": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
@@ -126,7 +152,33 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UpdateFuncionarioRequest"
+                                "required": [
+                                    "cpf",
+                                    "nome_completo",
+                                    "data_nascimento",
+                                    "portador_comorbidade"
+                                ],
+                                "properties": {
+                                    "cpf": {
+                                        "type": "string",
+                                        "format": "regex:/^\\d{11}$/",
+                                        "example": "12345678900"
+                                    },
+                                    "nome_completo": {
+                                        "type": "string",
+                                        "example": "João Silva"
+                                    },
+                                    "data_nascimento": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1990-01-01"
+                                    },
+                                    "portador_comorbidade": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
@@ -140,40 +192,454 @@
                     }
                 }
             }
-        }
-    },
-    "components": {
-        "schemas": {
-            "StoreFuncionarioRequest": {
-                "properties": {
-                    "cpf": {
-                        "description": "CPF do Funcionário",
-                        "type": "string",
-                        "format": "regex:/^\\d{11}$/"
-                    },
-                    "nome_completo": {
-                        "description": "Nome completo do Funcionário",
-                        "type": "string"
-                    },
-                    "data_nascimento": {
-                        "description": "Data de nascimento do Funcionário",
-                        "type": "string",
-                        "format": "date"
-                    },
-                    "portador_comorbidade": {
-                        "description": "Indica se o funcionário é portador de comorbidades",
-                        "type": "boolean"
+        },
+        "/funcionario-vacina": {
+            "get": {
+                "tags": [
+                    "FuncionarioVacina"
+                ],
+                "summary": "Lista todas as vacinações de funcionários",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Lista de vacinações de funcionários"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "FuncionarioVacina"
+                ],
+                "summary": "Registra uma nova vacinação para um funcionário",
+                "operationId": "store",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "funcionario_cpf",
+                                    "vacina_id",
+                                    "data_dose",
+                                    "dose"
+                                ],
+                                "properties": {
+                                    "funcionario_cpf": {
+                                        "type": "string",
+                                        "example": "12345678900"
+                                    },
+                                    "vacina_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "data_dose": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-03-14"
+                                    },
+                                    "dose": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
                     }
                 },
-                "type": "object"
-            },
-            "UpdateFuncionarioRequest": {
-                "type": "object",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/StoreFuncionarioRequest"
+                "responses": {
+                    "201": {
+                        "description": "Vacinação registrada com sucesso!"
                     }
-                ]
+                }
+            }
+        },
+        "/funcionario-vacina/{funcionario_id}/{vacina_id}": {
+            "get": {
+                "tags": [
+                    "FuncionarioVacina"
+                ],
+                "summary": "Retorna detalhes de uma vacinação específica de um funcionário",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "funcionario_id",
+                        "in": "path",
+                        "description": "ID do funcionário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "vacina_id",
+                        "in": "path",
+                        "description": "ID da vacina",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalhes da vacinação"
+                    },
+                    "404": {
+                        "description": "Vacinação não encontrada"
+                    }
+                }
+            }
+        },
+        "/funcionario-vacina/vacina/{vacina_id}": {
+            "get": {
+                "tags": [
+                    "FuncionarioVacina"
+                ],
+                "summary": "Lista todas as vacinações de funcionários por ID de vacina",
+                "operationId": "indexByVacinaId",
+                "parameters": [
+                    {
+                        "name": "vacina_id",
+                        "in": "path",
+                        "description": "ID da vacina",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de vacinações de funcionários por ID de vacina"
+                    },
+                    "404": {
+                        "description": "Nenhuma vacinação de funcionário encontrada"
+                    }
+                }
+            }
+        },
+        "/funcionario-vacina/funcionario/{funcionario_id}": {
+            "get": {
+                "tags": [
+                    "FuncionarioVacina"
+                ],
+                "summary": "Lista todas as vacinações de um funcionário por ID de funcionário",
+                "operationId": "indexByFuncionarioId",
+                "parameters": [
+                    {
+                        "name": "funcionario_id",
+                        "in": "path",
+                        "description": "ID do funcionário",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de vacinações de um funcionário por ID de funcionário"
+                    },
+                    "404": {
+                        "description": "Funcionário não encontrado"
+                    }
+                }
+            }
+        },
+        "/funcionario-vacina/funcionario/cpf/{funcionario_cpf}": {
+            "get": {
+                "tags": [
+                    "FuncionarioVacina"
+                ],
+                "summary": "Lista todas as vacinações de um funcionário por CPF de funcionário",
+                "operationId": "indexByFuncionarioCpf",
+                "parameters": [
+                    {
+                        "name": "funcionario_cpf",
+                        "in": "path",
+                        "description": "CPF do funcionário",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de vacinações de um funcionário por CPF de funcionário"
+                    },
+                    "404": {
+                        "description": "Funcionário não encontrado"
+                    }
+                }
+            }
+        },
+        "/funcionario-vacina/{funcionario_cpf}/{vacina_id}/{dose}": {
+            "put": {
+                "tags": [
+                    "FuncionarioVacina"
+                ],
+                "summary": "Atualiza os detalhes de uma vacinação específica de um funcionário",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "funcionario_cpf",
+                        "in": "path",
+                        "description": "CPF do funcionário",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "vacina_id",
+                        "in": "path",
+                        "description": "ID da vacina",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "dose",
+                        "in": "path",
+                        "description": "Dose da vacina",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "data_dose"
+                                ],
+                                "properties": {
+                                    "data_dose": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-03-14"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Registro de vacinação atualizado com sucesso!"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "FuncionarioVacina"
+                ],
+                "summary": "Remove uma vacinação específica de um funcionário",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "funcionario_cpf",
+                        "in": "path",
+                        "description": "CPF do funcionário",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "vacina_id",
+                        "in": "path",
+                        "description": "ID da vacina",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "dose",
+                        "in": "path",
+                        "description": "Dose da vacina",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Registro de vacinação removido com sucesso!"
+                    }
+                }
+            }
+        },
+        "/api/vacinas": {
+            "get": {
+                "tags": [
+                    "Vacinas"
+                ],
+                "summary": "Lista todas as vacinas",
+                "operationId": "d988745b062519447330347bbd70d88b",
+                "responses": {
+                    "200": {
+                        "description": "Operação bem-sucedida"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Vacinas"
+                ],
+                "summary": "Cria uma nova vacina",
+                "operationId": "cb971799af2d809c01e705e73d5c5a3b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome",
+                                    "lote",
+                                    "data_validade"
+                                ],
+                                "properties": {
+                                    "nome": {
+                                        "type": "string",
+                                        "example": "Vacina X"
+                                    },
+                                    "lote": {
+                                        "type": "string",
+                                        "example": "Lote123"
+                                    },
+                                    "data_validade": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-12-31"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Vacina criada com sucesso"
+                    }
+                }
+            }
+        },
+        "/api/vacinas/{id}": {
+            "get": {
+                "tags": [
+                    "Vacinas"
+                ],
+                "summary": "Exibe uma vacina específica",
+                "operationId": "64c90b8730bc822607c18d5ce3039d95",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operação bem-sucedida"
+                    },
+                    "404": {
+                        "description": "Vacina não encontrada."
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Vacinas"
+                ],
+                "summary": "Atualiza uma vacina específica",
+                "operationId": "3695cd66443bb8dc1f30cd49cf8fc559",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nome",
+                                    "lote",
+                                    "data_validade"
+                                ],
+                                "properties": {
+                                    "nome": {
+                                        "type": "string",
+                                        "example": "Nova Vacina X"
+                                    },
+                                    "lote": {
+                                        "type": "string",
+                                        "example": "NovoLote123"
+                                    },
+                                    "data_validade": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-12-31"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Vacina atualizada com sucesso"
+                    },
+                    "404": {
+                        "description": "Vacina não encontrada."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Vacinas"
+                ],
+                "summary": "Deleta uma vacina específica",
+                "operationId": "4a0977481a7e367bfac3284855c70917",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Vacina deletada com sucesso"
+                    },
+                    "404": {
+                        "description": "Vacina não encontrada."
+                    }
+                }
             }
         }
     }

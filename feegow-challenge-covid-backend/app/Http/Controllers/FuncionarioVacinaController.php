@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Funcionario;
+use App\Models\Vacina;
 use App\Repositories\FuncionarioVacinaRepository;
 use Illuminate\Http\Request;
 
@@ -13,7 +15,236 @@ class FuncionarioVacinaController extends Controller
     {
         $this->funcionarioVacinaRepo = $funcionarioVacinaRepo;
     }
+   /**
+     * @OA\Get(
+     *     path="/funcionario-vacina",
+     *     tags={"FuncionarioVacina"},
+     *     summary="Lista todas as vacinações de funcionários",
+     *     operationId="index",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de vacinações de funcionários",
+     *     ),
+     * )
+     */
+    public function index()
+    {
+        $funcionarioVacinas = Funcionario::with('vacinas')->get();
+        return response()->json($funcionarioVacinas);
+    }
 
+    /**
+     * @OA\Get(
+     *     path="/funcionario-vacina/{funcionario_id}/{vacina_id}",
+     *     tags={"FuncionarioVacina"},
+     *     summary="Retorna detalhes de uma vacinação específica de um funcionário",
+     *     operationId="show",
+     *     @OA\Parameter(
+     *         name="funcionario_id",
+     *         in="path",
+     *         description="ID do funcionário",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="vacina_id",
+     *         in="path",
+     *         description="ID da vacina",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Detalhes da vacinação",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Vacinação não encontrada",
+     *     ),
+     * )
+     */
+    public function show($funcionario_id, $vacina_id)
+    {
+        $funcionario = Funcionario::find($funcionario_id);
+        $vacina = Vacina::find($vacina_id);
+
+        $vacinaFuncionario = $funcionario->vacinas()->where('vacina_id', $vacina_id)->firstOrFail();
+
+        return response()->json($vacinaFuncionario);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/funcionario-vacina/vacina/{vacina_id}",
+     *     tags={"FuncionarioVacina"},
+     *     summary="Lista todas as vacinações de funcionários por ID de vacina",
+     *     operationId="indexByVacinaId",
+     *     @OA\Parameter(
+     *         name="vacina_id",
+     *         in="path",
+     *         description="ID da vacina",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de vacinações de funcionários por ID de vacina",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Nenhuma vacinação de funcionário encontrada",
+     *     ),
+     * )
+     */
+    public function indexByVacinaId($vacina_id)
+    {
+        $funcionarioVacinas = $this->funcionarioVacinaRepo->findByVacinaId($vacina_id);
+
+        if ($funcionarioVacinas->isEmpty()) {
+            return response()->json(['message' => 'Nenhuma vacinação de funcionário encontrada.'], 404);
+        }
+
+        return response()->json($funcionarioVacinas);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/funcionario-vacina/funcionario/{funcionario_id}",
+     *     tags={"FuncionarioVacina"},
+     *     summary="Lista todas as vacinações de um funcionário por ID de funcionário",
+     *     operationId="indexByFuncionarioId",
+     *     @OA\Parameter(
+     *         name="funcionario_id",
+     *         in="path",
+     *         description="ID do funcionário",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de vacinações de um funcionário por ID de funcionário",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Funcionário não encontrado",
+     *     ),
+     * )
+     */
+    public function indexByFuncionarioId($funcionario_id)
+    {
+        $funcionario = Funcionario::with(['vacinas' => function ($query) {
+            $query->select('vacinas.id', 'vacinas.nome', 'vacinas.lote',  'vacinas.data_validade', 'funcionarios_vacinas.dose', 'funcionarios_vacinas.data_dose');
+        }])->find($funcionario_id);
+
+        if (!$funcionario) {
+            return response()->json(['message' => 'Funcionário não encontrado.'], 404);
+        }
+
+        $vacinas = $funcionario->vacinas->map(function ($vacina) {
+            return [
+                'id' => $vacina->id,
+                'nome' => $vacina->nome,
+                'lote' => $vacina->lote,
+                'data_validade' => $vacina->data_validade,
+                'dose' => $vacina->pivot->dose,
+                'data_dose' => $vacina->pivot->data_dose,
+            ];
+        });
+
+        $response = [
+            'funcionario_id' => $funcionario->id,
+            'nome_completo' => $funcionario->nome_completo,
+            'vacinas' => $vacinas,
+        ];
+
+        return response()->json([$response]);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/funcionario-vacina/funcionario/cpf/{funcionario_cpf}",
+     *     tags={"FuncionarioVacina"},
+     *     summary="Lista todas as vacinações de um funcionário por CPF de funcionário",
+     *     operationId="indexByFuncionarioCpf",
+     *     @OA\Parameter(
+     *         name="funcionario_cpf",
+     *         in="path",
+     *         description="CPF do funcionário",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de vacinações de um funcionário por CPF de funcionário",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Funcionário não encontrado",
+     *     ),
+     * )
+     */
+    public function indexByFuncionarioCpf($funcionario_cpf)
+    {
+        $funcionario = Funcionario::with(['vacinas' => function ($query) {
+            $query->select('vacinas.id', 'vacinas.nome', 'vacinas.lote', 'vacinas.data_validade', 'funcionarios_vacinas.dose', 'funcionarios_vacinas.data_dose');
+        }])->where('cpf', $funcionario_cpf)->first();
+        
+        if (!$funcionario) {
+            return response()->json(['message' => 'Funcionário não encontrado.'], 404);
+        }
+        
+        $vacinas = $funcionario->vacinas->map(function ($vacina) {
+            return [
+                'id' => $vacina->id,
+                'nome' => $vacina->nome,
+                'lote' => $vacina->lote,
+                'data_validade' => $vacina->data_validade,
+                'dose' => $vacina->pivot->dose,
+                'data_dose' => $vacina->pivot->data_dose,
+            ];
+        });
+        
+        $response = [
+            'funcionario_id' => $funcionario->id,
+            'nome_completo' => $funcionario->nome_completo,
+            'vacinas' => $vacinas,
+        ];
+        
+        return response()->json([$response]);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/funcionario-vacina",
+     *     tags={"FuncionarioVacina"},
+     *     summary="Registra uma nova vacinação para um funcionário",
+     *     operationId="store",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"funcionario_cpf", "vacina_id", "data_dose", "dose"},
+     *             @OA\Property(property="funcionario_cpf", type="string", example="12345678900"),
+     *             @OA\Property(property="vacina_id", type="integer", example="1"),
+     *             @OA\Property(property="data_dose", type="string", format="date", example="2024-03-14"),
+     *             @OA\Property(property="dose", type="integer", example="1"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Vacinação registrada com sucesso!",
+     *     ),
+     * )
+     */
     public function store(Request $request)
     {
         // Validação e lógica de request...
@@ -25,6 +256,52 @@ class FuncionarioVacinaController extends Controller
         return response()->json(['message' => 'Vacinação registrada com sucesso!'], 201);
     }
 
+    /**
+     * @OA\Put(
+     *     path="/funcionario-vacina/{funcionario_cpf}/{vacina_id}/{dose}",
+     *     tags={"FuncionarioVacina"},
+     *     summary="Atualiza os detalhes de uma vacinação específica de um funcionário",
+     *     operationId="update",
+     *     @OA\Parameter(
+     *         name="funcionario_cpf",
+     *         in="path",
+     *         description="CPF do funcionário",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="vacina_id",
+     *         in="path",
+     *         description="ID da vacina",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="dose",
+     *         in="path",
+     *         description="Dose da vacina",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"data_dose"},
+     *             @OA\Property(property="data_dose", type="string", format="date", example="2024-03-14"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Registro de vacinação atualizado com sucesso!",
+     *     ),
+     * )
+     */
     public function update(Request $request, $funcionario_cpf, $vacina_id, $dose)
     {
         // Validação e lógica de request...
@@ -33,6 +310,45 @@ class FuncionarioVacinaController extends Controller
         return response()->json(['message' => 'Registro de vacinação atualizado com sucesso!']);
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/funcionario-vacina/{funcionario_cpf}/{vacina_id}/{dose}",
+     *     tags={"FuncionarioVacina"},
+     *     summary="Remove uma vacinação específica de um funcionário",
+     *     operationId="destroy",
+     *     @OA\Parameter(
+     *         name="funcionario_cpf",
+     *         in="path",
+     *         description="CPF do funcionário",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="vacina_id",
+     *         in="path",
+     *         description="ID da vacina",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="dose",
+     *         in="path",
+     *         description="Dose da vacina",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="Registro de vacinação removido com sucesso!",
+     *     ),
+     * )
+     */
     public function destroy($funcionario_cpf, $vacina_id, $dose)
     {
         $this->funcionarioVacinaRepo->removeVacinaFromFuncionario($funcionario_cpf, $vacina_id, $dose);

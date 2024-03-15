@@ -16,9 +16,9 @@ class VacinaRepository
         return Vacina::create($data);
     }
 
-    public function findOrFail($id)
+    public function find($id)
     {
-        return Vacina::findOrFail($id);
+        return Vacina::find($id);
     }
 
     public function update(Vacina $vacina, array $data)

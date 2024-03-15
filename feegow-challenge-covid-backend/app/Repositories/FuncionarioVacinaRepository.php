@@ -24,4 +24,27 @@ class FuncionarioVacinaRepository
         $funcionario = Funcionario::where('cpf', $funcionarioCpf)->firstOrFail();
         $funcionario->vacinas()->wherePivot('dose', $dose)->detach($vacinaId);
     }
+
+    public function findByVacinaId($vacinaId)
+    {
+        return Funcionario::whereHas('vacinas', function ($query) use ($vacinaId) {
+            $query->where('vacina_id', $vacinaId);
+        })->get();
+    }
+
+    public function findByFuncionarioId($funcionarioId)
+    {
+        return Funcionario::with(['vacinas' => function ($query) use ($funcionarioId) {
+            $query->wherePivot('funcionario_id', $funcionarioId);
+        }])->find($funcionarioId);
+    }
+
+    public function findByFuncionarioCpf($funcionarioCpf)
+    {
+        return Funcionario::with(['vacinas' => function ($query) use ($funcionarioCpf) {
+            $query->whereHas('funcionarios', function ($query) use ($funcionarioCpf) {
+                $query->where('cpf', $funcionarioCpf);
+            });
+        }])->where('cpf', $funcionarioCpf)->first();
+    }
 }

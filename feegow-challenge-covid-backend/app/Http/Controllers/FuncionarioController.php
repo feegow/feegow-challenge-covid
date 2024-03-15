@@ -7,19 +7,7 @@ use App\Http\Requests\UpdateFuncionarioRequest;
 use App\Repositories\FuncionarioRepository;
 use App\Models\Funcionario;
 
-/**
- * @OA\OpenApi(
- *   @OA\Info(
- *     title="API de Funcionários",
- *     version="1.0.0",
- *     description="Uma API para gestão de funcionários e suas vacinações contra a COVID-19.",
- *     @OA\Contact(
- *       email="suporte@empresa.com",
- *       name="Suporte Técnico"
- *     )
- *   )
- * )
- 
+/* 
  * @OA\Schema(
  *   schema="StoreFuncionarioRequest",
  *   type="object",
@@ -95,7 +83,13 @@ class FuncionarioController extends Controller
      *     summary="Cria um novo funcionário",
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/StoreFuncionarioRequest")
+     *         @OA\JsonContent(
+     *             required={"cpf", "nome_completo", "data_nascimento", "portador_comorbidade"},
+     *             @OA\Property(property="cpf", type="string", format="regex:/^\d{11}$/", example="12345678900"),
+     *             @OA\Property(property="nome_completo", type="string", example="João Silva"),
+     *             @OA\Property(property="data_nascimento", type="string", format="date", example="1990-01-01"),
+     *             @OA\Property(property="portador_comorbidade", type="boolean", example=true),
+     *         )
      *     ),
      *     @OA\Response(
      *         response=201,
@@ -157,7 +151,13 @@ class FuncionarioController extends Controller
      *     ),
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/UpdateFuncionarioRequest")
+     *         @OA\JsonContent(
+     *             required={"cpf", "nome_completo", "data_nascimento", "portador_comorbidade"},
+     *             @OA\Property(property="cpf", type="string", format="regex:/^\d{11}$/", example="12345678900"),
+     *             @OA\Property(property="nome_completo", type="string", example="João Silva"),
+     *             @OA\Property(property="data_nascimento", type="string", format="date", example="1990-01-01"),
+     *             @OA\Property(property="portador_comorbidade", type="boolean", example=true),
+     *         )
      *     ),
      *     @OA\Response(
      *         response=200,

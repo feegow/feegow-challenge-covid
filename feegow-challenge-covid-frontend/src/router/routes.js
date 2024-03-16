@@ -4,7 +4,8 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', name: 'home', component: () => import('pages/IndexPage.vue') },
-      { path: 'form-funcionario/:id?', name: 'formFuncionario', component: () => import('pages/FormFuncionario.vue') }
+      { path: 'funcionario', name: 'listFuncionarios', component: () => import('pages/Funcionario/ListFuncionarioPage.vue') },
+      { path: 'form-funcionario/:id?', name: 'formFuncionario', component: () => import('pages/Funcionario/FormFuncionarioPage.vue') }
     ]
   },
   {

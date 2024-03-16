@@ -88,16 +88,17 @@ export default defineComponent({
     const onSubmit = async () => {
       try {
         if (form.value.id) {
-          await update({
+          const response = await update({
             ...form.value, data_nascimento: formatDate(form.value.data_nascimento)
           })
+          console.log('response', response)
           $q.notify({
             icon: 'check',
             color: 'positive',
             position: 'top',
             message: 'Funcionário atualizado com sucesso!'
           })
-          router.push({ name: 'home' })
+          router.push({ name: 'listFuncionarios' })
         } else {
           await post({
             ...form.value, data_nascimento: formatDate(form.value.data_nascimento)
@@ -108,10 +109,11 @@ export default defineComponent({
             position: 'top',
             message: 'Funcionário cadastrado com sucesso!'
           })
-          router.push({ name: 'home' })
+          router.push({ name: 'listFuncionarios' })
         }
       } catch (error) {
-        console.log(error)
+        const errorMessage = error
+        console.log('FormFuncionarioPageErro', errorMessage)
       }
     }
 

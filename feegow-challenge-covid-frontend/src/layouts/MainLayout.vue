@@ -59,6 +59,18 @@ const linksList = [
     caption: '',
     icon: 'home',
     route: { name: 'home' }
+  },
+  {
+    title: 'Funcionários',
+    caption: '',
+    icon: 'people',
+    route: { name: 'listFuncionarios' }
+  },
+  {
+    title: 'Vacinas',
+    caption: '',
+    icon: 'local_hospital',
+    route: { name: 'vacinas' }
   }
 ]
 

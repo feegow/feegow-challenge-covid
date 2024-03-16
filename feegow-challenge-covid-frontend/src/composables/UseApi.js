@@ -30,13 +30,15 @@ export default function UseApi (url) {
 
   const update = async (form) => {
     try {
-      console.log('url', url)
-      console.log('form', form)
-      console.log('enviado', `${url}/${form.id}`)
       const { data } = await api.put(`${url}/${form.id}`, form)
       return data
     } catch (error) {
-      throw new Error(error)
+      console.log('errorAPI', error.response.data.dat.cpf[0])
+      if (error.response && error.response.data) {
+        throw new Error(error.response.data)
+      } else {
+        throw new Error(error)
+      }
     }
   }
 

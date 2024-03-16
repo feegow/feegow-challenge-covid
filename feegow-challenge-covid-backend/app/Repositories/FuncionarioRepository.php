@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Funcionario;
+use Illuminate\Support\Facades\Log;
 
 class FuncionarioRepository
 {
@@ -23,7 +24,8 @@ class FuncionarioRepository
 
     public function update(Funcionario $funcionario, array $data)
     {
-        $funcionario->update($data);
+        Log::info('Atualizando funcionário: ' . $funcionario->id);
+        $funcionario->save($data);
         return $funcionario;
     }
 

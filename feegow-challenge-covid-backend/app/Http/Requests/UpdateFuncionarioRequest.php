@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\Facades\Log;
 
 class UpdateFuncionarioRequest extends FormRequest
@@ -17,7 +18,7 @@ class UpdateFuncionarioRequest extends FormRequest
     {
         Log::info('Entrei em, rules');
         return [
-            'cpf' => ['required', 'string', 'regex:/^\d{11}$/', 'unique:funcionarios,cpf'],
+            'cpf' => ['required', 'string', 'regex:/^\d{11}$/', 'unique:funcionarios,cpf,' . $this->route('funcionario')->id],
             'nome_completo' => 'required|string|max:255',
             'data_nascimento' => 'required|date',
             'portador_comorbidade' => 'required|boolean',
@@ -26,7 +27,6 @@ class UpdateFuncionarioRequest extends FormRequest
     
     public function messages()
     {
-        // Personalize as mensagens de erro aqui, se necessário.
         return [
             'cpf.unique' => 'O CPF fornecido já está em uso por outro funcionário.',
             'cpf.required' => 'O CPF é obrigatório.',
@@ -40,5 +40,14 @@ class UpdateFuncionarioRequest extends FormRequest
             'portador_comorbidade.required' => 'A informação sobre ser portador de comorbidade é obrigatória.',
             'portador_comorbidade.boolean' => 'A informação sobre ser portador de comorbidade deve ser um valor booleano.',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success' => false,
+            'message' => 'Validation errors',
+            'data' => $validator->errors()
+        ], 422));
     }
 }

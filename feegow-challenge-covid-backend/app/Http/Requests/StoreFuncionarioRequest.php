@@ -15,7 +15,6 @@ class StoreFuncionarioRequest extends BaseFormRequest
 
     public function rules()
     {
-        Log::info('Entrei em, rules do store');
         return [
             'cpf' => ['required', 'string', 'regex:/^\d{11}$/', 'unique:funcionarios,cpf'],
             'nome_completo' => 'required|string|max:255',
@@ -25,7 +24,6 @@ class StoreFuncionarioRequest extends BaseFormRequest
     }
     public function messages()
     {
-        // Personalize as mensagens de erro aqui, se necessário.
         return [
             'cpf.unique' => 'O CPF fornecido já está em uso por outro funcionário.',
             'cpf.required' => 'O CPF é obrigatório.',
@@ -41,19 +39,11 @@ class StoreFuncionarioRequest extends BaseFormRequest
         ];
     }
     public function failedValidation(Validator $validator)
-
     {
-
         throw new HttpResponseException(response()->json([
-
             'success'   => false,
-
             'message'   => 'Validation errors',
-
             'data'      => $validator->errors()
-
         ]));
-
     }
-
 }

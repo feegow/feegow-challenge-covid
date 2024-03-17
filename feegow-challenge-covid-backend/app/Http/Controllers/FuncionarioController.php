@@ -208,4 +208,60 @@ class FuncionarioController extends Controller
         $this->funcionarioRepo->delete($funcionario);
         return response()->json(null, 204);
     }
+
+    /**
+     * @OA\Get(
+     *     path="/funcionarios/{funcionario_id}/vacina",
+     *     tags={"FuncionarioVacina"},
+     *     summary="Lista todas as vacinações de um funcionário por ID de funcionário",
+     *     operationId="indexByFuncionarioId",
+     *     @OA\Parameter(
+     *         name="funcionario_id",
+     *         in="path",
+     *         description="ID do funcionário",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de vacinações de um funcionário por ID de funcionário",
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Funcionário não encontrado",
+     *     ),
+     * )
+     */
+    public function indexVacinasByFuncionarioId($funcionario_id)
+    {
+        $funcionario = Funcionario::with(['vacinas' => function ($query) {
+            $query->select('vacinas.id', 'vacinas.nome', 'vacinas.lote',  'vacinas.data_validade', 'funcionarios_vacinas.dose', 'funcionarios_vacinas.data_dose');
+        }])->find($funcionario_id);
+
+        if (!$funcionario) {
+            return response()->json(['message' => 'Funcionário não encontrado.'], 404);
+        }
+
+        $vacinas = $funcionario->vacinas->map(function ($vacina) {
+            return [
+                'id' => $vacina->id,
+                'nome' => $vacina->nome,
+                'lote' => $vacina->lote,
+                'data_validade' => $vacina->data_validade,
+                'dose' => $vacina->pivot->dose,
+                'data_dose' => $vacina->pivot->data_dose,
+            ];
+        });
+
+        $response = [
+            'funcionario_id' => $funcionario->id,
+            'nome_completo' => $funcionario->nome_completo,
+            'portador_comorbidade' => $funcionario->portador_comorbidade,
+            'vacinas' => $vacinas,
+        ];
+
+        return response()->json([$response]);
+    }
 }

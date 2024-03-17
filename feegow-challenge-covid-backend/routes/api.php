@@ -6,7 +6,12 @@ use App\Http\Controllers\VacinaController;
 use App\Http\Controllers\FuncionarioVacinaController;
 
 // Funcionários
-Route::apiResource('funcionarios', FuncionarioController::class);
+Route::get('funcionarios', [FuncionarioController::class, 'index']);
+Route::get('funcionarios/{id}/vacinas', [FuncionarioController::class, 'indexVacinasByFuncionarioId']);
+Route::post('funcionarios', [FuncionarioController::class, 'store']);
+Route::get('funcionarios/{id}', [FuncionarioController::class, 'show']);
+Route::put('funcionarios/{id}', [FuncionarioController::class, 'update']);
+Route::delete('funcionarios/{id}', [FuncionarioController::class, 'destroy']);
 
 
 // Vacinas

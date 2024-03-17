@@ -1,6 +1,6 @@
 <template>
-  <q-page >
-    <div >
+  <q-page class="flex flex-center">
+    <div class="q-pa-md">
       <q-table
         title="Funcionário X Vacinas"
         :rows="funcionariovacinas[0]?.vacinas"
@@ -8,7 +8,9 @@
         row-key="id"
       >
         <template v-slot:top>
-          <span class="text-h5">Funcionário: {{ funcionariovacinas[0]?.nome_completo }}</span><q-space/><span>Portador Comorbidade: {{ funcionariovacinas[0]?.portador_comorbidade ? 'Sim' : 'Não' }}</span>
+          <span class="text-h5">Funcionário: {{ funcionariovacinas[0]?.nome_completo }}</span>
+          <q-space />
+          <span>Portador Comorbidade: {{ funcionariovacinas[0]?.portador_comorbidade ? 'Sim' : 'Não' }}</span>
           <q-space />
           <q-btn color="primary" label="Novo" />
         </template>
@@ -16,14 +18,28 @@
           <q-td :props="props" class="q-gutter-sm">
             <q-btn
               color="info"
-              icon="edit" dense size="sm"
+              icon="edit"
+              dense
+              size="sm"
               @click="handleEdit(props.row.id)"
             />
             <q-btn
               color="negative"
-              icon="delete" dense size="sm"
+              icon="delete"
+              dense
+              size="sm"
               @click="handleDelete(props.row.id)"
             />
+          </q-td>
+        </template>
+        <template v-slot:body-cell-data_validade="props">
+          <q-td :props="props">
+            {{ formatarData(props.row.data_validade) }}
+          </q-td>
+        </template>
+        <template v-slot:body-cell-data_dose="props">
+          <q-td :props="props">
+            {{ formatarData(props.row.data_dose) }}
           </q-td>
         </template>
       </q-table>
@@ -41,7 +57,7 @@ export default defineComponent({
   name: 'ListFuncionarioVacinas',
   setup () {
     const funcionariovacinas = ref([])
-    const { list, remove } = funcionarioVacinasService()
+    const { remove, getByFuncionarioId } = funcionarioVacinasService()
     const columns = [
       { name: 'id', label: 'ID', field: 'id', sortable: true, align: 'left' },
       { name: 'nome', label: 'Nome', field: 'nome', sortable: true, align: 'left' },
@@ -61,7 +77,7 @@ export default defineComponent({
 
     const getFuncionarioVacinas = async (id) => {
       try {
-        const data = await list(id)
+        const data = await getByFuncionarioId(id)
         funcionariovacinas.value = data
       } catch (error) {
         console.log(error)
@@ -101,11 +117,18 @@ export default defineComponent({
       router.push({ name: 'formVacina', params: { id } })
     }
 
+    const formatarData = (data) => {
+      if (!data) return ''
+      const [ano, mes, dia] = data.split('-')
+      return `${dia}/${mes}/${ano}`
+    }
+
     return {
       funcionariovacinas,
       columns,
       handleDelete,
-      handleEdit
+      handleEdit,
+      formatarData
     }
   }
 })

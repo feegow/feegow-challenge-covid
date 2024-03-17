@@ -19,6 +19,15 @@ export default function UseApi (url) {
     }
   }
 
+  const getByFuncionarioId = async (id) => {
+    try {
+      const { data } = await api.get(`${url}/funcionario/${id}`)
+      return data
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
   const post = async (form) => {
     try {
       const { data } = await api.post(url, form)
@@ -65,5 +74,5 @@ export default function UseApi (url) {
     }
   }
 
-  return { list, post, update, remove, getById }
+  return { list, post, update, remove, getById, getByFuncionarioId }
 }

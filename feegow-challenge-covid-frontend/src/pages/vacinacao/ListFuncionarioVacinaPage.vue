@@ -52,8 +52,7 @@ import { defineComponent, ref, onMounted } from 'vue'
 import funcionarioService from 'src/services/funcionarios'
 import { useQuasar } from 'quasar'
 import { useRouter, useRoute } from 'vue-router'
-import formatDateToPtBr from 'boot/helpers'
-
+import { formatDateToPtBr } from 'boot/helpers'
 export default defineComponent({
   name: 'ListFuncionarioVacinas',
   setup () {
@@ -115,7 +114,7 @@ export default defineComponent({
     }
 
     const handleEdit = async (id) => {
-      router.push({ name: 'formVacina', params: { id } })
+      router.push({ name: 'formFuncionarioVacinas', params: { id } })
     }
 
     return {

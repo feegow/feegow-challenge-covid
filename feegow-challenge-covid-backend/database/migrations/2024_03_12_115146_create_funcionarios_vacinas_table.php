@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('funcionarios_vacinas', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('funcionario_id')->constrained('funcionarios')->onDelete('cascade');
             $table->foreignId('vacina_id')->constrained('vacinas')->onDelete('cascade');
             $table->date('data_dose');
             $table->integer('dose');
             $table->timestamps();
-            $table->primary(['funcionario_id', 'vacina_id', 'dose']);
         });
         
     }

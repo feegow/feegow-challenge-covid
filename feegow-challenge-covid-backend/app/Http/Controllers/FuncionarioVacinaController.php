@@ -17,7 +17,7 @@ class FuncionarioVacinaController extends Controller
     }
    /**
      * @OA\Get(
-     *     path="/funcionario-vacina",
+     *     path="/api/funcionario-vacinas",
      *     tags={"FuncionarioVacina"},
      *     summary="Lista todas as vacinações de funcionários",
      *     operationId="index",

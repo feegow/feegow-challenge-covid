@@ -193,7 +193,7 @@
                 }
             }
         },
-        "/funcionario-vacina": {
+        "/api/funcionario-vacinas": {
             "get": {
                 "tags": [
                     "FuncionarioVacina"
@@ -203,53 +203,6 @@
                 "responses": {
                     "200": {
                         "description": "Lista de vacinações de funcionários"
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "FuncionarioVacina"
-                ],
-                "summary": "Registra uma nova vacinação para um funcionário",
-                "operationId": "store",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "funcionario_cpf",
-                                    "vacina_id",
-                                    "data_dose",
-                                    "dose"
-                                ],
-                                "properties": {
-                                    "funcionario_cpf": {
-                                        "type": "string",
-                                        "example": "12345678900"
-                                    },
-                                    "vacina_id": {
-                                        "type": "integer",
-                                        "example": "1"
-                                    },
-                                    "data_dose": {
-                                        "type": "string",
-                                        "format": "date",
-                                        "example": "2024-03-14"
-                                    },
-                                    "dose": {
-                                        "type": "integer",
-                                        "example": "1"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Vacinação registrada com sucesso!"
                     }
                 }
             }
@@ -371,6 +324,55 @@
                     },
                     "404": {
                         "description": "Funcionário não encontrado"
+                    }
+                }
+            }
+        },
+        "/funcionario-vacina": {
+            "post": {
+                "tags": [
+                    "FuncionarioVacina"
+                ],
+                "summary": "Registra uma nova vacinação para um funcionário",
+                "operationId": "store",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "funcionario_cpf",
+                                    "vacina_id",
+                                    "data_dose",
+                                    "dose"
+                                ],
+                                "properties": {
+                                    "funcionario_cpf": {
+                                        "type": "string",
+                                        "example": "12345678900"
+                                    },
+                                    "vacina_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "data_dose": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-03-14"
+                                    },
+                                    "dose": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Vacinação registrada com sucesso!"
                     }
                 }
             }

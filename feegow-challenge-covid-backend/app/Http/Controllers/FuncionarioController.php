@@ -237,7 +237,7 @@ class FuncionarioController extends Controller
     public function indexVacinasByFuncionarioId($funcionario_id)
     {
         $funcionario = Funcionario::with(['vacinas' => function ($query) {
-            $query->select('vacinas.id', 'vacinas.nome', 'vacinas.lote',  'vacinas.data_validade', 'funcionarios_vacinas.dose', 'funcionarios_vacinas.data_dose');
+            $query->select('funcionarios_vacinas.id as vacinacao_id','vacinas.id as vacina_id', 'vacinas.nome', 'vacinas.lote',  'vacinas.data_validade', 'funcionarios_vacinas.dose', 'funcionarios_vacinas.data_dose');
         }])->find($funcionario_id);
 
         if (!$funcionario) {
@@ -246,7 +246,8 @@ class FuncionarioController extends Controller
 
         $vacinas = $funcionario->vacinas->map(function ($vacina) {
             return [
-                'id' => $vacina->id,
+                'vacinacao_id' => $vacina->vacinacao_id,
+                'vacina_id' => $vacina->vacina_id,
                 'nome' => $vacina->nome,
                 'lote' => $vacina->lote,
                 'data_validade' => $vacina->data_validade,

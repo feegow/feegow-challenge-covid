@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\VacinaRepository;
 use Illuminate\Http\Request;
-use \Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Log;
+use App\Models\Funcionario;
 
 class VacinaController extends Controller
 {

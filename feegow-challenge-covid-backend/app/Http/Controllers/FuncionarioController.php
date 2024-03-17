@@ -265,4 +265,33 @@ class FuncionarioController extends Controller
 
         return response()->json([$response]);
     }
+
+    public function indexVacinacaoByVacinacaoId($funcionario_id)
+    {
+        $funcionario = Funcionario::with(['vacinas' => function ($query) {
+            $query->select('funcionarios_vacinas.id as vacinacao_id', 'funcionarios_vacinas.funcionario_id', 'funcionarios_vacinas.vacina_id', 'funcionarios_vacinas.dose', 'funcionarios_vacinas.data_dose');
+        }])->find($funcionario_id);
+
+        if (!$funcionario) {
+            return response()->json(['message' => 'Funcionário não encontrado.'], 404);
+        }
+
+        $response = [
+            'funcionario_id' => $funcionario->id,
+            'nome_completo' => $funcionario->nome_completo,
+            'portador_comorbidade' => $funcionario->portador_comorbidade,
+            'vacinas' => $funcionario->vacinas->map(function ($vacina) {
+                return [
+                    'vacinacao_id' => $vacina->vacinacao_id,
+                    'vacina_id' => $vacina->vacina_id,
+                    'dose' => $vacina->dose,
+                    'data_dose' => $vacina->data_dose,
+                    // Se desejar, você pode incluir mais campos da vacinação aqui
+                ];
+            }),
+        ];
+
+        return response()->json([$response]);
+    }
+
 }

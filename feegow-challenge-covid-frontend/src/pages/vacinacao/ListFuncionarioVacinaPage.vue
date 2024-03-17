@@ -34,12 +34,12 @@
         </template>
         <template v-slot:body-cell-data_validade="props">
           <q-td :props="props">
-            {{ formatarData(props.row.data_validade) }}
+            {{ formatDateToPtBr(props.row.data_validade) }}
           </q-td>
         </template>
         <template v-slot:body-cell-data_dose="props">
           <q-td :props="props">
-            {{ formatarData(props.row.data_dose) }}
+            {{ formatDateToPtBr(props.row.data_dose) }}
           </q-td>
         </template>
       </q-table>
@@ -49,15 +49,16 @@
 
 <script>
 import { defineComponent, ref, onMounted } from 'vue'
-import funcionarioVacinasService from 'src/services/funcionariovacinas'
+import funcionarioService from 'src/services/funcionarios'
 import { useQuasar } from 'quasar'
 import { useRouter, useRoute } from 'vue-router'
+import { formatDateToPtBr } from 'boot/helpers'
 
 export default defineComponent({
   name: 'ListFuncionarioVacinas',
   setup () {
     const funcionariovacinas = ref([])
-    const { remove, getByFuncionarioId } = funcionarioVacinasService()
+    const { remove, getVacinasByFuncionarioId } = funcionarioService()
     const columns = [
       { name: 'id', label: 'ID', field: 'id', sortable: true, align: 'left' },
       { name: 'nome', label: 'Nome', field: 'nome', sortable: true, align: 'left' },
@@ -72,12 +73,12 @@ export default defineComponent({
     const route = useRoute()
 
     onMounted(() => {
-      getFuncionarioVacinas(route.params.id)
+      fetchFuncionarioVacinas(route.params.id)
     })
 
-    const getFuncionarioVacinas = async (id) => {
+    const fetchFuncionarioVacinas = async (id) => {
       try {
-        const data = await getByFuncionarioId(id)
+        const data = await getVacinasByFuncionarioId(id)
         funcionariovacinas.value = data
       } catch (error) {
         console.log(error)
@@ -99,7 +100,7 @@ export default defineComponent({
             position: 'top',
             message: 'Vacina deletada com sucesso'
           })
-          getFuncionarioVacinas()
+          fetchFuncionarioVacinas()
         }).onCancel(() => {
           console.log('>>>> Cancel')
         })
@@ -117,18 +118,12 @@ export default defineComponent({
       router.push({ name: 'formVacina', params: { id } })
     }
 
-    const formatarData = (data) => {
-      if (!data) return ''
-      const [ano, mes, dia] = data.split('-')
-      return `${dia}/${mes}/${ano}`
-    }
-
     return {
       funcionariovacinas,
       columns,
       handleDelete,
       handleEdit,
-      formatarData
+      formatDateToPtBr
     }
   }
 })

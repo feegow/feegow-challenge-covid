@@ -19,9 +19,9 @@ export default function UseApi (url) {
     }
   }
 
-  const getByFuncionarioId = async (id) => {
+  const getVacinasByFuncionarioId = async (id) => {
     try {
-      const { data } = await api.get(`${url}/funcionario/${id}`)
+      const { data } = await api.get(`${url}/${id}/vacinas`)
       return data
     } catch (error) {
       throw new Error(error)
@@ -74,5 +74,5 @@ export default function UseApi (url) {
     }
   }
 
-  return { list, post, update, remove, getById, getByFuncionarioId }
+  return { list, post, update, remove, getById, getVacinasByFuncionarioId }
 }

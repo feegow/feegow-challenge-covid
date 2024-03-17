@@ -28,7 +28,7 @@
     </template>
     <template v-slot:body-cell-data_validade="props">
       <q-td :props="props">
-        {{ formatarData(props.row.data_validade) }}
+        {{ formatDateToPtBr(props.row.data_validade) }}
       </q-td>
     </template>
   </q-table>
@@ -41,6 +41,7 @@ import { defineComponent, ref, onMounted } from 'vue'
 import vacinasService from 'src/services/vacinas'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
+import { formatDateToPtBr } from 'boot/helpers'
 export default defineComponent({
   name: 'ListFuncionario',
   setup () {
@@ -97,17 +98,13 @@ export default defineComponent({
     const handleEdit = async (id) => {
       router.push({ name: 'formVacina', params: { id } })
     }
-    const formatarData = (data) => {
-      if (!data) return ''
-      const [ano, mes, dia] = data.split('-')
-      return `${dia}/${mes}/${ano}`
-    }
+
     return {
       vacinas,
       columns,
       handleDelete,
       handleEdit,
-      formatarData
+      formatDateToPtBr
     }
   }
 })

@@ -25,7 +25,7 @@
       v-model="form.data_validade"
       mask="##/##/####"
       label="Data de Validade"
-      :rules="[val => validarData(val) || 'Por favor, digite uma data válida']"
+      :rules="[val => validateDate(val) || 'Por favor, digite uma data válida']"
       >
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
@@ -64,6 +64,7 @@ import { defineComponent, ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import vacinaService from 'src/services/vacinas'
 import { useQuasar } from 'quasar'
+import { validateDate, formatDateToPtBr, formatDateToEnUS } from 'boot/helpers' // Importe as funções do arquivo helpers
 
 export default defineComponent({
   name: 'FormVacina',
@@ -83,7 +84,7 @@ export default defineComponent({
         const response = await getById(route.params.id)
         form.value = {
           ...response,
-          data_validade: formatDatePtBr(response.data_validade)
+          data_validade: formatDateToPtBr(response.data_validade) // Use a função formatDateToPtBr para formatar a data
         }
       }
     })
@@ -92,7 +93,7 @@ export default defineComponent({
       try {
         if (form.value.id) {
           await update({
-            ...form.value, data_validade: formatDate(form.value.data_validade)
+            ...form.value, data_validade: formatDateToEnUS(form.value.data_validade)
           })
           $q.notify({
             icon: 'check',
@@ -103,7 +104,7 @@ export default defineComponent({
           router.push({ name: 'listVacinas' })
         } else {
           await post({
-            ...form.value, data_validade: formatDate(form.value.data_validade)
+            ...form.value, data_validade: formatDateToEnUS(form.value.data_validade)
           })
           $q.notify({
             icon: 'check',
@@ -122,28 +123,12 @@ export default defineComponent({
         })
       }
     }
-
-    const formatDate = (date) => {
-      if (!date) return ''
-      const [day, month, year] = date.split('/')
-      return `${year}-${month}-${day}`
-    }
-
-    const formatDatePtBr = (date) => {
-      if (!date) return ''
-      const [year, month, day] = date.split('-')
-      return `${day}/${month}/${year}`
-    }
-
-    const validarData = (date) => {
-      const regex = /^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/]\d{4}$/
-      return regex.test(date)
-    }
-
     return {
       form,
       onSubmit,
-      validarData
+      validateDate,
+      formatDateToPtBr,
+      formatDateToEnUS
     }
   }
 })

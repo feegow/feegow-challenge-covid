@@ -33,7 +33,7 @@
     </template>
     <template v-slot:body-cell-data_nascimento="props">
       <q-td :props="props">
-        {{ formatarData(props.row.data_nascimento) }}
+        {{ formatDateToPtBr(props.row.data_nascimento) }}
       </q-td>
     </template>
     <template v-slot:body-cell-portador_comorbidade="props">
@@ -51,6 +51,7 @@ import { defineComponent, ref, onMounted } from 'vue'
 import funcionariosService from 'src/services/funcionarios'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
+import { formatDateToPtBr } from 'boot/helpers'
 export default defineComponent({
   name: 'ListFuncionario',
   setup () {
@@ -111,11 +112,7 @@ export default defineComponent({
     const handleFuncionarioVacinas = async (id) => {
       router.push({ name: 'listFuncionarioVacinas', params: { id } })
     }
-    const formatarData = (data) => {
-      if (!data) return ''
-      const [ano, mes, dia] = data.split('-')
-      return `${dia}/${mes}/${ano}`
-    }
+
     const setToogle = (row) => {
       row.portador_comorbidade = !row.portador_comorbidade
     }
@@ -125,8 +122,8 @@ export default defineComponent({
       handleDeleteFuncionario,
       handleEditFuncionario,
       handleFuncionarioVacinas,
-      formatarData,
-      setToogle
+      setToogle,
+      formatDateToPtBr
     }
   }
 })

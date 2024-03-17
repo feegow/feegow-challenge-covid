@@ -59,6 +59,7 @@ import { defineComponent, ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import funcionarioService from 'src/services/funcionarios'
 import { useQuasar } from 'quasar'
+import { formatDatePtBr } from 'boot/helpers'
 
 export default defineComponent({
   name: 'FormFuncionario',
@@ -127,15 +128,11 @@ export default defineComponent({
       return `${year}-${month}-${day}`
     }
 
-    const formatDatePtBr = (date) => {
-      if (!date) return ''
-      const [year, month, day] = date.split('-')
-      return `${day}/${month}/${year}`
-    }
-
     return {
       form,
-      onSubmit
+      onSubmit,
+      formatDate,
+      formatDatePtBr
     }
   }
 })

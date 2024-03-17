@@ -24,6 +24,15 @@ export default function UseApi (url) {
       const { data } = await api.post(url, form)
       return data
     } catch (error) {
+      console.log('error', error)
+      const errors = error.response.data.data
+      const keys = Object.keys(errors)
+      const message = keys.map((key) => {
+        return errors[key]
+      })
+      if (message.length > 0) {
+        throw new Error(message.join('\n'))
+      }
       throw new Error(error)
     }
   }
@@ -33,12 +42,15 @@ export default function UseApi (url) {
       const { data } = await api.put(`${url}/${form.id}`, form)
       return data
     } catch (error) {
-      console.log('errorAPI', error.response.data.dat.cpf[0])
-      if (error.response && error.response.data) {
-        throw new Error(error.response.data)
-      } else {
-        throw new Error(error)
+      const errors = error.response.data.data
+      const keys = Object.keys(errors)
+      const message = keys.map((key) => {
+        return errors[key]
+      })
+      if (message.length > 0) {
+        throw new Error(message.join('\n'))
       }
+      throw new Error(error)
     }
   }
 

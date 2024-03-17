@@ -70,7 +70,7 @@ const linksList = [
     title: 'Vacinas',
     caption: '',
     icon: 'local_hospital',
-    route: { name: 'vacinas' }
+    route: { name: 'listVacinas' }
   }
 ]
 

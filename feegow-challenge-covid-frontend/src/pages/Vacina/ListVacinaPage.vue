@@ -2,38 +2,33 @@
   <q-page class="flex flex-center">
    <div class="q-pa-md">
     <q-table
-      title="Funcionários"
-      :rows="funcionarios"
+      title="Vacinas"
+      :rows="vacinas"
       :columns="columns"
       row-key="name"
     >
     <template v-slot:top>
-        <span class="text-h5">Funcionarios</span>
+        <span class="text-h5">Vacinas</span>
         <q-space />
-        <q-btn color="primary" label="Novo" :to="{ name: 'formFuncionario' }" />
+        <q-btn color="primary" label="Novo" :to="{ name: 'formVacina' }" />
     </template>
     <template v-slot:body-cell-actions="props">
       <q-td :props="props" class="q-gutter-sm">
         <q-btn
           color="info"
           icon="edit" dense size="sm"
-          @click="handleEditFuncionario(props.row.id)"
+          @click="handleEdit(props.row.id)"
         />
         <q-btn
           color="negative"
           icon="delete" dense size="sm"
-          @click="handleDeleteFuncionario(props.row.id)"
+          @click="handleDelete(props.row.id)"
         />
       </q-td>
     </template>
-    <template v-slot:body-cell-data_nascimento="props">
+    <template v-slot:body-cell-data_validade="props">
       <q-td :props="props">
-        {{ formatarData(props.row.data_nascimento) }}
-      </q-td>
-    </template>
-    <template v-slot:body-cell-portador_comorbidade="props">
-      <q-td :props="props">
-        {{ props.row.portador_comorbidade ? 'Sim' : 'Não' }}
+        {{ formatarData(props.row.data_validade) }}
       </q-td>
     </template>
   </q-table>
@@ -43,40 +38,39 @@
 
 <script>
 import { defineComponent, ref, onMounted } from 'vue'
-import funcionariosService from 'src/services/funcionarios'
+import vacinasService from 'src/services/vacinas'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 export default defineComponent({
   name: 'ListFuncionario',
   setup () {
-    const funcionarios = ref([])
-    const { list, remove } = funcionariosService()
+    const vacinas = ref([])
+    const { list, remove } = vacinasService()
     const columns = [
       { name: 'id', label: 'ID', field: 'id', sortable: true, align: 'left' },
-      { name: 'cpf', label: 'CPF', field: 'cpf', sortable: true, align: 'left' },
-      { name: 'nome_completo', label: 'Nome Completo', field: 'nome_completo', sortable: true, align: 'left' },
-      { name: 'data_nascimento', label: 'Data de Nascimento', field: 'data_nascimento', sortable: true, align: 'left' },
-      { name: 'portador_comorbidade', label: 'Portador Comorbidade', field: 'portador_comorbidade', sortable: true, align: 'left' },
+      { name: 'nome', label: 'Nome', field: 'nome', sortable: true, align: 'left' },
+      { name: 'lote', label: 'Lote', field: 'lote', sortable: true, align: 'left' },
+      { name: 'data_validade', label: 'Data de Validade', field: 'data_validade', sortable: true, align: 'left' },
       { name: 'actions', label: 'Ações', field: 'actions', align: 'rigth' }
     ]
     const $q = useQuasar()
     const router = useRouter()
     onMounted(() => {
-      getFuncionarios()
+      getVacinas()
     })
-    const getFuncionarios = async () => {
+    const getVacinas = async () => {
       try {
         const data = await list()
-        funcionarios.value = data
+        vacinas.value = data
       } catch (error) {
         console.log(error)
       }
     }
-    const handleDeleteFuncionario = async (id) => {
+    const handleDelete = async (id) => {
       try {
         $q.dialog({
-          title: 'Remover Funcionário',
-          message: 'Deseja remover o funcionário?',
+          title: 'Remover Vacina',
+          message: 'Deseja remover a vacina?',
           cancel: true,
           persistent: true
         }).onOk(async () => {
@@ -85,9 +79,9 @@ export default defineComponent({
             icon: 'check',
             color: 'positive',
             position: 'top',
-            message: 'Funcionário deletado com sucesso'
+            message: 'Vacina deletada com sucesso'
           })
-          getFuncionarios()
+          getVacinas()
         }).onCancel(() => {
           console.log('>>>> Cancel')
         })
@@ -96,28 +90,24 @@ export default defineComponent({
           icon: 'check',
           color: 'negative',
           position: 'top',
-          message: 'Erro ao deletar funcionário'
+          message: 'Erro ao deletar vacina'
         })
       }
     }
-    const handleEditFuncionario = async (id) => {
-      router.push({ name: 'formFuncionario', params: { id } })
+    const handleEdit = async (id) => {
+      router.push({ name: 'formVacina', params: { id } })
     }
     const formatarData = (data) => {
       if (!data) return ''
       const [ano, mes, dia] = data.split('-')
       return `${dia}/${mes}/${ano}`
     }
-    const setToogle = (row) => {
-      row.portador_comorbidade = !row.portador_comorbidade
-    }
     return {
-      funcionarios,
+      vacinas,
       columns,
-      handleDeleteFuncionario,
-      handleEditFuncionario,
-      formatarData,
-      setToogle
+      handleDelete,
+      handleEdit,
+      formatarData
     }
   }
 })

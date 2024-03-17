@@ -21,7 +21,7 @@
               icon="edit"
               dense
               size="sm"
-              @click="handleEdit(props.row.id)"
+              @click="handleEdit(props.row.vacinacao_id)"
             />
             <q-btn
               color="negative"
@@ -53,13 +53,15 @@ import funcionarioService from 'src/services/funcionarios'
 import { useQuasar } from 'quasar'
 import { useRouter, useRoute } from 'vue-router'
 import { formatDateToPtBr } from 'boot/helpers'
+
 export default defineComponent({
   name: 'ListFuncionarioVacinas',
   setup () {
     const funcionariovacinas = ref([])
     const { remove, getVacinasByFuncionarioId } = funcionarioService()
     const columns = [
-      { name: 'id', label: 'ID', field: 'id', sortable: true, align: 'left' },
+      { name: 'vacinacao_id', label: 'Id Vacinacao', field: 'vacinacao_id', sortable: true, align: 'left' },
+      { name: 'vacina_id', label: 'Id Vacina', field: 'vacina_id', sortable: true, align: 'left' },
       { name: 'nome', label: 'Nome', field: 'nome', sortable: true, align: 'left' },
       { name: 'lote', label: 'Lote', field: 'lote', sortable: true, align: 'left' },
       { name: 'data_validade', label: 'Data de Validade', field: 'data_validade', sortable: true, align: 'left' },

@@ -2,6 +2,7 @@ import UseApi from 'src/composables/UseApi'
 
 export default function funcionariosService () {
   const { list, post, update, remove, getById, getVacinasByFuncionarioId } = UseApi('funcionarios')
+  const { getVacinacaoById } = UseApi('vacinacao')
 
   return {
     list,
@@ -9,6 +10,8 @@ export default function funcionariosService () {
     update,
     remove,
     getById,
-    getVacinasByFuncionarioId
+    getFuncionarioById: getById,
+    getVacinasByFuncionarioId,
+    getVacinacaoById
   }
 }

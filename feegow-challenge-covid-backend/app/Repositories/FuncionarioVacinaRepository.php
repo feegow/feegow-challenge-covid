@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Funcionario;
 use App\Models\Vacina;
+use App\Models\Vacinacao;
 
 class FuncionarioVacinaRepository
 {
@@ -46,5 +47,10 @@ class FuncionarioVacinaRepository
                 $query->where('cpf', $funcionarioCpf);
             });
         }])->where('cpf', $funcionarioCpf)->first();
+    }
+    
+    public function find($id)
+    {
+        return Vacinacao::find($id);
     }
 }

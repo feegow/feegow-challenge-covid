@@ -67,14 +67,13 @@ class FuncionarioVacinaController extends Controller
      *     ),
      * )
      */
-    public function show($funcionario_id, $vacina_id)
+    public function show($id)
     {
-        $funcionario = Funcionario::find($funcionario_id);
-        $vacina = Vacina::find($vacina_id);
-
-        $vacinaFuncionario = $funcionario->vacinas()->where('vacina_id', $vacina_id)->firstOrFail();
-
-        return response()->json($vacinaFuncionario);
+        $funcionarioVacinaRepo = $this->funcionarioVacinaRepo->find($id);
+        if (!$funcionarioVacinaRepo) {
+            return response()->json(['message' => 'Vacinação não encontrada.'], 404);
+        }
+        return response()->json($funcionarioVacinaRepo);
     }
 
     /**

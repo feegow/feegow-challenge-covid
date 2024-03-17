@@ -28,6 +28,15 @@ export default function UseApi (url) {
     }
   }
 
+  const getVacinacaoById = async (id) => {
+    try {
+      const { data } = await api.get(`${url}/${id}/funcionarios`)
+      return data
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
   const post = async (form) => {
     try {
       const { data } = await api.post(url, form)
@@ -74,5 +83,5 @@ export default function UseApi (url) {
     }
   }
 
-  return { list, post, update, remove, getById, getVacinasByFuncionarioId }
+  return { list, post, update, remove, getById, getVacinasByFuncionarioId, getVacinacaoById }
 }

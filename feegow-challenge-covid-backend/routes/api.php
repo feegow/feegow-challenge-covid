@@ -28,3 +28,5 @@ Route::get('/funcionario-vacinas/funcionario/{id}', [FuncionarioVacinaController
 Route::post('/funcionario-vacinas', [FuncionarioVacinaController::class, 'store']);
 Route::put('/funcionario-vacinas/{funcionario_cpf}/{vacina_id}/{dose}', [FuncionarioVacinaController::class, 'update']);
 Route::delete('/funcionario-vacinas/{funcionario_cpf}/{vacina_id}/{dose}', [FuncionarioVacinaController::class, 'destroy']);
+
+Route::get('/vacinacao/{id}', [FuncionarioVacinaController::class, 'show']);

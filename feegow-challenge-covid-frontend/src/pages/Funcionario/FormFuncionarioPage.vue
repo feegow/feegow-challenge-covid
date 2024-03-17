@@ -20,7 +20,7 @@
         class="col-lg-6 col-xs-6"
         :rules="[ val => val && val.length > 3 || 'Por favor, digite o CPF do funcionário']"
       />
-      <q-input filled v-model="form.data_nascimento" mask="##/##/####" label="Data de Nascimento">
+      <q-input filled v-model="form.data_nascimento" mask="##/##/####" label="Data de Nascimento" :rules="[val => validateDate(val) || 'Por favor, digite uma data válida']">
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -59,7 +59,7 @@ import { defineComponent, ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import funcionarioService from 'src/services/funcionarios'
 import { useQuasar } from 'quasar'
-import { formatDatePtBr } from 'boot/helpers'
+import { formatDateToPtBr, formatDateToEnUS, validateDate } from 'boot/helpers'
 
 export default defineComponent({
   name: 'FormFuncionario',
@@ -80,7 +80,7 @@ export default defineComponent({
         const response = await getById(route.params.id)
         form.value = {
           ...response,
-          data_nascimento: formatDatePtBr(response.data_nascimento)
+          data_nascimento: formatDateToPtBr(response.data_nascimento)
         }
         form.value.portador_comorbidade = !!response.portador_comorbidade
       }
@@ -90,7 +90,7 @@ export default defineComponent({
       try {
         if (form.value.id) {
           const response = await update({
-            ...form.value, data_nascimento: formatDate(form.value.data_nascimento)
+            ...form.value, data_nascimento: formatDateToEnUS(form.value.data_nascimento)
           })
           console.log('response', response)
           $q.notify({
@@ -102,7 +102,7 @@ export default defineComponent({
           router.push({ name: 'listFuncionarios' })
         } else {
           await post({
-            ...form.value, data_nascimento: formatDate(form.value.data_nascimento)
+            ...form.value, data_nascimento: formatDateToEnUS(form.value.data_nascimento)
           })
           $q.notify({
             icon: 'check',
@@ -122,17 +122,11 @@ export default defineComponent({
       }
     }
 
-    const formatDate = (date) => {
-      if (!date) return ''
-      const [day, month, year] = date.split('/')
-      return `${year}-${month}-${day}`
-    }
-
     return {
       form,
       onSubmit,
-      formatDate,
-      formatDatePtBr
+      formatDateToPtBr,
+      validateDate
     }
   }
 })

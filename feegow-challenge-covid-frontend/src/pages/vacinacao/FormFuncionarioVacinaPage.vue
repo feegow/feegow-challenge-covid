@@ -1,3 +1,4 @@
+<!-- FormFuncionarioVacinaPage.vue -->
 <template>
   <q-page padding>
     <q-form
@@ -64,9 +65,10 @@ import { defineComponent, ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import vacinaService from 'src/services/vacinas'
 import { useQuasar } from 'quasar'
+import { formatDatePtBr, validateDate } from 'boot/helpers' // Importe as funções formatDatePtBr e validateDate
 
 export default defineComponent({
-  name: 'FormVacina',
+  name: 'FormFuncionarioVacinas',
   setup () {
     const { post, getById, update } = vacinaService()
     const $q = useQuasar()
@@ -129,21 +131,10 @@ export default defineComponent({
       return `${year}-${month}-${day}`
     }
 
-    const formatDatePtBr = (date) => {
-      if (!date) return ''
-      const [year, month, day] = date.split('-')
-      return `${day}/${month}/${year}`
-    }
-
-    const validarData = (date) => {
-      const regex = /^(0[1-9]|[12][0-9]|3[01])[/](0[1-9]|1[012])[/]\d{4}$/
-      return regex.test(date)
-    }
-
     return {
       form,
       onSubmit,
-      validarData
+      validateDate
     }
   }
 })

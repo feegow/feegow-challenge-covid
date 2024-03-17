@@ -52,7 +52,7 @@ import { defineComponent, ref, onMounted } from 'vue'
 import funcionarioService from 'src/services/funcionarios'
 import { useQuasar } from 'quasar'
 import { useRouter, useRoute } from 'vue-router'
-import { formatDateToPtBr } from 'boot/helpers'
+import formatDateToPtBr from 'boot/helpers'
 
 export default defineComponent({
   name: 'ListFuncionarioVacinas',

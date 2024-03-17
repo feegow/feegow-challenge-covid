@@ -162,6 +162,7 @@ class FuncionarioVacinaController extends Controller
         $response = [
             'funcionario_id' => $funcionario->id,
             'nome_completo' => $funcionario->nome_completo,
+            'portador_comorbidade' => $funcionario->portador_comorbidade,
             'vacinas' => $vacinas,
         ];
 
@@ -217,6 +218,7 @@ class FuncionarioVacinaController extends Controller
         $response = [
             'funcionario_id' => $funcionario->id,
             'nome_completo' => $funcionario->nome_completo,
+            'portador_comorbidade' => $funcionario->portador_comorbidade,
             'vacinas' => $vacinas,
         ];
         

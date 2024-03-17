@@ -24,6 +24,11 @@
           icon="delete" dense size="sm"
           @click="handleDeleteFuncionario(props.row.id)"
         />
+        <q-btn
+          color="green"
+          icon="local_hospital" dense size="sm"
+          @click="handleFuncionarioVacinas(props.row.id)"
+        />
       </q-td>
     </template>
     <template v-slot:body-cell-data_nascimento="props">
@@ -103,6 +108,9 @@ export default defineComponent({
     const handleEditFuncionario = async (id) => {
       router.push({ name: 'formFuncionario', params: { id } })
     }
+    const handleFuncionarioVacinas = async (id) => {
+      router.push({ name: 'listFuncionarioVacinas', params: { id } })
+    }
     const formatarData = (data) => {
       if (!data) return ''
       const [ano, mes, dia] = data.split('-')
@@ -116,6 +124,7 @@ export default defineComponent({
       columns,
       handleDeleteFuncionario,
       handleEditFuncionario,
+      handleFuncionarioVacinas,
       formatarData,
       setToogle
     }

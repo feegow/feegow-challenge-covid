@@ -53,4 +53,10 @@ class FuncionarioVacinaRepository
     {
         return Vacinacao::find($id);
     }
+
+    public function update(Vacinacao $vacinacao, array $data)
+    {
+        $vacinacao->update($data);
+        return $vacinacao;
+    }
 }

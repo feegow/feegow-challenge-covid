@@ -6,6 +6,7 @@ use App\Models\Funcionario;
 use App\Models\Vacina;
 use App\Repositories\FuncionarioVacinaRepository;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class FuncionarioVacinaController extends Controller
 {
@@ -303,13 +304,32 @@ class FuncionarioVacinaController extends Controller
      *     ),
      * )
      */
-    public function update(Request $request, $funcionario_cpf, $vacina_id, $dose)
-    {
-        // Validação e lógica de request...
-        $this->funcionarioVacinaRepo->updateVacinaFuncionario($funcionario_cpf, $vacina_id, $dose, ['data_dose' => $request->data_dose]);
+    // public function update(Request $request, $funcionario_cpf, $vacina_id, $dose)
+    // {
+    //     // Validação e lógica de request...
+    //     $this->funcionarioVacinaRepo->updateVacinaFuncionario($funcionario_cpf, $vacina_id, $dose, ['data_dose' => $request->data_dose]);
 
-        return response()->json(['message' => 'Registro de vacinação atualizado com sucesso!']);
+    //     return response()->json(['message' => 'Registro de vacinação atualizado com sucesso!']);
+    // }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $vacinacao = $this->funcionarioVacinaRepo->find($id);
+            $vacinacao = $this->funcionarioVacinaRepo->update($vacinacao, $request->all());
+            return response()->json($vacinacao);
+        } catch (QueryException $e) {
+            // Verifica se a exceção é devido a uma restrição de chave estrangeira
+            if ($e->getCode() == '23000') {
+                // Retorna uma resposta com uma mensagem de erro amigável
+                return response()->json(['error' => 'Não foi possível atualizar a vacinação. A vacina selecionada não está cadastrada.'], 422);
+            }
+    
+            // Se não for uma exceção de chave estrangeira, retorna a mensagem de erro padrão
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
+
 
     /**
      * @OA\Delete(

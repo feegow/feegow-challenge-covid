@@ -2,6 +2,9 @@
 
 Challenge Covid
 
+* Uso de Composables para injeção do Axios
+* Utilziado VueJS (Quasar)
+
 ## Instalar dependências
 
 ```bash

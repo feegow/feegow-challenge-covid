@@ -2,6 +2,10 @@
 
 Challenge Covid
 
+* Deonstração de Utilização de Use Cases para validação da Dose da Vacina
+* Demostração de Utilização de FormRequest para validação de formulário
+
+
 ## Instruções Para Backend
 
 cd feegow-challenge-covid-backend

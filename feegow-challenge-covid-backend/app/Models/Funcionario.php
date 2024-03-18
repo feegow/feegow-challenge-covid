@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Funcionario extends Model
 {
-    protected $model = Funcionario::class;
     protected $fillable = ['cpf', 'nome_completo', 'data_nascimento', 'portador_comorbidade'];
 
     public function vacinas()

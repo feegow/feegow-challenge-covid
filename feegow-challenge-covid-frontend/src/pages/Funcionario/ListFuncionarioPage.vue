@@ -58,7 +58,6 @@ export default defineComponent({
     const funcionarios = ref([])
     const { list, remove } = funcionariosService()
     const columns = [
-      { name: 'id', label: 'ID', field: 'id', sortable: true, align: 'left' },
       { name: 'cpf', label: 'CPF', field: 'cpf', sortable: true, align: 'left' },
       { name: 'nome_completo', label: 'Nome Completo', field: 'nome_completo', sortable: true, align: 'left' },
       { name: 'data_nascimento', label: 'Data de Nascimento', field: 'data_nascimento', sortable: true, align: 'left' },

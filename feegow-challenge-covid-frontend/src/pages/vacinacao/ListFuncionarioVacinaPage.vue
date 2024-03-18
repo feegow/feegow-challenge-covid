@@ -12,7 +12,7 @@
           <q-space />
           <span>Portador Comorbidade: {{ funcionariovacinas[0]?.portador_comorbidade ? 'Sim' : 'Não' }}</span>
           <q-space />
-          <q-btn color="primary" label="Novo" />
+          <q-btn color="primary" label="Novo" :to="{ name: 'formFuncionarioVacinas', params: { id, 'isNew' : 'create' } }" />
         </template>
         <template v-slot:body-cell-actions="props">
           <q-td :props="props" class="q-gutter-sm">
@@ -50,6 +50,7 @@
 <script>
 import { defineComponent, ref, onMounted } from 'vue'
 import funcionarioService from 'src/services/funcionarios'
+import vacinacaoService from 'src/services/vacinacao'
 import { useQuasar } from 'quasar'
 import { useRouter, useRoute } from 'vue-router'
 import { formatDateToPtBr } from 'boot/helpers'
@@ -58,10 +59,9 @@ export default defineComponent({
   name: 'ListFuncionarioVacinas',
   setup () {
     const funcionariovacinas = ref([])
-    const { remove, getVacinasByFuncionarioId } = funcionarioService()
+    const { remove } = funcionarioService()
+    const { getVacinacaoByFuncionarioId } = vacinacaoService()
     const columns = [
-      { name: 'vacinacao_id', label: 'Id Vacinacao', field: 'vacinacao_id', sortable: true, align: 'left' },
-      { name: 'vacina_id', label: 'Id Vacina', field: 'vacina_id', sortable: true, align: 'left' },
       { name: 'nome', label: 'Nome', field: 'nome', sortable: true, align: 'left' },
       { name: 'lote', label: 'Lote', field: 'lote', sortable: true, align: 'left' },
       { name: 'data_validade', label: 'Data de Validade', field: 'data_validade', sortable: true, align: 'left' },
@@ -79,11 +79,15 @@ export default defineComponent({
 
     const fetchFuncionarioVacinas = async (id) => {
       try {
-        const data = await getVacinasByFuncionarioId(id)
+        const data = await getVacinacaoByFuncionarioId(id)
         funcionariovacinas.value = data
       } catch (error) {
         console.log(error)
       }
+    }
+
+    const handlerNew = (id) => {
+      router.push({ name: 'formFuncionarioVacinas', params: { id }, isNew: 'create' })
     }
 
     const handleDelete = async (id) => {
@@ -124,6 +128,7 @@ export default defineComponent({
       columns,
       handleDelete,
       handleEdit,
+      handlerNew,
       formatDateToPtBr
     }
   }

@@ -24,8 +24,7 @@ class FuncionarioRepository
 
     public function update(Funcionario $funcionario, array $data)
     {
-        Log::info('Atualizando funcionário: ' . $funcionario->id);
-        $funcionario->save($data);
+        $funcionario->update($data);
         return $funcionario;
     }
 

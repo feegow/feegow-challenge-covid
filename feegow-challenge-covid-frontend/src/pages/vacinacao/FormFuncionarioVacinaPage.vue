@@ -11,6 +11,7 @@
         class="col-lg-12 col-xs-6"
         readonly
       />
+
       <q-select
         filled
         v-model="selectedVacinaId"
@@ -46,6 +47,7 @@
         label="Número da Dose"
         class="col-lg-3 col-xs-6"
         type="number"
+        min="1"
       />
       <div class="col-12 q-gutter-sm">
         <q-btn
@@ -72,7 +74,7 @@
 import { defineComponent, ref, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useQuasar } from 'quasar'
-import { formatDateToPtBr, formatDateToEnUS } from 'boot/helpers'
+import { validateDate, formatDateToPtBr, formatDateToEnUS } from 'boot/helpers'
 import vacinasService from 'src/services/vacinas'
 import funcionariosService from 'src/services/funcionarios'
 import vacinacaoService from 'src/services/vacinacao'
@@ -88,6 +90,7 @@ export default defineComponent({
     const { getById, post, update } = vacinacaoService()
     const $q = useQuasar()
     const funcionarioNome = ref('')
+    const funcionarioId = ref('')
     const selectedVacinaId = ref(null)
     const form = ref({
       vacina_id: '',
@@ -97,16 +100,19 @@ export default defineComponent({
     })
 
     onMounted(async () => {
-      console.log('route.params.id', route.params.id)
+      funcionarioId.value = route.params.id
+      console.log('funcionarioid', funcionarioId)
+      await getFuncionario(route.params.id)
       await getVacinas()
-      await getVacinacao(route.params.id)
+      if (typeof route.params.isNew === 'undefined') {
+        await getVacinacao(route.params.id)
+      }
     })
 
     const getFuncionario = async (id) => {
       try {
         const data = await getFuncionarioById(id)
         funcionarioNome.value = data.nome_completo || ''
-        console.log('funcionario', data)
       } catch (error) {
         console.log(error)
       }
@@ -124,13 +130,11 @@ export default defineComponent({
     const getVacinacao = async (id) => {
       try {
         const response = await getById(id)
-        console.log('response', response)
         form.value = {
           ...response,
           data_dose: formatDateToPtBr(response.data_dose)
         }
         if (response && response.funcionario_id) {
-          await getFuncionario(response.funcionario_id)
           selectedVacinaId.value = response.vacina_id
         }
       } catch (error) {
@@ -145,6 +149,7 @@ export default defineComponent({
     const onSubmit = async () => {
       try {
         if (form.value.id) {
+          console.log('vou fazer update')
           const response = await update({
             ...form.value, data_dose: formatDateToEnUS(form.value.data_dose)
           })
@@ -158,7 +163,10 @@ export default defineComponent({
           router.push({ name: 'listFuncionarioVacinas', params: { id: form.value.funcionario_id } })
         } else {
           await post({
-            ...form.value, data_nascimento: formatDateToEnUS(form.value.data_nascimento)
+            ...form.value,
+            data_dose: formatDateToEnUS(form.value.data_dose),
+            funcionario_id: parseInt(funcionarioId.value),
+            dose: parseInt(form.value.dose)
           })
           $q.notify({
             icon: 'check',
@@ -180,10 +188,12 @@ export default defineComponent({
 
     return {
       form,
+      funcionarioId,
       funcionarioNome,
       selectedVacinaId,
       vacinas,
-      onSubmit
+      onSubmit,
+      validateDate
     }
   }
 })

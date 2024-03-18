@@ -8,10 +8,16 @@ use App\Models\Vacinacao;
 
 class FuncionarioVacinaRepository
 {
-    public function addVacinaToFuncionario($funcionarioCpf, $vacinaId, $dadosVacina)
+
+    public function getAll()
     {
-        $funcionario = Funcionario::where('cpf', $funcionarioCpf)->firstOrFail();
-        $funcionario->vacinas()->attach($vacinaId, $dadosVacina);
+        return Vacinacao::all();
+    }
+
+    public function addVacinaToFuncionario(array $data,)
+    {
+        return Vacinacao::create($data);
+
     }
 
     public function updateVacinaFuncionario($funcionarioCpf, $vacinaId, $dose, $dadosVacina)
@@ -20,10 +26,9 @@ class FuncionarioVacinaRepository
         $funcionario->vacinas()->updateExistingPivot($vacinaId, array_merge($dadosVacina, ['dose' => $dose]));
     }
 
-    public function removeVacinaFromFuncionario($funcionarioCpf, $vacinaId, $dose)
+    public function removeVacinaFromFuncionario($id)
     {
-        $funcionario = Funcionario::where('cpf', $funcionarioCpf)->firstOrFail();
-        $funcionario->vacinas()->wherePivot('dose', $dose)->detach($vacinaId);
+        return Vacinacao::find($id)->delete();
     }
 
     public function findByVacinaId($vacinaId)
@@ -35,19 +40,18 @@ class FuncionarioVacinaRepository
 
     public function findByFuncionarioId($funcionarioId)
     {
-        return Funcionario::with(['vacinas' => function ($query) use ($funcionarioId) {
-            $query->wherePivot('funcionario_id', $funcionarioId);
+        return Funcionario::with(['vacinas' => function ($query) {
+             $query->select('vacinas.id', 'vacinas.nome', 'vacinas.lote',  'vacinas.data_validade', 'funcionarios_vacinas.dose', 'funcionarios_vacinas.data_dose');
         }])->find($funcionarioId);
     }
 
-    public function findByFuncionarioCpf($funcionarioCpf)
+    public function findByVacinaIdAndFuncionarioId($vacinaId, $funcionarioId)
     {
-        return Funcionario::with(['vacinas' => function ($query) use ($funcionarioCpf) {
-            $query->whereHas('funcionarios', function ($query) use ($funcionarioCpf) {
-                $query->where('cpf', $funcionarioCpf);
-            });
-        }])->where('cpf', $funcionarioCpf)->first();
+        return Funcionario::with(['vacinas' => function ($query) use ($vacinaId) {
+            $query->where('vacina_id', $vacinaId);
+        }])->find($funcionarioId);
     }
+
     
     public function find($id)
     {

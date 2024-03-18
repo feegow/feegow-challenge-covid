@@ -12,10 +12,10 @@
         />
 
         <q-toolbar-title>
-          Quasar App
+          Feegow Challenge Covid
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>Desenvolvido por: Bruno Arruda</div>
       </q-toolbar>
     </q-header>
 

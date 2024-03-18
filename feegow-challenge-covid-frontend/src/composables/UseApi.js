@@ -19,9 +19,9 @@ export default function UseApi (url) {
     }
   }
 
-  const getVacinasByFuncionarioId = async (id) => {
+  const getVacinacaoByFuncionarioId = async (id) => {
     try {
-      const { data } = await api.get(`${url}/${id}/vacinas`)
+      const { data } = await api.get(`${url}/funcionarios/${id}`)
       return data
     } catch (error) {
       throw new Error(error)
@@ -39,6 +39,8 @@ export default function UseApi (url) {
 
   const post = async (form) => {
     try {
+      console.log('url', url)
+      console.log('formComposeble', form)
       const { data } = await api.post(url, form)
       return data
     } catch (error) {
@@ -57,6 +59,7 @@ export default function UseApi (url) {
 
   const update = async (form) => {
     try {
+      console.log('url completa', `${url}/${form.id}`)
       const { data } = await api.put(`${url}/${form.id}`, form)
       return data
     } catch (error) {
@@ -83,5 +86,5 @@ export default function UseApi (url) {
     }
   }
 
-  return { list, post, update, remove, getById, getVacinasByFuncionarioId, getVacinacaoById }
+  return { list, post, update, remove, getById, getVacinacaoById, getVacinacaoByFuncionarioId }
 }

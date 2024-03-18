@@ -16,9 +16,8 @@ class UpdateFuncionarioRequest extends FormRequest
 
     public function rules()
     {
-        Log::info('Entrei em, rules');
         return [
-            'cpf' => ['required', 'string', 'regex:/^\d{11}$/', 'unique:funcionarios,cpf,' . $this->route('funcionario')->id],
+            'cpf' => ['required', 'string', 'regex:/^\d{11}$/'],
             'nome_completo' => 'required|string|max:255',
             'data_nascimento' => 'required|date',
             'portador_comorbidade' => 'required|boolean',
@@ -28,7 +27,6 @@ class UpdateFuncionarioRequest extends FormRequest
     public function messages()
     {
         return [
-            'cpf.unique' => 'O CPF fornecido já está em uso por outro funcionário.',
             'cpf.required' => 'O CPF é obrigatório.',
             'cpf.regex' => 'O campo CPF deve conter exatamente 11 dígitos numéricos.',
             'cpf.string' => 'O campo CPF deve ser uma sequência de números válidos.',

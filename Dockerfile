@@ -1,6 +1,6 @@
-FROM php:8.2.6-fpm-alpine3.18
+FROM php:8.2-fpm-alpine3.19
 
-RUN apk add --no-cache linux-headers libzip-dev zip
+RUN apk add --no-cache linux-headers libzip-dev zip composer
 
 RUN docker-php-ext-install pdo
 RUN docker-php-ext-install pdo_mysql
@@ -14,6 +14,8 @@ RUN apk --update --no-cache add \
     nginx \
     curl \
     dpkg \
+    php82-tokenizer \
+    php82-dom \
     bash
 
 RUN rm -rf /etc/supervisor.d/ \

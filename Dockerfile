@@ -1,21 +1,32 @@
 FROM php:8.2-fpm-alpine3.19
 
-RUN apk add --no-cache linux-headers libzip-dev zip composer
+RUN apk add --no-cache linux-headers libzip-dev zip composer tzdata libpng-dev
 
-RUN docker-php-ext-install pdo
-RUN docker-php-ext-install pdo_mysql
-RUN docker-php-ext-install sockets
-RUN docker-php-ext-install bcmath
-RUN docker-php-ext-install session
-RUN docker-php-ext-install zip
+ENV TZ America/Fortaleza
+
+RUN docker-php-ext-install pdo_mysql mysqli gd zip
 
 RUN apk --update --no-cache add \
     supervisor \
     nginx \
     curl \
     dpkg \
+    php82-gd \
+    php82-mbstring \
+   # php82-mysqli \
+    php82-pdo \
+   # php82-pdo_mysql \
+    php82-shmop \
+    php82-sockets \
+    php82-bcmath \
+    php82-curl \
+    php82-xml \
+    php82-session \
     php82-tokenizer \
     php82-dom \
+  # php82-zip \
+    php82-fileinfo \
+    php82-xmlwriter \
     bash
 
 RUN rm -rf /etc/supervisor.d/ \

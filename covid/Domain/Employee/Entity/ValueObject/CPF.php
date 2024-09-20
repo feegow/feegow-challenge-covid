@@ -54,4 +54,9 @@ readonly class CPF
     {
         return $this->number;
     }
+
+    public function value(): string
+    {
+        return $this->number;
+    }
 }

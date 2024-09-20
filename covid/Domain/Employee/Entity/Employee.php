@@ -9,11 +9,11 @@ use DomainException;
 class Employee
 {
     public function __construct(
-        public CPF $cpf,
-        public string $name,
+        public CPF      $cpf,
+        public string   $name,
         public DateTime $dob,
-        public bool $portadorDeComorbidade,
-        public Doses $doses,
+        public bool     $comorbidities,
+        public Doses    $doses,
     )
     {
         $this->validate();

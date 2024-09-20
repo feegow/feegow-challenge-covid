@@ -19,18 +19,18 @@ class EmployeeTest extends TestCase
         $cpf = new CPF('173.741.710-30');
         $name = 'John Doe';
         $dob = new DateTime('2000-01-01');
-        $portadorDeComorbidade = false;
+        $comorbidities = false;
         $doses = new Doses();
         $vacina = new Medicine('Coronavac', '001-01', new DateTime('2025-01-01'));
         $dose = new Dose($vacina, new DateTime('2021-01-01'), DoseSequence::FIRST);
         $doses->addDose($dose);
 
-        $funcionario = new Employee($cpf, $name, $dob, $portadorDeComorbidade, $doses);
+        $funcionario = new Employee($cpf, $name, $dob, $comorbidities, $doses);
 
         $this->assertEquals($cpf, $funcionario->cpf);
         $this->assertEquals($name, $funcionario->name);
         $this->assertEquals($dob, $funcionario->dob);
-        $this->assertEquals($portadorDeComorbidade, $funcionario->portadorDeComorbidade);
+        $this->assertEquals($comorbidities, $funcionario->comorbidities);
         $this->assertEquals($doses, $funcionario->doses);
     }
 

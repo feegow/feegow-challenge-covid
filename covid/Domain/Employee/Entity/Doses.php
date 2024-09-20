@@ -9,7 +9,7 @@ class Doses implements Countable
 {
     private array $doses = [];
 
-    public function addDose(Dose $dose): void
+    public function add(Dose $dose): void
     {
         $this->validate($dose);
         $this->doses[$dose->doseNumber->value] = $dose;
@@ -57,5 +57,10 @@ class Doses implements Countable
         if ($dose->doseNumber === DoseSequence::THIRD && !isset($this->doses[DoseSequence::SECOND->value])) {
             throw new DomainException('Third dose cannot be applied without second dose');
         }
+    }
+
+    public function toArray(): array
+    {
+        return array_map(fn(Dose $dose) => $dose->toArray(), $this->doses);
     }
 }

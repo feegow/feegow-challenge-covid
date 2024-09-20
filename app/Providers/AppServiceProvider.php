@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Covid\Domain\Employee\Persistence\EmployeeRepository;
+use Covid\Infrastructure\Persistence\EmployeeRespositoryEloquent;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(
+            EmployeeRepository::class,
+            EmployeeRespositoryEloquent::class
+        );
     }
 
     /**

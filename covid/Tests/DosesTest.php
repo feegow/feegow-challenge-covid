@@ -27,7 +27,7 @@ class DosesTest extends TestCase
         $doses = new Doses();
         $dose = new Dose($this->medicine, new DateTime('2022-01-01'), DoseSequence::FIRST);
 
-        $doses->addDose($dose);
+        $doses->add($dose);
 
         $this->assertEquals(1, $doses->count());
     }
@@ -40,8 +40,8 @@ class DosesTest extends TestCase
         $doses = new Doses();
         $dose = new Dose($this->medicine, new DateTime('2022-01-01'), DoseSequence::FIRST);
 
-        $doses->addDose($dose);
-        $doses->addDose($dose);
+        $doses->add($dose);
+        $doses->add($dose);
     }
 
     public function testAddAllVacines(): void
@@ -51,9 +51,9 @@ class DosesTest extends TestCase
         $dose2 = new Dose($this->medicine, new DateTime(), DoseSequence::SECOND);
         $dose3 = new Dose($this->medicine, new DateTime(), DoseSequence::THIRD);
 
-        $doses->addDose($dose1);
-        $doses->addDose($dose2);
-        $doses->addDose($dose3);
+        $doses->add($dose1);
+        $doses->add($dose2);
+        $doses->add($dose3);
 
         $this->assertCount(3, $doses);
     }
@@ -80,7 +80,7 @@ class DosesTest extends TestCase
         $doses = new Doses();
         $dose = new Dose($this->medicine, new DateTime(), DoseSequence::SECOND);
 
-        $doses->addDose($dose);
+        $doses->add($dose);
     }
 
     public function testApplyThirdDoseWithoutSecond(): void
@@ -91,7 +91,7 @@ class DosesTest extends TestCase
         $doses = new Doses();
         $dose = new Dose($this->medicine, new DateTime(), DoseSequence::THIRD);
 
-        $doses->addDose($dose);
+        $doses->add($dose);
     }
 
     public function TestApplyDosesInSameDay(): void
@@ -103,7 +103,7 @@ class DosesTest extends TestCase
         $dose1 = new Dose($this->medicine, new DateTime(), DoseSequence::FIRST);
         $dose2 = new Dose($this->medicine, new DateTime(), DoseSequence::SECOND);
 
-        $doses->addDose($dose1);
-        $doses->addDose($dose2);
+        $doses->add($dose1);
+        $doses->add($dose2);
     }
 }

@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('doses', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('medicine_id')->constrained('medicines');
             $table->foreignUuid('employee_cpf')->constrained('employees', 'cpf');
             $table->date('date_applyed');
-            $table->enum('dose_number', ['first', 'second', 'third']);
+            $table->enum('dose_sequence', ['first', 'second', 'third']);
+            $table->primary(['dose_sequence', 'employee_cpf']);
         });
     }
 

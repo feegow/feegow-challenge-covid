@@ -6,6 +6,7 @@ use DomainException;
 
 class Medicine
 {
+    public readonly int|null $id;
     public function __construct(
         public string $name,
         public string $lot,
@@ -15,6 +16,10 @@ class Medicine
         $this->validate();
     }
 
+    public function addId(int|null $id): void
+    {
+        $this->id = $id;
+    }
     private function validate(): void
     {
         if ($this->name === '') {

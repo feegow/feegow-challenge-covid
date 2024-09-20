@@ -4,6 +4,7 @@ namespace Covid\Domain\Employee\DTO;
 
 class EmployeeDto
 {
+    public int|null $id = null;
     public string $name;
     public string $cpf;
     public string $dob;

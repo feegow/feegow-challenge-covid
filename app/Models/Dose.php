@@ -14,7 +14,7 @@ class Dose extends Model
         'employee_cpf',
         'medicine_id',
         'date_applyed',
-        'dose_number'
+        'dose_sequence'
     ];
 
     public function employee(): BelongsTo

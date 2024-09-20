@@ -15,7 +15,7 @@ class EmployeeController extends Controller
         return view('employee.create', compact('medicines'));
     }
 
-    public function store(EmployeeRequest $request): void
+    public function store(EmployeeRequest $request)
     {
         $validated = $request->validated();
         dd($validated);

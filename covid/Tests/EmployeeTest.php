@@ -23,7 +23,7 @@ class EmployeeTest extends TestCase
         $doses = new Doses();
         $vacina = new Medicine('Coronavac', '001-01', new DateTime('2025-01-01'));
         $dose = new Dose($vacina, new DateTime('2021-01-01'), DoseSequence::FIRST);
-        $doses->addDose($dose);
+        $doses->add($dose);
 
         $funcionario = new Employee($cpf, $name, $dob, $comorbidities, $doses);
 

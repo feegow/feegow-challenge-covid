@@ -2,9 +2,9 @@
 
 namespace Covid\Domain\Employee\Entity;
 
-enum DoseSequence: int
+enum DoseSequence: string
 {
-    case FIRST = 1;
-    case SECOND = 2;
-    case THIRD = 3;
+    case FIRST = 'first';
+    case SECOND = 'second';
+    case THIRD = 'third';
 }

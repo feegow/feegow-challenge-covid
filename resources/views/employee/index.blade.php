@@ -33,5 +33,11 @@
             </tr>
         @endforeach
     </x-adminlte-datatable>
+
+    @if(session('success'))
+        <x-adminlte-alert theme="success" title="Sucesso" dismissable>
+            {{ session('success') }}
+        </x-adminlte-alert>
+    @endif
 @endsection
 

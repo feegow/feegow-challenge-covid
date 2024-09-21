@@ -20,7 +20,7 @@ class DoseTest extends TestCase
 
         $this->assertEquals($medicine, $dose->medicineApplyed);
         $this->assertEquals($dateApplied, $dose->dateApplyed);
-        $this->assertEquals(DoseSequence::FIRST, $dose->doseNumber);
+        $this->assertEquals(DoseSequence::FIRST, $dose->doseSequence);
     }
 
     public function constructorWithExpiredMedicineThrowsException(): void

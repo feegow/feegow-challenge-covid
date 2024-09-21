@@ -6,7 +6,7 @@ use Covid\Domain\Employee\Entity\DoseSequence;
 
 class DoseDto
 {
-    public int|null $id;
+    public int|null $id = null;
     public function __construct(
         public MedicineDto  $medicine,
         public string       $dateApplyed,

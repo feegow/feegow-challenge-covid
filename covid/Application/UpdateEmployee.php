@@ -2,8 +2,8 @@
 
 namespace Covid\Application;
 
+use Covid\Domain\Employee\EmployeeService;
 use Exception;
-use EmployeeService;
 use Covid\Domain\Employee\DTO\EmployeeDto;
 use Covid\Domain\Employee\Persistence\EmployeeRepository;
 readonly class UpdateEmployee

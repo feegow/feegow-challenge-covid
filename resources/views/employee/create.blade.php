@@ -2,7 +2,6 @@
 
 @section('plugins.TempusDominusBs4', true)
 @section('plugins.Select2', true)
-@section('plugins.BootstrapSwitch', true)
 
 @section('subtitle', 'Cadastro')
 @section('content_header_title', 'Cadastro')
@@ -22,13 +21,11 @@
         </div>
 
         <div class="row">
-            <x-adminlte-input-switch fgroup-class="col-md-12"
-                                     name="comorbidities"
-                                     label="Portador de comorbidade?"
-                                     data-on-text="Sim"
-                                     data-off-text="Não"
-                                     data-on-color="teal"
-            />
+            <label for="comorbidities" class="col-md-12">
+                Portador de comorbidade? <br>
+                <input type="radio" name="comorbidities" {{ old('comorbidities') ? 'checked' : '' }} value="true"> Sim
+                <input type="radio" name="comorbidities" {{ !old('comorbidities') ? 'checked' : '' }} value="false"> Não
+            </label>
         </div>
 
         <div class="row">
@@ -55,14 +52,14 @@
                     'maxDate' => "js:moment().endOf('day')",
                     ];
             @endphp
-            <x-adminlte-input-date fgroup-class="col-md-4" value="{{ old('firstDose_date') }}" name="firstDose_date" :config="$configDateDose" placeholder="Escolha uma data..."
+            <x-adminlte-input-date fgroup-class="col-md-4" value="{{ old('first_dose_date') }}" name="first_dose_date" :config="$configDateDose" placeholder="Escolha uma data..."
                                    label="Data da primeira vacina">
             </x-adminlte-input-date>
 
-            <x-adminlte-select2 name="firstDose_medicine_id"  label="Vacina" fgroup-class="col-md-4">
+            <x-adminlte-select2 name="first_dose_medicine_id"  label="Vacina" fgroup-class="col-md-4">
                 <option value="">Escolha uma vacina</option>
                 @foreach($medicines as $medicine)
-                    <option {{ old('firstDose_medicine_id') == $medicine->id ? 'selected' : '' }}
+                    <option {{ old('first_dose_medicine_id') == $medicine->id ? 'selected' : '' }}
                             value="{{ $medicine->id }}">
                         {{ $medicine->name }} - lot.{{ $medicine->lot }} - val.{{ $medicine->expiration_date->format('d/m/Y') }}
                     </option>
@@ -72,14 +69,14 @@
 
         {{--        segunda vacina--}}
         <div class="row">
-            <x-adminlte-input-date fgroup-class="col-md-4" name="secondDose_date" :config="$configDateDose" placeholder="Escolha uma data..."
+            <x-adminlte-input-date fgroup-class="col-md-4" value="{{ old('second_dose_date') }}" name="second_dose_date" :config="$configDateDose" placeholder="Escolha uma data..."
                                    label="Data da segunda vacina">
             </x-adminlte-input-date>
 
-            <x-adminlte-select2 name="secondDose_medicine_id" label="Vacina" fgroup-class="col-md-4">
+            <x-adminlte-select2 name="second_dose_medicine_id" label="Vacina" fgroup-class="col-md-4">
                 <option value="">Escolha uma vacina</option>
                 @foreach($medicines as $medicine)
-                    <option {{ old('secondDose_medicine_id') == $medicine->id ? 'selected' : '' }}
+                    <option {{ old('second_dose_medicine_id') == $medicine->id ? 'selected' : '' }}
                             value="{{ $medicine->id }}">
                         {{ $medicine->name }} - lot.{{ $medicine->lot }} - val.{{ $medicine->expiration_date->format('d/m/Y') }}</option>
                 @endforeach
@@ -88,14 +85,14 @@
 
         {{--        terceira vacina--}}
         <div class="row">
-            <x-adminlte-input-date fgroup-class="col-md-4" value="{{ old('thirdDose_date') }}" name="thirdDose_date" :config="$configDateDose" placeholder="Escolha uma data..."
+            <x-adminlte-input-date fgroup-class="col-md-4" value="{{ old('third_dose_date') }}" name="third_dose_date" :config="$configDateDose" placeholder="Escolha uma data..."
                                    label="Data da terceira vacina">
             </x-adminlte-input-date>
 
-            <x-adminlte-select2 name="thirdDose_medicine_id" label="Vacina" fgroup-class="col-md-4">
+            <x-adminlte-select2 name="third_dose_medicine_id" label="Vacina" fgroup-class="col-md-4">
                 <option value="">Escolha uma vacina</option>
                 @foreach($medicines as $medicine)
-                    <option {{ old('thirdDose_medicine_id') == $medicine->id ? 'selected' : '' }}
+                    <option {{ old('third_dose_medicine_id') == $medicine->id ? 'selected' : '' }}
                             value="{{ $medicine->id }}">
                         {{ $medicine->name }} - lot.{{ $medicine->lot }} - val.{{ $medicine->expiration_date->format('d/m/Y') }}
                     </option>
@@ -107,4 +104,20 @@
             <x-adminlte-button fgroup-class="col-md-12" class="btn-flat" type="submit" label="Salvar" theme="success" icon="fas fa-lg fa-save"/>
         </div>
     </form>
+
+    @if(session('error'))
+        <br>
+        <x-adminlte-alert theme="warning" title="Warning">
+            {{ session('error') }}
+        </x-adminlte-alert>
+    @endif
+
+    @if($errors->any())
+        <br>
+        <x-adminlte-alert theme="danger" title="Erro" dismissable>
+            @foreach($errors->all() as $error)
+                {{ $error }}<br>
+            @endforeach
+        </x-adminlte-alert>
+    @endif
 @stop

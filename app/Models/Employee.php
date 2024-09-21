@@ -10,7 +10,9 @@ class Employee extends Model
 {
     use HasFactory;
 
+    protected $keyType = 'string';
     protected $primaryKey = 'cpf';
+    public $incrementing = false;
     protected $fillable = [
         'name',
         'cpf',
@@ -24,7 +26,7 @@ class Employee extends Model
 
     public function doses(): HasMany
     {
-        return $this->hasMany(Dose::class);
+        return $this->hasMany(Dose::class, 'employee_cpf', 'cpf');
     }
 
     public function getCpfMaskedAttribute(): string

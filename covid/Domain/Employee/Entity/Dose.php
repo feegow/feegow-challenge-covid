@@ -11,7 +11,7 @@ class Dose
     public function __construct(
         public Medicine     $medicineApplyed,
         public Datetime     $dateApplyed,
-        public DoseSequence $doseNumber,
+        public DoseSequence $doseSequence,
     )
     {
         $this->validate();
@@ -31,7 +31,7 @@ class Dose
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->id ?? null,
             'medicine' => [
                 'id' => $this->medicineApplyed->id,
                 'name' => $this->medicineApplyed->name,
@@ -39,7 +39,7 @@ class Dose
                 'expiration_date' => $this->medicineApplyed->expirationDate->format('Y-m-d')
             ],
             'dateApplyed' => $this->dateApplyed->format('Y-m-d'),
-            'doseNumber' => $this->doseNumber->name
+            'doseSequence' => $this->doseSequence->name
         ];
     }
 }

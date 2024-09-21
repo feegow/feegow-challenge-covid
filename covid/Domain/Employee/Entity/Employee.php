@@ -43,7 +43,7 @@ class Employee
     public function toArray():array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->id ?? null,
             'cpf' => $this->cpf->value(),
             'name' => $this->name,
             'dob' => $this->dob->format('Y-m-d'),

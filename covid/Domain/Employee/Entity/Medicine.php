@@ -31,7 +31,7 @@ class Medicine
         }
 
         if ($this->expirationDate->diff(new DateTime())->invert !== 1) {
-            throw new DomainException('Expiration date must be in the future');
+            throw new DomainException('Medicine expired');
         }
     }
 }

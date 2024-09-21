@@ -10,6 +10,7 @@ class Dose extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
     protected $fillable = [
         'employee_cpf',
         'medicine_id',

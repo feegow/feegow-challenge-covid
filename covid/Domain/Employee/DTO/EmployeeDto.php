@@ -5,24 +5,15 @@ namespace Covid\Domain\Employee\DTO;
 class EmployeeDto
 {
     public int|null $id = null;
-    public string $name;
-    public string $cpf;
-    public string $dob;
-    public string $comorbidities;
-    public array  $doses;
 
     public function __construct(
-        string $name,
-        string $cpf,
-        string $dob,
-        string $comorbidities,
-        array  $doses,
+        public string $name,
+        public string $cpf,
+        public string $dob,
+        public string $comorbidities,
+        public DosesDto  $doses,
     )
     {
-        $this->name = $name;
-        $this->cpf = $cpf;
-        $this->dob = $dob;
-        $this->comorbidities = $comorbidities;
-        $this->doses = $doses;
+
     }
 }

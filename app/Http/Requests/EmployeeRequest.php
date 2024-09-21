@@ -26,12 +26,12 @@ class EmployeeRequest extends FormRequest
             'cpf' => ['required', 'string', 'cpf', 'unique:employees'],
             'dob' => ['required', 'date_format:d/m/Y'],
             'comorbidities' => ['nullable'],
-            'firstDose_medicine_id' => ['exists:medicines,id', 'nullable', 'required_with:firstDose_date'],
-            'secondDose_medicine_id' => ['exists:medicines,id', 'nullable', 'required_with:secondDose_date'],
-            'thirdDose_medicine_id' => ['exists:medicines,id', 'nullable', 'required_with:thirdDose_date'],
-            'firstDose_date' => ['date_format:d/m/Y', 'nullable'],
-            'secondDose_date' => ['date_format:d/m/Y', 'nullable'],
-            'thirdDose_date' => ['date_format:d/m/Y', 'nullable'],
+            'first_dose_medicine_id' => ['exists:medicines,id', 'nullable', 'required_with:first_dose_date'],
+            'second_dose_medicine_id' => ['exists:medicines,id', 'nullable', 'required_with:second_dose_date'],
+            'third_dose_medicine_id' => ['exists:medicines,id', 'nullable', 'required_with:third_dose_date'],
+            'first_dose_date' => ['date_format:d/m/Y', 'nullable'],
+            'second_dose_date' => ['date_format:d/m/Y', 'nullable'],
+            'third_dose_date' => ['date_format:d/m/Y', 'nullable'],
         ];
     }
 
@@ -44,15 +44,17 @@ class EmployeeRequest extends FormRequest
             'name.required' => 'Nome é obrigatório',
             'dob.required' => 'Data de nascimento é obrigatória',
             'dob.date_format' => 'Data de nascimento inválida',
-            'firstDose_date.date_format' => 'Data da primeira dose inválida',
-            'secondDose_date.date_format' => 'Data da segunda dose inválida',
-            'thirdDose_date.date_format' => 'Data da terceira dose inválida',
-            'firstDose_medicine_id.exists' => 'Medicamento da primeira dose inválido',
-            'secondDose_medicine_id.exists' => 'Medicamento da segunda dose inválido',
-            'thirdDose_medicine_id.exists' => 'Medicamento da terceira dose inválido',
-            'firstDose_medicine_id.required_with' => 'Data da primeira dose é obrigatória',
-            'secondDose_medicine_id.required_with' => 'Data da segunda dose é obrigatória',
-            'thirdDose_medicine_id.required_with' => 'Data da terceira dose é obrigatória',
+            'first_dose_date.date_format' => 'Data da primeira dose inválida',
+            'second_dose_date.date_format' => 'Data da segunda dose inválida',
+            'third_dose_date.date_format' => 'Data da terceira dose inválida',
+
+            'first_dose_medicine_id.exists' => 'Medicamento da primeira dose inválido',
+            'second_dose_medicine_id.exists' => 'Medicamento da segunda dose inválido',
+            'third_dose_medicine_id.exists' => 'Medicamento da terceira dose inválido',
+
+            'first_dose_medicine_id.required_with' => 'Vacina da primeira dose é obrigatória',
+            'second_dose_medicine_id.required_with' => 'Vacina da segunda dose é obrigatória',
+            'third_dose_medicine_id.required_with' => 'Vacina da terceira dose é obrigatória',
         ];
     }
 }

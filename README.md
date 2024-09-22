@@ -1,3 +1,8 @@
+# Como rodar o sistema
+- Acesse o arquivo [How-to-run.md](./How-to-run.md)
+
+---
+
 # Case Técnico Feegow
 
 ## Apresentação do problema

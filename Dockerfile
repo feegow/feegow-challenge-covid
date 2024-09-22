@@ -13,9 +13,7 @@ RUN apk --update --no-cache add \
     dpkg \
     php82-gd \
     php82-mbstring \
-   # php82-mysqli \
     php82-pdo \
-   # php82-pdo_mysql \
     php82-shmop \
     php82-sockets \
     php82-bcmath \
@@ -24,8 +22,9 @@ RUN apk --update --no-cache add \
     php82-session \
     php82-tokenizer \
     php82-dom \
-  # php82-zip \
     php82-fileinfo \
+    php82-simplexml \
+    php82-xmlreader \
     php82-xmlwriter \
     bash
 

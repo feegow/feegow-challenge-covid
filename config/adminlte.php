@@ -257,7 +257,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -294,6 +294,7 @@ return [
     */
 
     'menu' => [
+        ['header' => 'Funcionários'],
         [
             'text' => 'Cadastro',
             'route' => 'employee.create',
@@ -304,11 +305,18 @@ return [
             'route' => 'employee.index',
             'icon' => 'fas fa-fw fa-list',
         ],
+        ['header' => 'Vacinas'],
         [
-            'text' => 'Vacinas',
-            'route' => 'medicine.index',
+            'text' => 'Cadastro',
+            'route' => 'medicine.create',
             'icon' => 'fas fa-fw fa-syringe',
         ],
+        [
+            'text' => 'Lista',
+            'route' => 'medicine.index',
+            'icon' => 'fas fa-fw fa-list',
+        ],
+        ['header' => 'Outros'],
         [
             'text' => 'Relatórios',
             'route' => 'report.index',
@@ -358,26 +366,6 @@ return [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'vendor/bootstrap-switch/js/bootstrap-switch.min.js',
-                ],
-            ],
-        ],
-        'Datatables' => [
-            'active' => false,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
-                ],
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
-                ],
-                [
-                    'type' => 'css',
-                    'asset' => false,
-                    'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
                 ],
             ],
         ],
@@ -468,6 +456,51 @@ return [
                     'type' => 'css',
                     'asset' => true,
                     'location' => 'vendor/datatables/css/dataTables.bootstrap4.min.css',
+                ],
+            ],
+        ],
+        'DatatablesPlugins' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/dataTables.buttons.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.bootstrap4.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.html5.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.print.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/jszip/jszip.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/pdfmake/pdfmake.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/pdfmake/vfs_fonts.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/css/buttons.bootstrap4.min.css',
                 ],
             ],
         ],

@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Listeners\ReportRequestListener;
 use Covid\Domain\Employee\Persistence\EmployeeRepository;
+use Covid\Domain\Employee\Persistence\MedicineRepository;
 use Covid\Infrastructure\Persistence\EmployeeRespositoryEloquent;
+use Covid\Infrastructure\Persistence\MedicineRepositoryEloquent;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +21,11 @@ class AppServiceProvider extends ServiceProvider
             EmployeeRepository::class,
             EmployeeRespositoryEloquent::class
         );
+
+        $this->app->bind(
+            MedicineRepository::class,
+            MedicineRepositoryEloquent::class
+        );
     }
 
     /**
@@ -24,6 +33,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Event::subscribe(ReportRequestListener::class);
     }
 }

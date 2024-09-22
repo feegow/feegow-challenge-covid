@@ -20,7 +20,7 @@
         ];
     @endphp
 
-    <x-adminlte-datatable id="table1" :heads="$heads" :config="$config">
+    <x-adminlte-datatable id="table1" :heads="$heads" :config="$config" striped hoverable with-buttons beautify>
         @foreach($medicines as $medicine)
             <tr>
                 <td>{{ $medicine->id }}</td>

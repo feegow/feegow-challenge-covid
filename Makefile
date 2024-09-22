@@ -18,3 +18,7 @@ install:
 	@docker-compose up -d worker
 	@echo "Installed project"
 	@echo "Access http://localhost:8080"
+
+test:
+	@echo ">>>>> Running tests"
+	@docker-compose exec app php artisan test

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MedicineRequest;
-use App\Models\Medicine;
 use App\Helper\TransformDataHelper;
+use App\Service\MedicineService;
 use covid\Application\UseCase\CreateMedicine;
 use Covid\Domain\Employee\DTO\MedicineDto;
 use Illuminate\Support\Facades\Log;
@@ -19,7 +19,7 @@ class MedicineController extends Controller
 
     public function index()
     {
-        $medicines = Medicine::all();
+        $medicines = MedicineService::getAll();
         return view('medicine.index', compact('medicines'));
     }
 
@@ -38,6 +38,7 @@ class MedicineController extends Controller
                 $this->helper->formatDate($validated['expiration_date'])
             );
             app()->make(CreateMedicine::class)->handle($medicineDto);
+            MedicineService::flushCache();
         } catch (\DomainException $de) {
             Log::error($de->getMessage(), [$de->getTrace()]);
             return redirect()->back()

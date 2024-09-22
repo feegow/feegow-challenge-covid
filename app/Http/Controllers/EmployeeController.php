@@ -6,7 +6,7 @@ use App\Helper\TransformDataHelper;
 use App\Http\Requests\EmployeeRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
 use App\Models\Employee;
-use App\Models\Medicine;
+use App\Service\MedicineService;
 use covid\Application\UseCase\CreateEmployee;
 use covid\Application\UseCase\UpdateEmployee;
 use DomainException;
@@ -24,7 +24,7 @@ class EmployeeController extends Controller
 
     public function create(): View
     {
-        $medicines = Medicine::all();
+        $medicines = MedicineService::getAll();
         return view('employee.create', compact('medicines'));
     }
 
@@ -33,7 +33,8 @@ class EmployeeController extends Controller
         $cpf = base64_decode($cpf);
         $employee = Employee::with('doses')->where('cpf', $cpf)->first();
         $doses = $employee->doses->keyBy('dose_sequence')->all();
-        $medicines = Medicine::all();
+        $medicines = MedicineService::getAll();
+        ;
         return view('employee.edit', compact('employee', 'medicines', 'doses'));
     }
 

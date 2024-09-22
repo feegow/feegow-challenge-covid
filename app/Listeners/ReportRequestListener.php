@@ -35,7 +35,7 @@ class ReportRequestListener implements ShouldQueue
             $this->report->of($requestReport->file_name, ['csv'], $employees, ['nome' => 'name', 'cpf'])
                 ->showMeta(false)
                 ->showNumColumn(false)
-                ->store("reports/{$requestReport->file_name}");
+                ->store("reports/{$requestReport->file_name}.csv");
 
             $requestReport->update(['status' => 'completed']);
         } catch (\Exception $e) {

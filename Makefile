@@ -22,3 +22,7 @@ install:
 test:
 	@echo ">>>>> Running tests"
 	@docker-compose exec app php artisan test
+
+down:
+	@echo ">>>>> Stoping Docker"
+	@docker-compose down

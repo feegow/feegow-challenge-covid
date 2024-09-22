@@ -18,7 +18,12 @@
   - `docker-compose exec app php artisan migrate`
   - `docker-compose exec app php artisan db:seed`
   - `docker-compose up -d worker`
+  - O sistema já está pronto para uso
 - acesso o sistema em `http://localhost:8080`
+- para desligar o sistema execute o comando `make down`
+
+### Inicio do sistema depois de instalado
+- Execute o comando `make`
 
 # Como rodar os testes
 - Execute o comando `make test`

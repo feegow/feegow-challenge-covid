@@ -18,9 +18,13 @@ class Dose extends Model
         'dose_sequence'
     ];
 
+    protected $casts = [
+        'date_applyed' => 'datetime'
+    ];
+
     public function employee(): BelongsTo
     {
-        return $this->belongsTo(Employee::class, 'cpf', 'employee_cpf');
+        return $this->belongsTo(Employee::class, 'employee_cpf', 'cpf');
     }
 
     public function medicine(): BelongsTo

@@ -10,7 +10,7 @@ class EmployeeDto
         public string $name,
         public string $cpf,
         public string $dob,
-        public string $comorbidities,
+        public bool $comorbidities,
         public DosesDto  $doses,
     )
     {

@@ -22,7 +22,7 @@ class EmployeeService
             new CPF($dto->cpf),
             $dto->name,
             new DateTime($dto->dob),
-            $dto->comorbidities,
+            (bool) $dto->comorbidities,
             new Doses()
         );
         $employee->addId($dto->id);
@@ -44,8 +44,6 @@ class EmployeeService
                 new DateTime($doseDto->dateApplyed),
                 $doseDto->doseSequence
             );
-
-            $dose->addId($doseDto->id);
 
             $employee->doses->add($dose);
         }

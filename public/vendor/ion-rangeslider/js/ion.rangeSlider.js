@@ -24,7 +24,7 @@
     "use strict";
 
     // =================================================================================================================
-    // Service
+    // TransformDataHelper
 
     var plugin_count = 0;
 
@@ -1719,7 +1719,7 @@
 
 
         // =============================================================================================================
-        // Service methods
+        // TransformDataHelper methods
 
         toggleInput: function () {
             this.$cache.input.toggleClass("irs-hidden-input");

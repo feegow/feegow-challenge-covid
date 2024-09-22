@@ -294,6 +294,7 @@ return [
     */
 
     'menu' => [
+        ['header' => 'Funcionários'],
         [
             'text' => 'Cadastro',
             'route' => 'employee.create',
@@ -304,11 +305,18 @@ return [
             'route' => 'employee.index',
             'icon' => 'fas fa-fw fa-list',
         ],
+        ['header' => 'Vacinas'],
         [
-            'text' => 'Vacinas',
-            'route' => 'medicine.index',
+            'text' => 'Cadastro',
+            'route' => 'medicine.create',
             'icon' => 'fas fa-fw fa-syringe',
         ],
+        [
+            'text' => 'Lista',
+            'route' => 'medicine.index',
+            'icon' => 'fas fa-fw fa-list',
+        ],
+        ['header' => 'Outros'],
         [
             'text' => 'Relatórios',
             'route' => 'report.index',
@@ -468,6 +476,51 @@ return [
                     'type' => 'css',
                     'asset' => true,
                     'location' => 'vendor/datatables/css/dataTables.bootstrap4.min.css',
+                ],
+            ],
+        ],
+        'DatatablesPlugins' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/dataTables.buttons.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.bootstrap4.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.html5.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.print.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/jszip/jszip.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/pdfmake/pdfmake.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/pdfmake/vfs_fonts.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/css/buttons.bootstrap4.min.css',
                 ],
             ],
         ],

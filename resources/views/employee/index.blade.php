@@ -2,6 +2,7 @@
 
 @section('DatatablesPlugins', true)
 @section('Datatables', true)
+@section('DatatablesPlugins', true)
 
 @section('subtitle', 'Funcionários')
 @section('content_header_title', 'Funcionários')
@@ -18,7 +19,7 @@
     ];
 
     $config = [
-        'order' => [[1, 'asc']],
+        'order' => [[0, 'asc']],
         'columns' => [null, null, null, null, ['orderable' => false]],
     ];
     @endphp

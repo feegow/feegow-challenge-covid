@@ -23,6 +23,8 @@ RUN apk --update --no-cache add \
     php82-tokenizer \
     php82-dom \
     php82-fileinfo \
+    php82-simplexml \
+    php82-xmlreader \
     php82-xmlwriter \
     bash
 

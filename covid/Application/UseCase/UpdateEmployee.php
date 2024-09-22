@@ -5,7 +5,6 @@ namespace covid\Application\UseCase;
 use Covid\Domain\Employee\EmployeeService;
 use Exception;
 use Covid\Domain\Employee\DTO\EmployeeDto;
-use Covid\Domain\Employee\EmployeeService;
 use Covid\Domain\Employee\Persistence\EmployeeRepository;
 
 readonly class UpdateEmployee

@@ -4,7 +4,7 @@
 - Docker
 - Docker Compose
 - Make (opcional)
-
+- obs: é possivel que haja problemas com a conexão com banco de dados no windows, nesse caso é necessario alterar o arquivo .env e trocar o valor de `DB_HOST=db` para `DB_HOST={endereço correto} 
 ### Passos
 
 - Clone o repositório

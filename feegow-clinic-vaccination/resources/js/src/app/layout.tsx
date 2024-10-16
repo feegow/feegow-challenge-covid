@@ -1,20 +1,21 @@
-import { Outlet } from "react-router-dom";
-import { Container, Section, Flex } from "@radix-ui/themes";
-import Header from "../components/header";
-import Footer from "../components/footer";
+import { Outlet } from 'react-router-dom';
+import Header from '../components/header';
+import Footer from '../components/footer';
+import Breadcrumb from '../components/breadcrumb';
+import Sidebar from '../components/sidebar';
 
 export default function Layout() {
-    return (
-        <Flex direction="column" style={{ minHeight: "100vh" }}>
-            <Header />
-            <Container size="4">
-                <main>
-                    <Section py="6" style={{ flex: 1 }}>
-                        <Outlet />
-                    </Section>
-                </main>
-            </Container>
-            <Footer />
-        </Flex>
-    );
+  return (
+    <>
+      <Header />
+      <Breadcrumb />
+      <Sidebar />
+      <div className="w-full lg:ps-64">
+        <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+          <Outlet />
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
 }

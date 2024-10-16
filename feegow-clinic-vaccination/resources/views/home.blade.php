@@ -9,7 +9,8 @@
 <body>
     <div id="root"></div>
     @viteReactRefresh
-    @vite(['resources/js/App.tsx'])
+    @vite(['resources/js/main.tsx'])
+    @vite(['node_modules/preline/dist/preline.js'])
     <script>
         var APP_LOCALE = {{ Illuminate\Support\Js::from(config('app.locale', 'en')) }};
         var APP_URL = {{ Illuminate\Support\Js::from(config('app.url')) }};

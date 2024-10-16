@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useAuth } from '../../context/AuthContext';
+import { Button } from '@radix-ui/themes';
 
 const schema = z.object({
   email: z
@@ -19,7 +20,7 @@ export const LoginForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isLoading },
   } = useForm<LoginFormData>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -135,12 +136,14 @@ export const LoginForm = () => {
                   </label>
                 </div>
               </div>
-              <button
+              <Button
                 type="submit"
-                className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                loading={isLoading}
+                disabled={isLoading}
+                className="w-full py-3 cursor-pointer px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-[#00b4fc] text-white hover:bg-[#00b4fc] focus:outline-none focus:ring-2 focus:ring-[#00b4fc] focus:ring-offset-2 transition-colors duration-300 disabled:opacity-50 disabled:pointer-events-none"
               >
                 Entrar
-              </button>
+              </Button>
             </div>
           </form>
         </div>

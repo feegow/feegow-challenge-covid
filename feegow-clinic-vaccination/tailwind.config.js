@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -6,12 +7,18 @@ export default {
     './resources/**/*.jsx',
     './resources/**/*.ts',
     './resources/**/*.tsx',
-    'node_modules/preline/dist/*.js',
+    './node_modules/preline/preline.js',
   ],
   theme: {
     extend: {
       fontFamily: {
         sans: ['Roboto', 'sans-serif'],
+      },
+      colors: {
+        primary: {
+          DEFAULT: '#3D83DF',
+          hover: '#3573c5',
+        },
       },
     },
   },

@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { api } from '../services/api';
-import { login } from '../services/auth';
+import { login, logout } from '../services/auth';
 import { User } from '../types';
 import { LoginResponse } from '../types';
 import { LoginFormData } from '../components/auth/login';
@@ -10,7 +10,7 @@ import { router } from '../../App';
 interface AuthContextType {
   user: User | null;
   signIn: (userData: LoginFormData) => Promise<LoginResponse>;
-  logout: () => void;
+  signOut: () => Promise<void>;
   isLoggedIn: boolean;
 }
 
@@ -48,9 +48,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     return response;
   };
-  const logout = () => setUser(null);
+  const signOut = async () => {
+    try {
+      await logout();
+      setUser(null);
+      router.navigate('/auth/login', { replace: true });
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
-  return <AuthContext.Provider value={{ user, signIn, logout, isLoggedIn }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, signIn, signOut, isLoggedIn }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

@@ -22,14 +22,6 @@ class VaccineController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreVaccineRequest $request)
@@ -41,14 +33,6 @@ class VaccineController extends Controller
      * Display the specified resource.
      */
     public function show(Vaccine $vaccine)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Vaccine $vaccine)
     {
         //
     }

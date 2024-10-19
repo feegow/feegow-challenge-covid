@@ -12,8 +12,8 @@ class Vaccine extends Model
 
     protected $fillable = [
         'name',
-        'lot',
-        'validity_date'
+        'lot_number',
+        'expiration_date'
     ];
 
     public function employees(): HasMany

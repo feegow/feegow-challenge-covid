@@ -1,0 +1,32 @@
+{
+  "folders": [
+    {
+      "name": "🏠 Root",
+      "path": "."
+    },
+    {
+      "name": "📦 Source",
+      "path": "app"
+    },
+    {
+      "name": "🎨 Frontend",
+      "path": "resources/js"
+    },
+    {
+      "name": "🖌️ Styles",
+      "path": "resources/css"
+    },
+    {
+      "name": "🗃️ Database",
+      "path": "database"
+    },
+    {
+      "name": "🧪 Tests",
+      "path": "tests"
+    },
+    {
+      "name": "⚙️ Config",
+      "path": "config"
+    }
+  ]
+}

@@ -31,6 +31,7 @@ export default tseslint.config(eslint.configs.recommended, ...tseslint.configs.r
     ...reactPlugin.configs.recommended.rules,
     ...reactHooksPlugin.configs.recommended.rules,
     'react/react-in-jsx-scope': 'off',
+    'react/display-name': 'off',
   },
   settings: {
     react: {

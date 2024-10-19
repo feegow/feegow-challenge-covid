@@ -15,10 +15,7 @@ export function Menu({ user }: { user: any }) {
         <p className="text-sm font-medium text-gray-800 dark:text-neutral-200">{user?.email}</p>
       </div>
       <div className="p-1.5 space-y-0.5">
-        <MenuItem href="#" icon="notification" text="Newsletter" />
-        <MenuItem href="#" icon="shopping" text="Compras" />
-        <MenuItem href="#" icon="download" text="Downloads" />
-        <MenuItem href="#" icon="team" text="Conta da Equipe" />
+        <MenuItem href="#" icon="download" text="Baixar relatório" />
         <MenuItem
           href="#"
           icon="logout"

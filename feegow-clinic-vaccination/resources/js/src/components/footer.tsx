@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <Flex py="20px" align="center" justify="center" style={{ backgroundColor: 'var(--gray-2)' }}>
       <Text size="2" color="gray" align="center">
-        &copy; {new Date().getFullYear()} {COMPANY_NAME}. All rights reserved.
+        &copy; {new Date().getFullYear()} {COMPANY_NAME}. Todos os direitos reservados.
       </Text>
     </Flex>
   );

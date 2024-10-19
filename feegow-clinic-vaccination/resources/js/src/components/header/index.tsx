@@ -15,9 +15,9 @@ export default function Header() {
       <nav className="px-4 sm:px-6 flex basis-full items-center w-full mx-auto">
         <Logo appName={APP_NAME} />
         <div className="w-full flex items-center justify-end ms-auto md:justify-between gap-x-1 md:gap-x-3">
-          <SearchBar />
+          {/* <SearchBar /> */}
           <div className="flex flex-row items-center justify-end gap-1">
-            <MobileSearchButton />
+            {/* <MobileSearchButton /> */}
             <NotificationButton />
             <ActivityButton />
             <UserDropdown user={user} />

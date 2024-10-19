@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('vaccines', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('batch_number')->unique();
+            $table->string('short_name');
+            $table->string('lot_number')->unique();
             $table->date('expiration_date');
             $table->timestamps();
         });

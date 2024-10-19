@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -37,8 +38,21 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    public function createOrUpdate(array $attributes = [])
+    {
+        $user = User::where('email', $attributes['email'] ?? $this->definition()['email'])->first();
+
+        if ($user) {
+            $user->update(array_merge($this->definition(), $attributes));
+        } else {
+            $user = $this->create($attributes);
+        }
+
+        return $user;
     }
 }

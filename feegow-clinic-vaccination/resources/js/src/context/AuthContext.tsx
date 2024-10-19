@@ -22,13 +22,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     // Get CSRF token at application start
-    axios.get('/sanctum/csrf-cookie').then(() => {});
+    axios.get('/sanctum/csrf-cookie').then(() => { });
     getUser();
   }, []);
 
+
   useEffect(() => {
+    storeLastVisitedPage();
     if (isLoggedIn) {
-      router.navigate('/', { replace: true });
+      const lastVisitedPage = localStorage.getItem('lastVisitedPage') || '/';
+      router.navigate(lastVisitedPage, { replace: true });
+      localStorage.removeItem('lastVisitedPage'); // Clear the stored page after redirection
     }
   }, [isLoggedIn]);
 
@@ -45,9 +49,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const response = await login(userData);
     if (response.success) {
       await getUser();
+      const lastVisitedPage = localStorage.getItem('lastVisitedPage') || '/';
+      router.navigate(lastVisitedPage, { replace: true });
+      localStorage.removeItem('lastVisitedPage');
     }
     return response;
   };
+
   const signOut = async () => {
     try {
       await logout();
@@ -55,6 +63,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       router.navigate('/auth/login', { replace: true });
     } catch (error) {
       console.error('Logout failed:', error);
+    }
+  };
+
+  const storeLastVisitedPage = () => {
+    const currentPath = window.location.pathname + window.location.search;
+    console.log({
+      currentPath,
+      search: window.location.search,
+      pathname: window.location.pathname,
+    });
+    if (currentPath !== '/auth/login' && currentPath !== '/auth/register') {
+      localStorage.setItem('lastVisitedPage', currentPath);
     }
   };
 

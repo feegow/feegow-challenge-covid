@@ -45,7 +45,7 @@ const columns = [
   { name: 'Ações', colspan: 2 },
 ];
 
-const formatDate = (date: string) => {
+const formatDate = (date: string | null) => {
   if (!date)
     return (
       <span title="Não vacinou">
@@ -75,7 +75,7 @@ const RowItem = memo(({ item, deleteEmployee, refreshEmployees, vaccineOptions }
       <td className="py-3 px-4">{formatDate(item.first_dose_date)}</td>
       <td className="py-3 px-4">{formatDate(item.second_dose_date)}</td>
       <td className="py-3 px-4">{formatDate(item.third_dose_date)}</td>
-      <td className="py-3 px-4">{item.vaccine_short_name}</td>
+      <td className="py-3 px-4">{item.vaccine_short_name || 'Não vacinou'}</td>
       <td className="py-3 px-4">{item.has_comorbidity ? 'Sim' : 'Não'}</td>
       <td className="py-3 px-4" colSpan={2}>
         <div className="flex items-center justify-center h-full w-full gap-x-4">
@@ -154,7 +154,7 @@ export function EmployeeList() {
         setEmployeesData(responseData);
         setTotalPages(responseData.meta.last_page);
       } catch (err) {
-        setError('Error loading employees. Please try again.');
+        setError('Erro ao carregar colaboradores. Por favor, tente novamente.');
       } finally {
         setIsLoading(false);
       }

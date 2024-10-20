@@ -25,7 +25,7 @@ class EmployeeRequest extends FormRequest
         $rules = [
             'full_name' => 'required|string|max:255',
             'birth_date' => 'required|date_format:Y-m-d',
-            'vaccine_id' => 'required|exists:vaccines,id',
+            'vaccine_id' => 'nullable|exists:vaccines,id',
             'has_comorbidity' => 'required|boolean',
             'first_dose_date' => 'nullable|date_format:Y-m-d',
             'second_dose_date' => 'nullable|date_format:Y-m-d',

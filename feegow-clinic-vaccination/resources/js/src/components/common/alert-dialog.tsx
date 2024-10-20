@@ -15,8 +15,8 @@ export const AlertDialog: React.FC<AlertDialogProps> = ({
   trigger,
   title,
   description,
-  cancelText = 'Cancel',
-  confirmText = 'Confirm',
+  cancelText = 'Cancelar',
+  confirmText = 'Confirmar',
   onConfirm,
   confirmButtonClassName = 'bg-red4 text-red11 hover:bg-red5 focus:shadow-red7',
 }) => (

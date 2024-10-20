@@ -36,7 +36,7 @@ export function EmployeeForm({ protectCPF = false, register, errors, control, va
       <FormDateField label="Data da Primeira Dose" name="first_dose_date" control={control} errors={errors} />
       <FormDateField label="Data da Segunda Dose" name="second_dose_date" control={control} errors={errors} />
       <FormDateField label="Data da Terceira Dose" name="third_dose_date" control={control} errors={errors} />
-      <VaccineSelect label="Vacina" control={control} options={vaccineOptions} errors={errors} required />
+      <VaccineSelect label="Vacina" control={control} options={vaccineOptions} errors={errors} />
       <RadioGroup
         label="Possui Comorbidade"
         name="has_comorbidity"

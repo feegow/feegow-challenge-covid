@@ -18,11 +18,11 @@ export interface Employee {
   full_name: string;
   cpf: string;
   birth_date: string; // Date in "YYYY-MM-DD" format
-  first_dose_date: string; // Date in "YYYY-MM-DD" format
-  second_dose_date: string; // Date in "YYYY-MM-DD" format
+  first_dose_date: string | null; // Nullable date in "YYYY-MM-DD" format
+  second_dose_date: string | null; // Nullable date in "YYYY-MM-DD" format
   third_dose_date: string | null; // Nullable date in "YYYY-MM-DD" format
-  vaccine_id: number;
-  vaccine_short_name?: string;
+  vaccine_id: number | null;
+  vaccine_short_name?: string | null;
   has_comorbidity: boolean;
   created_at: string; // Date-time in ISO format
   updated_at: string; // Date-time in ISO format

@@ -141,7 +141,7 @@ export function VaccineList() {
         setVaccinesData(responseData);
         setTotalPages(responseData.meta.last_page);
       } catch (err) {
-        setError('Error loading vaccines. Please try again.');
+        setError('Erro ao carregar vacinas. Por favor, tente novamente.');
       } finally {
         setIsLoading(false);
       }

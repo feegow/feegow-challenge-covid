@@ -24,7 +24,7 @@ class EmployeeResource extends JsonResource
             'second_dose_date' => $this->second_dose_date,
             'third_dose_date' => $this->third_dose_date,
             'vaccine_id' => $this->vaccine_id,
-            'vaccine_short_name' => $this->vaccine->short_name,
+            'vaccine_short_name' => $this->vaccine ? $this->vaccine->short_name : null,
             'has_comorbidity' => $this->has_comorbidity,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

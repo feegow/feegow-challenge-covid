@@ -12,6 +12,7 @@ class Vaccine extends Model
 
     protected $fillable = [
         'name',
+        'short_name',
         'lot_number',
         'expiration_date'
     ];

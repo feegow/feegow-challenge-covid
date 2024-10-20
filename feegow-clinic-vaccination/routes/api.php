@@ -2,13 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\VaccineController;
 
 Route::prefix('auth')->group(function () {
-    Route::post('/login', [LoginController::class, 'login']);
-    Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 });
 
 
@@ -19,3 +19,11 @@ Route::get('/user', function (Request $request) {
 Route::apiResource('/employees', EmployeeController::class)->middleware('auth:sanctum');
 
 Route::apiResource('/vaccines', VaccineController::class)->middleware('auth:sanctum');
+
+Route::get('/intended-url', [AuthController::class, 'getIntendedUrl'])->middleware('auth:sanctum');
+
+Route::post('/tokens/create', function (Request $request) {
+    $token = $request->user()->createToken($request->token_name);
+
+    return ['token' => $token->plainTextToken];
+})->middleware('auth:sanctum');

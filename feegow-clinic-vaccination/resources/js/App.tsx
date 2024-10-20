@@ -7,10 +7,11 @@ import ProtectedRoute from './src/components/protected-route';
 import { AuthProvider } from './src/context/AuthContext';
 import AuthLayout from './src/app/auth/layout';
 import NotFound from './src/components/not-found';
-import { EmployeeAdd } from './src/components/employee/create';
+import { Create as EmployeeCreate } from './src/components/employee/create';
 import { EmployeeList } from './src/components/employee';
 import { VaccinationAdd } from './src/components/vaccination';
 import { Vaccination } from './src/components/vaccination';
+import { ToastContainer } from 'react-toastify';
 
 const Root = () => {
   const location = useLocation();
@@ -49,7 +50,7 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: '/colaboradores/adicionar',
-                element: <EmployeeAdd />,
+                element: <EmployeeCreate />,
               },
             ],
           },
@@ -84,7 +85,12 @@ export const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <ToastContainer style={{ zIndex: 9999 }} />
+    </>
+  );
 };
 
 export default App;

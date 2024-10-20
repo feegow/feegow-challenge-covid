@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreEmployeeRequest;
-use App\Http\Requests\UpdateEmployeeRequest;
+use App\Http\Requests\EmployeeRequest;
 use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;
 use Illuminate\Http\Request;
@@ -17,21 +16,26 @@ class EmployeeController extends Controller
     {
         $per_page = $request->input('per_page', 15);
         $search = $request->input('search');
+
+        $query = Employee::query();
+
         if ($search) {
-            $employees = Employee::where('full_name', 'like', '%' . $search . '%')->paginate($per_page);
-        } else {
-            $employees = Employee::paginate($per_page);
+            $query->where(function ($q) use ($search) {
+                $q->whereRaw('LOWER(full_name) LIKE ?', ['%' . strtolower($search) . '%']);
+            });
         }
+
+        $employees = $query->orderBy('created_at', 'desc')->paginate($per_page);
         return EmployeeResource::collection($employees);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEmployeeRequest $request)
+    public function store(EmployeeRequest $request)
     {
         $employee = Employee::create($request->validated());
-        return response()->json($employee, 201);
+        return new EmployeeResource($employee);
     }
 
     /**
@@ -39,16 +43,16 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        return response()->json($employee);
+        return new EmployeeResource($employee);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEmployeeRequest $request, Employee $employee)
+    public function update(EmployeeRequest $request, Employee $employee)
     {
         $employee->update($request->validated());
-        return response()->json($employee);
+        return new EmployeeResource($employee);
     }
 
     /**
@@ -57,6 +61,6 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         $employee->delete();
-        return response()->json(null, 204);
+        return response()->noContent();
     }
 }

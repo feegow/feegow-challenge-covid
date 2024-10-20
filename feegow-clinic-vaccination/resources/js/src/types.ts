@@ -29,6 +29,16 @@ export interface Employee {
   updated_at: string; // Date-time in ISO format
 }
 
+export interface Vaccine {
+  id: number;
+  name: string;
+  lot_number: string;
+  expiration_date: string;
+  created_at: string;
+  updated_at: string;
+  short_name: string;
+}
+
 export interface Links {
   first: string;
   last: string;
@@ -57,4 +67,8 @@ export interface PaginatedResponse<T> {
   data: T[];
   links: Links;
   meta: Meta;
+}
+
+export interface IntendedUrlResponse {
+  url: string;
 }

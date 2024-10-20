@@ -1,20 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { CloseButton } from './close-button';
 import { Shortcut } from './shortcut';
 import { useSearchParams } from 'react-router-dom';
+import debounce from 'lodash.debounce';
+import { Button } from '@radix-ui/themes';
+import { X } from 'lucide-react';
 
 export function SearchBar() {
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const [_, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
 
   const [search, setSearch] = useState('');
 
+  // Debounced function to update search params
+  const debouncedSetSearchParams = useCallback(
+    debounce((value: string) => {
+      if (value) {
+        setSearchParams({ search: value });
+      } else {
+        setSearchParams({});
+      }
+    }, 300),
+    [setSearchParams]
+  );
+
   useEffect(() => {
-    if (search) {
-      setSearchParams({ search });
-      setSearch(search);
-    }
-  }, [search, setSearchParams]);
+    debouncedSetSearchParams(search);
+    // Cancel the debounce on cleanup
+    return () => debouncedSetSearchParams.cancel();
+  }, [search, debouncedSetSearchParams]);
 
   return (
     <div className="hidden md:block">
@@ -45,7 +58,13 @@ export function SearchBar() {
           placeholder="Pesquisar"
         />
         <CloseButton />
-        <Shortcut />
+        {search && (
+          <div className="absolute inset-y-0 end-0 flex items-center z-20 pe-3 text-gray-400">
+            <Button onClick={() => setSearch('')} variant="ghost" className='cursor-pointer' title='Limpar pesquisa' size="1">
+              <X size={16} />
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

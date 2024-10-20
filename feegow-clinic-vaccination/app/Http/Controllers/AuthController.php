@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
   public function login(Request $request)
   {
@@ -33,6 +33,16 @@ class LoginController extends Controller
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
+    $request->session()->forget('returnUrl');
+
     return response()->json(['message' => 'Logged out successfully', 'success' => true], 200);
+  }
+
+  public function getIntendedUrl(Request $request)
+  {
+    $returnUrl = $request->input('returnUrl', url('/'));
+    session(['returnUrl' => $returnUrl]);
+
+    return response()->json(['url' => $returnUrl]);
   }
 }

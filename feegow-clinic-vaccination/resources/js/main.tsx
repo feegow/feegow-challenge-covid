@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import './bootstrap';
 import './preline';
-
+import 'react-toastify/dist/ReactToastify.css';
 function renderApp() {
   const rootElement = document.getElementById('root');
 

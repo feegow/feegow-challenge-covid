@@ -2,23 +2,28 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { api } from '../services/api';
 import { login, logout } from '../services/auth';
-import { User } from '../types';
+import { IntendedUrlResponse, User } from '../types';
 import { LoginResponse } from '../types';
 import { LoginFormData } from '../components/auth/login';
-import { router } from '../../App';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface AuthContextType {
   user: User | null;
   signIn: (userData: LoginFormData) => Promise<LoginResponse>;
   signOut: () => Promise<void>;
   isLoggedIn: boolean;
+  isLoading: boolean;
+  getIntendedUrl: () => Promise<string>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const isLoggedIn = !!user;
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     // Get CSRF token at application start
@@ -26,32 +31,66 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     getUser();
   }, []);
 
-
-  useEffect(() => {
-    storeLastVisitedPage();
-    if (isLoggedIn) {
-      const lastVisitedPage = localStorage.getItem('lastVisitedPage') || '/';
-      router.navigate(lastVisitedPage, { replace: true });
-      localStorage.removeItem('lastVisitedPage'); // Clear the stored page after redirection
+  const getIntendedUrl = async () => {
+    try {
+      const response = await axios.post('/intended-url', {
+        returnUrl: window.location.pathname
+      });
+      return response.data.url;
+    } catch (error) {
+      console.error('Error getting intended URL:', error);
+      return null;
     }
-  }, [isLoggedIn]);
+  };
 
   const getUser = async () => {
+    setIsLoading(true);
     try {
       const response = await api.get<User>('/user');
       setUser(response.data);
     } catch (error) {
-      // do nothing
+      setUser(null);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (isLoggedIn && location.pathname.startsWith('/auth/')) {
+        const params = new URLSearchParams(location.search);
+        const returnUrl = params.get('returnUrl');
+        if (returnUrl) {
+          const [pathname, search] = returnUrl.split('?');
+          navigate(pathname, { replace: true, state: { from: 'login' } });
+          if (search) {
+            navigate({ search }, { replace: true });
+          }
+        } else {
+          navigate('/', { replace: true });
+        }
+      } else if (!isLoggedIn && !location.pathname.startsWith('/auth/')) {
+        const currentFullPath = `${location.pathname}${location.search}`;
+        navigate(`/auth/login?returnUrl=${encodeURIComponent(currentFullPath)}`, { replace: true });
+      }
+    }
+  }, [isLoggedIn, isLoading, location.pathname, location.search, navigate]);
 
   const signIn = async (userData: LoginFormData) => {
     const response = await login(userData);
     if (response.success) {
       await getUser();
-      const lastVisitedPage = localStorage.getItem('lastVisitedPage') || '/';
-      router.navigate(lastVisitedPage, { replace: true });
-      localStorage.removeItem('lastVisitedPage');
+      const params = new URLSearchParams(location.search);
+      const returnUrl = params.get('returnUrl');
+      if (returnUrl) {
+        const [pathname, search] = returnUrl.split('?');
+        navigate(pathname, { replace: true, state: { from: 'login' } });
+        if (search) {
+          navigate({ search }, { replace: true });
+        }
+      } else {
+        navigate('/', { replace: true });
+      }
     }
     return response;
   };
@@ -60,25 +99,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       await logout();
       setUser(null);
-      router.navigate('/auth/login', { replace: true });
+      navigate('/auth/login', { replace: true });
     } catch (error) {
       console.error('Logout failed:', error);
     }
   };
 
-  const storeLastVisitedPage = () => {
-    const currentPath = window.location.pathname + window.location.search;
-    console.log({
-      currentPath,
-      search: window.location.search,
-      pathname: window.location.pathname,
-    });
-    if (currentPath !== '/auth/login' && currentPath !== '/auth/register') {
-      localStorage.setItem('lastVisitedPage', currentPath);
-    }
-  };
+  if (isLoading) {
+    return <div>Carregando...</div>;
+  }
 
-  return <AuthContext.Provider value={{ user, signIn, signOut, isLoggedIn }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{ user, signIn, signOut, isLoggedIn, isLoading, getIntendedUrl }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {

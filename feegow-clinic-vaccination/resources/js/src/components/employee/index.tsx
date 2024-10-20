@@ -8,74 +8,76 @@ import { Employee, PaginatedResponse } from '@/types';
 import dayjs from '@/lib/dayjs';
 import { MobileSearchButton } from '../header/mobile-search-button';
 import { SearchBar } from '../header/search-bar';
+import { Button } from '@radix-ui/themes';
+import { Trash2, X } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
+import { Create } from './create';
+import { AlertDialog } from '../common/alert-dialog';
+import { toast } from 'react-toastify';
+import { Edit } from './edit';
+import { useVaccineOptions, VaccineOption } from './hooks/useVaccineOptions';
 
-const Actions = () => {
+type ActionsProps = {
+  refreshEmployees: () => void;
+  vaccineOptions: VaccineOption[];
+}
+
+const Actions = ({ refreshEmployees, vaccineOptions }: ActionsProps) => {
   return (
     <>
       <SearchBar />
       <MobileSearchButton />
-      <a
-        className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-        href="#"
-      >
-        Ver todos
-      </a>
-      <a
-        className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-        href="#"
-      >
-        <svg
-          className="shrink-0 size-4"
-          xmlns="http://www.w3.org/2000/svg"
-          width={24}
-          height={24}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M5 12h14" />
-          <path d="M12 5v14" />
-        </svg>
-        Adicionar
-      </a>
+      <Create refreshEmployees={refreshEmployees} vaccineOptions={vaccineOptions} />
     </>
   );
 };
 
 const columns = [
-  'Nome',
-  'CPF',
-  'Data de Nascimento',
-  '1ª Dose',
-  '2ª Dose',
-  '3ª Dose',
-  'Vacina',
-  'Comorbidade',
-  'Ações',
+  { name: 'Nome', colspan: 2 },
+  { name: 'CPF', colspan: 2 },
+  { name: 'Data de Nascimento' },
+  { name: '1ª Dose' },
+  { name: '2ª Dose' },
+  { name: '3ª Dose' },
+  { name: 'Vacina' },
+  { name: 'Comorbidade' },
+  { name: 'Ações', colspan: 2 },
 ];
 
 const formatDate = (date: string) => {
+  if (!date) return <span title='Não vacinou'><X className='text-red-400 mx-auto' /></span>;
   return dayjs(date).format('DD/MM/YYYY');
 };
 
+type RowItemProps = {
+  item: Employee;
+  deleteEmployee: (id: number) => void;
+  refreshEmployees: () => void;
+  vaccineOptions: VaccineOption[];
+}
 
-const RowItem = ({ item }: { item: Employee }) => {
+const RowItem = ({ item, deleteEmployee, refreshEmployees, vaccineOptions }: RowItemProps) => {
   return (
     <tr className='hover:bg-gray-100'>
-      <td className='py-3 px-4'>{item.full_name}</td>
-      <td className='py-3 px-4'>{item.cpf}</td>
+      <td className='py-3 px-4' colSpan={2}>{item.full_name}</td>
+      <td className='py-3 px-4' colSpan={2}>{item.cpf}</td>
       <td className='py-3 px-4'>{formatDate(item.birth_date)}</td>
       <td className='py-3 px-4'>{formatDate(item.first_dose_date)}</td>
       <td className='py-3 px-4'>{formatDate(item.second_dose_date)}</td>
       <td className='py-3 px-4'>{formatDate(item.third_dose_date)}</td>
       <td className='py-3 px-4'>{item.vaccine_short_name}</td>
       <td className='py-3 px-4'>{item.has_comorbidity ? 'Sim' : 'Não'}</td>
-      <td className='py-3 px-4'>
-        <button>Editar</button>
-        <button>Excluir</button>
+      <td className='py-3 px-4' colSpan={2}>
+        <div className='flex items-center justify-center h-full w-full gap-x-4'>
+          <Edit employee={item} key={item.id} refreshEmployees={refreshEmployees} vaccineOptions={vaccineOptions} />
+          <AlertDialog
+            trigger={<Button className='cursor-pointer w-6 h-6' title='Excluir' variant="soft"><Trash2 /></Button>}
+            title="Tem certeza?"
+            description="Esta ação não pode ser desfeita."
+            confirmText="Sim, excluir colaborador"
+            onConfirm={() => deleteEmployee(item.id)}
+          />
+        </div>
       </td>
     </tr>
   );
@@ -85,30 +87,50 @@ const RowItem = ({ item }: { item: Employee }) => {
 export function EmployeeList() {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const itemsPerPage = 15;
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get('search');
+
   const { currentPage, setTotalPages, totalPages, goToPage } = usePagination({
     initialPage: 1,
     itemsPerPage,
   });
+
+  const { vaccineOptions } = useVaccineOptions();
 
   const fetchEmployees = useCallback(async (page: number) => {
     const response = await api.get<PaginatedResponse<Employee>>('/employees', {
       params: {
         page: page,
         per_page: itemsPerPage,
+        search,
       },
     });
     const responseData = response.data;
     setEmployees(responseData.data);
     setTotalPages(responseData.meta.last_page);
-  }, [setTotalPages]);
+  }, [setTotalPages, search]);
+
+  const refreshEmployees = useCallback(() => {
+    fetchEmployees(currentPage);
+  }, [fetchEmployees, currentPage]);
 
   useEffect(() => {
     fetchEmployees(currentPage);
-  }, [currentPage, fetchEmployees]);
+  }, [currentPage, fetchEmployees, search]);
 
   const handlePageChange = (page: number) => {
     goToPage(page);
   };
+
+  const deleteEmployee = useCallback(async (id: number) => {
+    try {
+      await api.delete(`/employees/${id}`);
+      refreshEmployees();
+      toast.success('Colaborador excluído com sucesso.');
+    } catch (error) {
+      toast.error('Erro ao excluir colaborador.');
+    }
+  }, [refreshEmployees]);
 
   return (
     <>
@@ -117,13 +139,13 @@ export function EmployeeList() {
           <div className="-m-1.5 overflow-x-auto">
             <div className="p-1.5 min-w-full inline-block align-middle">
               <List>
-                <List.Header title="Colaboradores" description="Lista de colaboradores." actions={<Actions />} />
+                <List.Header title="Colaboradores" description="Lista de colaboradores." actions={<Actions refreshEmployees={refreshEmployees} vaccineOptions={vaccineOptions} />} />
                 <ListTable>
                   <TableHeader columns={columns} />
                   <TableBody
                     data={employees}
                     renderRow={(item) => (
-                      <RowItem item={item} key={item.cpf} />
+                      <RowItem item={item} key={item.cpf} deleteEmployee={deleteEmployee} refreshEmployees={refreshEmployees} vaccineOptions={vaccineOptions} />
                     )}
                   />
                 </ListTable>

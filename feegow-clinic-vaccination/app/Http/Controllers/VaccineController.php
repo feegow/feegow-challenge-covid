@@ -2,31 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreVaccineRequest;
-use App\Http\Requests\UpdateVaccineRequest;
+use App\Http\Requests\VaccineRequest;
+use App\Http\Resources\VaccineResource;
 use App\Models\Vaccine;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Request;
 
 class VaccineController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $vaccines = Cache::remember('vaccines_data', 3600, function () {
-            return Vaccine::all();
-        });
+        $page = $request->input('page', 1);
+        $perPage = $request->input('per_page', 15);
+        $search = $request->input('search');
 
-        return response()->json($vaccines);
+        $cacheKey = "vaccines_page_{$page}_perPage_{$perPage}_search_" . md5($search);
+
+        return Cache::remember($cacheKey, now()->addMinutes(60), function () use ($perPage, $search) {
+            $query = Vaccine::query();
+
+            if ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($search) . '%']);
+                });
+            }
+
+            $vaccines = $query->orderBy('created_at', 'desc')->paginate($perPage);
+
+            return VaccineResource::collection($vaccines);
+        });
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreVaccineRequest $request)
+    public function store(VaccineRequest $request)
     {
-        //
+        $vaccine = Vaccine::create($request->validated());
+        return new VaccineResource($vaccine);
     }
 
     /**
@@ -34,15 +50,16 @@ class VaccineController extends Controller
      */
     public function show(Vaccine $vaccine)
     {
-        //
+        return new VaccineResource($vaccine);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateVaccineRequest $request, Vaccine $vaccine)
+    public function update(VaccineRequest $request, Vaccine $vaccine)
     {
-        //
+        $vaccine->update($request->validated());
+        return new VaccineResource($vaccine);
     }
 
     /**
@@ -50,6 +67,7 @@ class VaccineController extends Controller
      */
     public function destroy(Vaccine $vaccine)
     {
-        //
+        $vaccine->delete();
+        return response()->noContent();
     }
 }

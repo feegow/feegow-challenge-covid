@@ -4,17 +4,15 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { AlertDialog } from '../common/alert-dialog';
-import { MobileSearchButton } from '../header/mobile-search-button';
-import { SearchBar } from '../header/search-bar';
-import { List } from '../list';
-import { Pagination } from '../list/pagination';
-import { ListTable, TableBody, TableHeader } from '../table';
-
-import { Create } from './create';
-import { Edit } from './edit';
-import { useVaccineOptions, VaccineOption } from './hooks/useVaccineOptions';
-
+import { Create } from '@/app/employee/create';
+import { Edit } from '@/app/employee/edit';
+import { AlertDialog } from '@/components/common/alert-dialog';
+import { useVaccineOptions, VaccineOption } from '@/components/employee/hooks/useVaccineOptions';
+import { MobileSearchButton } from '@/components/header/mobile-search-button';
+import { SearchBar } from '@/components/header/search-bar';
+import { List } from '@/components/list';
+import { Pagination } from '@/components/list/pagination';
+import { ListTable, TableBody, TableHeader } from '@/components/table';
 import { usePagination } from '@/hooks/usePagination';
 import dayjs from '@/lib/dayjs';
 import { api } from '@/services/api';

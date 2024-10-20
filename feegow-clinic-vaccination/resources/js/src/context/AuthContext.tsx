@@ -2,15 +2,14 @@ import axios from 'axios';
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { LoginFormData } from '../components/auth/login';
-import { api } from '../services/api';
-import { login, logout } from '../services/auth';
-import { IntendedUrlResponse, User } from '../types';
-import { LoginResponse } from '../types';
+import { LoginFormData } from '@/components/auth/login';
+import { api } from '@/services/api';
+import { login, logout } from '@/services/auth';
+import { User, LoginResponse } from '@/types';
 
 interface AuthContextType {
   user: User | null;
-  signIn: (userData: LoginFormData) => Promise<LoginResponse>;
+  signIn: () => Promise<LoginResponse>;
   signOut: () => Promise<void>;
   isLoggedIn: boolean;
   isLoading: boolean;
@@ -28,7 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     // Get CSRF token at application start
-    axios.get('/sanctum/csrf-cookie').then(() => {});
+    axios.get('/sanctum/csrf-cookie').then(() => { });
     getUser();
   }, []);
 

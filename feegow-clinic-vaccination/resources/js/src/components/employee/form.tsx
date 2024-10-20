@@ -1,12 +1,11 @@
 import { UseFormRegister, FieldValues, FieldErrors, Control } from 'react-hook-form';
 
-import { FormCpfField } from '../../common/form-cpf-field';
-import { FormDateField } from '../../common/form-date-field';
-import { FormField } from '../../common/form-field';
-import { RadioGroup } from '../../common/radio-group';
-import { VaccineOption } from '../hooks/useVaccineOptions';
-
-import { VaccineSelect } from './vaccine-select';
+import { FormCpfField } from '@/components/common/form-cpf-field';
+import { FormDateField } from '@/components/common/form-date-field';
+import { FormField } from '@/components/common/form-field';
+import { RadioGroup } from '@/components/common/radio-group';
+import { VaccineOption } from '@/components/employee/hooks/useVaccineOptions';
+import { VaccineSelect } from '@/components/employee/vaccine-select';
 
 type EmployeeFormProps = {
   register: UseFormRegister<FieldValues>;

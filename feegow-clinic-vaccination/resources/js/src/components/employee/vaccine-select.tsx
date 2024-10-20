@@ -2,7 +2,7 @@ import { Control, Controller } from 'react-hook-form';
 import { FieldValues, FieldErrors } from 'react-hook-form';
 import Select from 'react-select';
 
-import { VaccineOption } from '../hooks/useVaccineOptions';
+import { VaccineOption } from './hooks/useVaccineOptions';
 
 type VaccineSelectProps = {
   control: Control<FieldValues>;
@@ -26,7 +26,7 @@ export function VaccineSelect({ label, control, options, errors, required = fals
             {...field}
             options={options}
             onChange={(selectedOption) => field.onChange(selectedOption?.value)}
-            value={options?.find((option) => option.value === field.value)}
+            value={options?.find((option) => option?.value === field.value)}
             isClearable
             placeholder="Selecione uma vacina"
           />

@@ -4,13 +4,15 @@ import { ToastContainer } from 'react-toastify';
 
 import AuthLayout from './src/app/auth/layout';
 import Login from './src/app/auth/login/page';
+import { EmployeeList } from './src/app/employee';
 import Home from './src/app/home/page';
 import Layout from './src/app/layout';
-import { EmployeeList } from './src/components/employee';
+import { VaccineList } from './src/app/vaccine';
 import NotFound from './src/components/not-found';
 import ProtectedRoute from './src/components/protected-route';
-import { VaccineList } from './src/components/vaccination';
 import { AuthProvider } from './src/context/AuthContext';
+
+import ReportPage from '@/app/reports/page';
 
 const Root = () => {
   const location = useLocation();
@@ -62,6 +64,10 @@ export const router = createBrowserRouter([
               //   element: <VaccinationAdd />,
               // },
             ],
+          },
+          {
+            path: '/relatorios',
+            element: <ReportPage />,
           },
         ],
       },

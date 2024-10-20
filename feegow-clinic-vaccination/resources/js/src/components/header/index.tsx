@@ -1,8 +1,7 @@
-import { useAuth } from '../../context/AuthContext';
-
-import { Logo } from './logo';
-import { NotificationButton } from './notification-button';
-import { UserDropdown } from './user-dropdown';
+import { Logo } from '@/components/header/logo';
+import { NotificationButton } from '@/components/header/notification-button';
+import { UserDropdown } from '@/components/header/user-dropdown';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Header() {
   const { APP_NAME } = window as any;

@@ -1,21 +1,13 @@
 import { UseFormRegister, FieldValues, FieldErrors, Control } from 'react-hook-form';
 
-import { FormDateField } from '../../common/form-date-field';
-import { FormField } from '../../common/form-field';
+import { FormDateField } from '@/components/common/form-date-field';
+import { FormField } from '@/components/common/form-field';
 
 type VaccineFormProps = {
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors<FieldValues>;
   control: Control<FieldValues>;
 };
-
-// name: z.string().min(1, { message: 'Nome é obrigatório' }),
-//   short_name: z.string().min(1, { message: 'Nome abreviado é obrigatório' }).optional(),
-//     lot_number: z.string().min(1, { message: 'Número do lote é obrigatório' }),
-//       expiration_date: z.string()
-//         .refine(value => !value || validateBrazilianDate(value), { message: 'Data de validade inválida' })
-//         .optional()
-//         .transform(value => value ? convertFromBrazilianFormDate(value) : undefined),
 
 export function VaccineForm({ register, errors, control }: VaccineFormProps) {
   return (

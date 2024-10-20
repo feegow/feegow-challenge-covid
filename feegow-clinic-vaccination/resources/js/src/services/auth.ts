@@ -1,7 +1,7 @@
-import { LoginFormData } from '../components/auth/login';
-import { LoginResponse, User } from '../types';
-
 import { api } from './api';
+
+import { LoginFormData } from '@/components/auth/login';
+import { LoginResponse, User } from '@/types';
 
 export const login = async (data: LoginFormData): Promise<LoginResponse> => {
   const response = await api.post<LoginResponse>('/auth/login', data);

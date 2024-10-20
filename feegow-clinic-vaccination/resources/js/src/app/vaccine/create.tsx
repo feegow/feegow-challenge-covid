@@ -3,13 +3,12 @@ import { lazy, Suspense, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
-import { api } from '../../services/api';
-import { AddButton } from '../common/add-btn';
-import { ModalDialog } from '../common/modal-dialog';
+import { AddButton } from '@/components/common/add-btn';
+import { ModalDialog } from '@/components/common/modal-dialog';
+import { vaccineFormSchema, VaccineFormData } from '@/components/vaccine/vaccine-form-schema';
+import { api } from '@/services/api';
 
-import { vaccineFormSchema, VaccineFormData } from './vaccine-form-schema';
-
-const LazyVaccineForm = lazy(() => import('./components/form').then((module) => ({ default: module.VaccineForm })));
+const LazyVaccineForm = lazy(() => import('@/components/vaccine/form').then((module) => ({ default: module.VaccineForm })));
 
 const Description = () => (
   <div className="flex flex-col mt-2 mb-5">

@@ -3,7 +3,7 @@ import { Button } from '@radix-ui/themes';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 
 const schema = z.object({
   email: z
@@ -87,12 +87,12 @@ export const LoginForm = () => {
                   <label htmlFor="password" className="block text-sm mb-2 dark:text-white">
                     Senha
                   </label>
-                  <a
+                  {/* <a
                     className="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline focus:outline-none focus:underline font-medium dark:text-blue-500"
                     href="../examples/html/recover-account.html"
                   >
                     Esqueceu a senha?
-                  </a>
+                  </a> */}
                 </div>
                 <div className="relative">
                   <input

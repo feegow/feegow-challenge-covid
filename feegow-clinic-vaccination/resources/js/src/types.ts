@@ -67,7 +67,3 @@ export interface PaginatedResponse<T> {
   links: Links;
   meta: Meta;
 }
-
-export interface IntendedUrlResponse {
-  url: string;
-}

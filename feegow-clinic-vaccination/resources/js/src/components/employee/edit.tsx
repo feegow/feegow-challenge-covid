@@ -1,18 +1,24 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { lazy, Suspense, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'react-toastify';
+
+import { formatToBrazilianDate } from '../../lib/dayjs';
 import { api } from '../../services/api';
 import { Employee } from '../../types';
-import { employeeFormSchema, EmployeeFormData } from './employee-form-schema';
 import { ModalDialog } from '../common/modal-dialog';
+
 import { EditButton } from './components/edit-btn';
-import { toast } from 'react-toastify';
+import { employeeFormSchema, EmployeeFormData } from './employee-form-schema';
 import { VaccineOption } from './hooks/useVaccineOptions';
-import { formatToBrazilianDate } from '../../lib/dayjs';
 
-const LazyEmployeeForm = lazy(() => import('./components/form').then(module => ({ default: module.EmployeeForm })));
+const LazyEmployeeForm = lazy(() => import('./components/form').then((module) => ({ default: module.EmployeeForm })));
 
-const Description = () => <div className='flex flex-col mt-2 mb-5'><span className="text-gray-500">Edite os detalhes do colaborador.</span></div>;
+const Description = () => (
+  <div className="flex flex-col mt-2 mb-5">
+    <span className="text-gray-500">Edite os detalhes do colaborador.</span>
+  </div>
+);
 
 type EditProps = {
   employee: Employee;
@@ -32,11 +38,15 @@ export function Edit({ employee, refreshEmployees, vaccineOptions }: EditProps) 
     has_comorbidity: employee.has_comorbidity === true ? 'true' : 'false',
   };
 
-  const { register, handleSubmit, formState: { errors, isSubmitting }, control } = useForm<EmployeeFormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    control,
+  } = useForm<EmployeeFormData>({
     resolver: zodResolver(employeeFormSchema),
-    defaultValues
+    defaultValues,
   });
-
 
   const onSubmit = async (data: EmployeeFormData): Promise<boolean> => {
     try {

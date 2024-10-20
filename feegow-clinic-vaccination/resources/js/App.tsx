@@ -1,17 +1,16 @@
-import { createBrowserRouter, Outlet, RouterProvider, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import Home from './src/app/home/page';
-import Login from './src/app/auth/login/page';
-import Layout from './src/app/layout';
-import ProtectedRoute from './src/components/protected-route';
-import { AuthProvider } from './src/context/AuthContext';
-import AuthLayout from './src/app/auth/layout';
-import NotFound from './src/components/not-found';
-import { Create as EmployeeCreate } from './src/components/employee/create';
-import { EmployeeList } from './src/components/employee';
-import { VaccinationAdd } from './src/components/vaccination';
-import { Vaccination } from './src/components/vaccination';
+import { createBrowserRouter, Outlet, RouterProvider, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+
+import AuthLayout from './src/app/auth/layout';
+import Login from './src/app/auth/login/page';
+import Home from './src/app/home/page';
+import Layout from './src/app/layout';
+import { EmployeeList } from './src/components/employee';
+import NotFound from './src/components/not-found';
+import ProtectedRoute from './src/components/protected-route';
+import { VaccineList } from './src/components/vaccination';
+import { AuthProvider } from './src/context/AuthContext';
 
 const Root = () => {
   const location = useLocation();
@@ -48,20 +47,20 @@ export const router = createBrowserRouter([
             path: '/colaboradores',
             element: <EmployeeList />,
             children: [
-              {
-                path: '/colaboradores/adicionar',
-                element: <EmployeeCreate />,
-              },
+              // {
+              //   path: '/colaboradores/adicionar',
+              //   element: <EmployeeCreate />,
+              // },
             ],
           },
           {
             path: '/vacinas',
-            element: <Vaccination />,
+            element: <VaccineList />,
             children: [
-              {
-                path: '/vacinas/adicionar',
-                element: <VaccinationAdd />,
-              },
+              // {
+              //   path: '/vacinas/adicionar',
+              //   element: <VaccinationAdd />,
+              // },
             ],
           },
         ],

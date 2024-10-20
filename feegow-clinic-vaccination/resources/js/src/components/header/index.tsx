@@ -1,8 +1,9 @@
 import { useAuth } from '../../context/AuthContext';
+
 import { ActivityButton } from './activity-button';
-import { NotificationButton } from './notification-button';
-import { MobileSearchButton } from './mobile-search-button';
 import { Logo } from './logo';
+import { MobileSearchButton } from './mobile-search-button';
+import { NotificationButton } from './notification-button';
 import { SearchBar } from './search-bar';
 import { UserDropdown } from './user-dropdown';
 

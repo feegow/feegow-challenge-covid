@@ -8,7 +8,7 @@ type FormDateFieldProps = {
   control: Control<FieldValues>; // Add this line
   errors: FieldErrors<FieldValues>;
   required?: boolean;
-}
+};
 
 const ForwardedPatternFormat = forwardRef<HTMLInputElement, PatternFormatProps>((props, ref) => (
   <PatternFormat {...props} getInputRef={ref} />

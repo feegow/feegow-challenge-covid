@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
+import { useState } from 'react';
 
 type ModalDialogProps = {
   trigger: React.ReactNode;
@@ -13,14 +13,16 @@ type ModalDialogProps = {
   onOpenChange?: (open: boolean) => void;
 };
 
-export function ModalDialog({ trigger,
+export function ModalDialog({
+  trigger,
   title,
   description,
   onSave,
   children,
   isLoading = false,
   open,
-  onOpenChange }: ModalDialogProps) {
+  onOpenChange,
+}: ModalDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const isControlled = open !== undefined && onOpenChange !== undefined;
   const isOpen = isControlled ? open : internalOpen;
@@ -46,7 +48,10 @@ export function ModalDialog({ trigger,
           {open && children}
           <div className="mt-6 flex justify-end space-x-2">
             <Dialog.Close asChild>
-              <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2" disabled={isLoading}>
+              <button
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+                disabled={isLoading}
+              >
                 Cancelar
               </button>
             </Dialog.Close>

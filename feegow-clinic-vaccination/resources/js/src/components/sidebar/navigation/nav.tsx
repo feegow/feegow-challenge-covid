@@ -1,8 +1,10 @@
-import { NavItem } from './nav-item';
-import { NavGroup } from './nav-group';
-import { SubNavItem } from './sub-nav-item';
-import { HomeIcon, UsersIcon } from '../icons';
 import { Plus, List, Syringe } from 'lucide-react';
+
+import { HomeIcon, UsersIcon } from '../icons';
+
+import { NavGroup } from './nav-group';
+import { NavItem } from './nav-item';
+import { SubNavItem } from './sub-nav-item';
 
 export function Nav() {
   return (

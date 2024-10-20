@@ -1,4 +1,5 @@
 import { useAuth } from '../../../context/AuthContext';
+
 import { MenuItem } from './menu-item';
 
 export function Menu({ user }: { user: any }) {

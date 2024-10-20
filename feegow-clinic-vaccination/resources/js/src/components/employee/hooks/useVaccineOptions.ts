@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+
 import { api } from '@/services/api';
 import { PaginatedResponse, Vaccine } from '@/types';
 
 export type VaccineOption = {
   value: number;
   label: string;
-}
+};
 
 export function useVaccineOptions() {
   const [vaccineOptions, setVaccineOptions] = useState<VaccineOption[]>([]);

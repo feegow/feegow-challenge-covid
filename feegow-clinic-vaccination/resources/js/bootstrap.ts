@@ -6,11 +6,11 @@ window.axios.defaults.withCredentials = true;
 window.axios.defaults.withXSRFToken = true;
 
 window.axios.interceptors.response.use(
-  response => response,
-  error => {
+  (response) => response,
+  (error) => {
     if (error.response && error.response.status === 419) {
       window.location.href = '/login';
     }
     return Promise.reject(error);
-  }
+  },
 );

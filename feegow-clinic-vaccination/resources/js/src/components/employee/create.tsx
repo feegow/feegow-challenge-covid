@@ -1,16 +1,22 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { lazy, Suspense, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { api } from '../../services/api';
-import { createEmployeeFormSchema, CreateEmployeeFormData } from './employee-form-schema';
-import { ModalDialog } from '../common/modal-dialog';
-import { AddButton } from './components/add-btn';
 import { toast } from 'react-toastify';
+
+import { api } from '../../services/api';
+import { ModalDialog } from '../common/modal-dialog';
+
+import { AddButton } from './components/add-btn';
+import { createEmployeeFormSchema, CreateEmployeeFormData } from './employee-form-schema';
 import { VaccineOption } from './hooks/useVaccineOptions';
 
-const LazyEmployeeForm = lazy(() => import('./components/form').then(module => ({ default: module.EmployeeForm })));
+const LazyEmployeeForm = lazy(() => import('./components/form').then((module) => ({ default: module.EmployeeForm })));
 
-const Description = () => <div className='flex flex-col mt-2 mb-5'><span className="text-gray-500">Insira os detalhes do novo colaborador.</span></div>;
+const Description = () => (
+  <div className="flex flex-col mt-2 mb-5">
+    <span className="text-gray-500">Insira os detalhes do novo colaborador.</span>
+  </div>
+);
 
 type CreateProps = {
   refreshEmployees: () => void;
@@ -20,7 +26,13 @@ type CreateProps = {
 export function Create({ refreshEmployees, vaccineOptions }: CreateProps) {
   const [open, setOpen] = useState(false);
 
-  const { register, handleSubmit, reset, formState: { errors, isSubmitting }, control } = useForm<CreateEmployeeFormData>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+    control,
+  } = useForm<CreateEmployeeFormData>({
     resolver: zodResolver(createEmployeeFormSchema),
     defaultValues: {
       has_comorbidity: false,
@@ -53,12 +65,7 @@ export function Create({ refreshEmployees, vaccineOptions }: CreateProps) {
       onOpenChange={setOpen}
     >
       <Suspense fallback={<div>Carregando formulário...</div>}>
-        <LazyEmployeeForm
-          register={register}
-          errors={errors}
-          control={control}
-          vaccineOptions={vaccineOptions}
-        />
+        <LazyEmployeeForm register={register} errors={errors} control={control} vaccineOptions={vaccineOptions} />
       </Suspense>
     </ModalDialog>
   );

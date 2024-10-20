@@ -8,7 +8,7 @@ type FormCpfFieldProps = {
   control: Control<FieldValues>; // Changed from register to control
   errors: FieldErrors<FieldValues>;
   required?: boolean;
-}
+};
 
 const ForwardedPatternFormat = forwardRef<HTMLInputElement, PatternFormatProps>((props, ref) => (
   <PatternFormat {...props} getInputRef={ref} />

@@ -1,10 +1,11 @@
+import { Button } from '@radix-ui/themes';
+import debounce from 'lodash.debounce';
+import { X } from 'lucide-react';
 import { useEffect, useState, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
 import { CloseButton } from './close-button';
 import { Shortcut } from './shortcut';
-import { useSearchParams } from 'react-router-dom';
-import debounce from 'lodash.debounce';
-import { Button } from '@radix-ui/themes';
-import { X } from 'lucide-react';
 
 export function SearchBar() {
   const [, setSearchParams] = useSearchParams();
@@ -20,7 +21,7 @@ export function SearchBar() {
         setSearchParams({});
       }
     }, 300),
-    [setSearchParams]
+    [setSearchParams],
   );
 
   useEffect(() => {
@@ -51,7 +52,7 @@ export function SearchBar() {
         </div>
         <input
           type="text"
-          name='search'
+          name="search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="py-2 ps-10 pe-16 block w-full bg-white border-gray-200 rounded-lg text-sm focus:outline-none focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder:text-neutral-400 dark:focus:ring-neutral-600"
@@ -60,7 +61,13 @@ export function SearchBar() {
         <CloseButton />
         {search && (
           <div className="absolute inset-y-0 end-0 flex items-center z-20 pe-3 text-gray-400">
-            <Button onClick={() => setSearch('')} variant="ghost" className='cursor-pointer' title='Limpar pesquisa' size="1">
+            <Button
+              onClick={() => setSearch('')}
+              variant="ghost"
+              className="cursor-pointer"
+              title="Limpar pesquisa"
+              size="1"
+            >
               <X size={16} />
             </Button>
           </div>

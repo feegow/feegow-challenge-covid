@@ -13,7 +13,6 @@ export interface LoginResponse {
   success?: boolean;
 }
 
-
 export interface Employee {
   id: number;
   full_name: string;

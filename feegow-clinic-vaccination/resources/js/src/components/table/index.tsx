@@ -1,6 +1,7 @@
 import React from 'react';
-import TableHeader from './header';
+
 import TableBody from './body';
+import TableHeader from './header';
 
 interface ListTableProps {
   children: React.ReactNode;

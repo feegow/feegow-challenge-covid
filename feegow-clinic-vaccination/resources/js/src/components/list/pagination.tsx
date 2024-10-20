@@ -6,11 +6,7 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export const Pagination: React.FC<PaginationProps> = ({
-  currentPage,
-  totalPages,
-  onPageChange,
-}: PaginationProps) => {
+export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }: PaginationProps) => {
   const goToPage = (page: number) => {
     const newPage = Math.max(1, Math.min(page, totalPages));
     onPageChange(newPage);
@@ -85,22 +81,25 @@ export const Pagination: React.FC<PaginationProps> = ({
         <span>Anterior</span>
       </button>
 
-      {getPageNumbers().map((pageNumber, index) => (
+      {getPageNumbers().map((pageNumber, index) =>
         pageNumber === '...' ? (
-          <span key={`ellipsis-${index}`} className="px-2">...</span>
+          <span key={`ellipsis-${index}`} className="px-2">
+            ...
+          </span>
         ) : (
           <button
             key={pageNumber}
             type="button"
             onClick={() => goToPage(pageNumber as number)}
-            className={`min-h-[38px] min-w-[38px] flex justify-center items-center text-gray-800 hover:bg-gray-100 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10 ${currentPage === pageNumber ? 'bg-gray-100 dark:bg-white/10' : ''
-              }`}
+            className={`min-h-[38px] min-w-[38px] flex justify-center items-center text-gray-800 hover:bg-gray-100 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10 ${
+              currentPage === pageNumber ? 'bg-gray-100 dark:bg-white/10' : ''
+            }`}
             aria-current={currentPage === pageNumber ? 'page' : undefined}
           >
             {pageNumber}
           </button>
-        )
-      ))}
+        ),
+      )}
 
       <button
         type="button"

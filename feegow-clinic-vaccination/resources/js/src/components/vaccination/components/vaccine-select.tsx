@@ -26,7 +26,7 @@ export function VaccineSelect({ label, control, options, errors, required = fals
             {...field}
             options={options}
             onChange={(selectedOption) => field.onChange(selectedOption?.value)}
-            value={options?.find((option) => option?.value === field.value)}
+            value={options?.find((option) => option.value === field.value)}
             isClearable
             placeholder="Selecione uma vacina"
           />

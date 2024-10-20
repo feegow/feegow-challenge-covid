@@ -1,4 +1,5 @@
 import * as Avatar from '@radix-ui/react-avatar';
+
 import { Menu } from './menu';
 
 export function UserDropdown({ user }: { user: any }) {

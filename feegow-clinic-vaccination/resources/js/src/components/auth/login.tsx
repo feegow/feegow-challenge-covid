@@ -1,8 +1,9 @@
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { useAuth } from '../../context/AuthContext';
 import { Button } from '@radix-ui/themes';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+
+import { useAuth } from '../../context/AuthContext';
 
 const schema = z.object({
   email: z

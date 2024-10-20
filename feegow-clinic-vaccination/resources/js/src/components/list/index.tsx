@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Footer } from './footer';
 import { Header } from './header';
 
@@ -34,7 +35,7 @@ type ListComponentType = React.FC<ListProps> & {
   Header: React.ComponentType<ListHeaderProps>;
   Footer: React.ComponentType;
   Item: React.ComponentType<ListItemProps>;
-}
+};
 
 const List: ListComponentType = ({ children, Header, Footer, Item }: ListProps) => {
   const ComposedHeader = Header || DefaultHeader;

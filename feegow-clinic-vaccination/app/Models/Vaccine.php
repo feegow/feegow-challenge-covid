@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Vaccine extends Model
@@ -14,7 +14,7 @@ class Vaccine extends Model
         'name',
         'short_name',
         'lot_number',
-        'expiration_date'
+        'expiration_date',
     ];
 
     public function employees(): HasMany

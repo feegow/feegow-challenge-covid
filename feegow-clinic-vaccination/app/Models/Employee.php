@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
@@ -18,13 +17,13 @@ class Employee extends Model
         'second_dose_date',
         'third_dose_date',
         'vaccine_id',
-        'has_comorbidity'
+        'has_comorbidity',
     ];
 
     // Accessor para anonimizar o CPF
     public function getCpfAttribute($value)
     {
-        return substr($value, 0, 3) . '***.***-**';
+        return substr($value, 0, 3).'***.***-**';
     }
 
     public function vaccine()

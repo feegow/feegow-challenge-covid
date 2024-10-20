@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use App\Models\Employee;
+use App\Models\User;
 use App\Models\Vaccine;
 use Illuminate\Database\Seeder;
 
@@ -50,6 +50,7 @@ class DatabaseSeeder extends Seeder
         Employee::factory()->count($totalEmployees)->make()->chunk($chunkSize)->each(function ($chunk) use ($vaccines, &$createdEmployees, $totalEmployees) {
             $data = $chunk->map(function ($employee) use ($vaccines) {
                 $vaccine = $this->getWeightedRandomVaccine($vaccines->toArray());
+
                 return [
                     'full_name' => $employee->full_name,
                     'cpf' => $this->generateUniqueCpf(),
@@ -58,7 +59,7 @@ class DatabaseSeeder extends Seeder
                     'second_dose_date' => $employee->second_dose_date,
                     'third_dose_date' => $employee->third_dose_date,
                     'vaccine_id' => $vaccines->firstWhere('name', $vaccine['name'])->id,
-                    'has_comorbidity' => (mt_rand(1, 100) <= 20)
+                    'has_comorbidity' => (mt_rand(1, 100) <= 20),
                 ];
             })->toArray();
 
@@ -99,6 +100,7 @@ class DatabaseSeeder extends Seeder
         } while (in_array($cpf, $this->usedCpfs));
 
         $this->usedCpfs[] = $cpf;
+
         return $cpf;
     }
 }

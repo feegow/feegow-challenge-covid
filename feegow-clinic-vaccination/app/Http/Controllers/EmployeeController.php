@@ -6,6 +6,7 @@ use App\Http\Requests\EmployeeRequest;
 use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class EmployeeController extends Controller
 {
@@ -14,19 +15,25 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
-        $per_page = $request->input('per_page', 15);
+        $page = $request->input('page', 1);
+        $perPage = $request->input('per_page', 15);
         $search = $request->input('search');
 
-        $query = Employee::query();
+        $cacheKey = "employees_page_{$page}_perPage_{$perPage}_search_".md5($search);
 
-        if ($search) {
-            $query->where(function ($q) use ($search) {
-                $q->whereRaw('LOWER(full_name) LIKE ?', ['%' . strtolower($search) . '%']);
-            });
-        }
+        return Cache::remember($cacheKey, now()->addMinutes(60), function () use ($perPage, $search) {
+            $query = Employee::query();
 
-        $employees = $query->orderBy('created_at', 'desc')->paginate($per_page);
-        return EmployeeResource::collection($employees);
+            if ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->whereRaw('LOWER(full_name) LIKE ?', ['%'.strtolower($search).'%']);
+                });
+            }
+
+            $employees = $query->orderBy('created_at', 'desc')->paginate($perPage);
+
+            return EmployeeResource::collection($employees);
+        });
     }
 
     /**
@@ -35,6 +42,7 @@ class EmployeeController extends Controller
     public function store(EmployeeRequest $request)
     {
         $employee = Employee::create($request->validated());
+
         return new EmployeeResource($employee);
     }
 
@@ -52,6 +60,7 @@ class EmployeeController extends Controller
     public function update(EmployeeRequest $request, Employee $employee)
     {
         $employee->update($request->validated());
+
         return new EmployeeResource($employee);
     }
 
@@ -61,6 +70,7 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         $employee->delete();
+
         return response()->noContent();
     }
 }

@@ -1,6 +1,6 @@
 import { Button } from '@radix-ui/themes';
 import { Trash2, X } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -18,7 +18,6 @@ import { usePagination } from '@/hooks/usePagination';
 import dayjs from '@/lib/dayjs';
 import { api } from '@/services/api';
 import { Vaccine, PaginatedResponse } from '@/types';
-
 
 type ActionsProps = {
   refreshVaccines: () => void;
@@ -58,7 +57,7 @@ type RowItemProps = {
   refreshVaccines: () => void;
 };
 
-const RowItem = ({ item, deleteVaccine, refreshVaccines }: RowItemProps) => {
+const RowItem = memo(({ item, deleteVaccine, refreshVaccines }: RowItemProps) => {
   return (
     <tr className="hover:bg-gray-100">
       <td className="py-3 px-4" colSpan={2}>
@@ -87,10 +86,45 @@ const RowItem = ({ item, deleteVaccine, refreshVaccines }: RowItemProps) => {
       </td>
     </tr>
   );
+});
+
+const fetchVaccines = async (
+  page: number,
+  itemsPerPage: number,
+  search: string | null,
+): Promise<PaginatedResponse<Vaccine>> => {
+  const response = await api.get<PaginatedResponse<Vaccine>>('/vaccines', {
+    params: {
+      page: page,
+      per_page: itemsPerPage,
+      search,
+    },
+  });
+  return response.data;
+};
+
+const LoadingRow = () => {
+  const columnsLength = useMemo(() => columns.reduce((total, column) => total + (column.colspan || 1), 0), []);
+  return (
+    <tr>
+      <td colSpan={columnsLength} className="text-center py-4">
+        <div
+          className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          role="status"
+        >
+          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+            Carregando...
+          </span>
+        </div>
+      </td>
+    </tr>
+  );
 };
 
 export function VaccineList() {
-  const [vaccines, setVaccines] = useState<Vaccine[]>([]);
+  const [vaccinesData, setVaccinesData] = useState<PaginatedResponse<Vaccine> | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const itemsPerPage = 15;
   const [searchParams] = useSearchParams();
   const search = searchParams.get('search');
@@ -100,33 +134,37 @@ export function VaccineList() {
     itemsPerPage,
   });
 
-  const fetchVaccines = useCallback(
+  const fetchVaccinesCallback = useCallback(
     async (page: number) => {
-      const response = await api.get<PaginatedResponse<Vaccine>>('/vaccines', {
-        params: {
-          page: page,
-          per_page: itemsPerPage,
-          search,
-        },
-      });
-      const responseData = response.data;
-      setVaccines(responseData.data);
-      setTotalPages(responseData.meta.last_page);
+      setIsLoading(true);
+      setError(null);
+      try {
+        const responseData = await fetchVaccines(page, itemsPerPage, search);
+        setVaccinesData(responseData);
+        setTotalPages(responseData.meta.last_page);
+      } catch (err) {
+        setError('Error loading vaccines. Please try again.');
+      } finally {
+        setIsLoading(false);
+      }
     },
-    [setTotalPages, search],
+    [itemsPerPage, search, setTotalPages],
+  );
+
+  useEffect(() => {
+    fetchVaccinesCallback(currentPage);
+  }, [currentPage, fetchVaccinesCallback]);
+
+  const handlePageChange = useCallback(
+    (page: number) => {
+      goToPage(page);
+    },
+    [goToPage],
   );
 
   const refreshVaccines = useCallback(() => {
-    fetchVaccines(currentPage);
-  }, [fetchVaccines, currentPage]);
-
-  useEffect(() => {
-    fetchVaccines(currentPage);
-  }, [currentPage, fetchVaccines, search]);
-
-  const handlePageChange = (page: number) => {
-    goToPage(page);
-  };
+    fetchVaccinesCallback(currentPage);
+  }, [fetchVaccinesCallback, currentPage]);
 
   const deleteVaccine = useCallback(
     async (id: number) => {
@@ -140,6 +178,21 @@ export function VaccineList() {
     },
     [refreshVaccines],
   );
+
+  const vaccineRows = useMemo(() => {
+    return vaccinesData?.data.map((item) => (
+      <RowItem
+        key={item.id}
+        item={item}
+        deleteVaccine={deleteVaccine}
+        refreshVaccines={refreshVaccines}
+      />
+    ));
+  }, [vaccinesData?.data, deleteVaccine, refreshVaccines]);
+
+  if (error) {
+    return <div className="text-center py-4 text-red-500">{error}</div>;
+  }
 
   return (
     <>
@@ -156,14 +209,7 @@ export function VaccineList() {
                 <ListTable>
                   <TableHeader columns={columns} />
                   <TableBody>
-                    {vaccines.map((item) => (
-                      <RowItem
-                        item={item}
-                        key={item.id}
-                        deleteVaccine={deleteVaccine}
-                        refreshVaccines={refreshVaccines}
-                      />
-                    ))}
+                    {isLoading ? <LoadingRow /> : vaccineRows}
                   </TableBody>
                 </ListTable>
                 <List.Footer>

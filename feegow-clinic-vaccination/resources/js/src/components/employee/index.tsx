@@ -114,6 +114,24 @@ const fetchEmployees = async (
   return response.data;
 };
 
+const LoadingRow = () => {
+  const columnsLength = useMemo(() => columns.reduce((total, column) => total + (column.colspan || 1), 0), []);
+  return (
+    <tr>
+      <td colSpan={columnsLength} className="text-center py-4">
+        <div
+          className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          role="status"
+        >
+          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+            Carregando...
+          </span>
+        </div>
+      </td>
+    </tr>
+  );
+};
+
 export function EmployeeList() {
   const [employeesData, setEmployeesData] = useState<PaginatedResponse<Employee> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -174,11 +192,7 @@ export function EmployeeList() {
     [refreshEmployees],
   );
 
-  if (error) {
-    return <div className="text-center py-4 text-red-500">{error}</div>;
-  }
-
-  const memoizedEmployeeRows = useMemo(() => {
+  const employeeRows = useMemo(() => {
     return employeesData?.data.map((item) => (
       <RowItem
         key={item.id}
@@ -189,6 +203,10 @@ export function EmployeeList() {
       />
     ));
   }, [employeesData?.data, deleteEmployee, refreshEmployees, vaccineOptions]);
+
+  if (error) {
+    return <div className="text-center py-4 text-red-500">{error}</div>;
+  }
 
   return (
     <>
@@ -205,22 +223,7 @@ export function EmployeeList() {
                 <ListTable>
                   <TableHeader columns={columns} />
                   <TableBody>
-                    {isLoading ? (
-                      <tr>
-                        <td colSpan={columns.length} className="text-center py-4">
-                          <div
-                            className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                            role="status"
-                          >
-                            <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-                              Loading...
-                            </span>
-                          </div>
-                        </td>
-                      </tr>
-                    ) : (
-                      memoizedEmployeeRows
-                    )}
+                    {isLoading ? <LoadingRow /> : employeeRows}
                   </TableBody>
                 </ListTable>
                 <List.Footer>

@@ -1,10 +1,7 @@
 import { useAuth } from '../../context/AuthContext';
 
-import { ActivityButton } from './activity-button';
 import { Logo } from './logo';
-import { MobileSearchButton } from './mobile-search-button';
 import { NotificationButton } from './notification-button';
-import { SearchBar } from './search-bar';
 import { UserDropdown } from './user-dropdown';
 
 export default function Header() {
@@ -16,11 +13,8 @@ export default function Header() {
       <nav className="px-4 sm:px-6 flex basis-full items-center w-full mx-auto">
         <Logo appName={APP_NAME} />
         <div className="w-full flex items-center justify-end ms-auto gap-x-1 md:gap-x-3">
-          {/* <SearchBar /> */}
           <div className="flex flex-row items-center justify-end gap-1">
-            {/* <MobileSearchButton /> */}
             <NotificationButton />
-            <ActivityButton />
             <UserDropdown user={user} />
           </div>
         </div>

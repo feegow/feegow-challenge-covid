@@ -5,9 +5,9 @@ import { convertFromBrazilianFormDate, validateBrazilianDate } from '@/lib/dayjs
 const cpfSchema = z.string().regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, { message: 'CPF inválido' });
 
 export const employeeFormSchema = z.object({
-  full_name: z.string().min(1, { message: 'Nome completo é obrigatório' }),
+  full_name: z.string({ required_error: 'Nome completo é obrigatório' }).min(1, { message: 'Nome completo é obrigatório' }),
   birth_date: z
-    .string()
+    .string({ required_error: 'Data de nascimento é obrigatória' })
     .min(1, { message: 'Data de nascimento é obrigatória' })
     .refine(validateBrazilianDate, { message: 'Data de nascimento inválida' })
     .transform(convertFromBrazilianFormDate),

@@ -20,6 +20,10 @@ interface ListItemProps {
   children: React.ReactNode;
 }
 
+interface ListFooterProps {
+  children?: React.ReactNode;
+}
+
 // Default Header component
 const DefaultHeader: React.FC<ListHeaderProps> = ({ title, description, actions }) => (
   <Header title={title} description={description} actions={actions} />
@@ -33,7 +37,7 @@ const DefaultItem: React.FC<ListItemProps> = ({ children }) => <div className="p
 
 type ListComponentType = React.FC<ListProps> & {
   Header: React.ComponentType<ListHeaderProps>;
-  Footer: React.ComponentType;
+  Footer: React.ComponentType<ListFooterProps>;
   Item: React.ComponentType<ListItemProps>;
 };
 

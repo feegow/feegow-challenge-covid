@@ -19,14 +19,14 @@ class EmployeeController extends Controller
         $perPage = $request->input('per_page', 15);
         $search = $request->input('search');
 
-        $cacheKey = "employees_page_{$page}_perPage_{$perPage}_search_".md5($search);
+        $cacheKey = "employees_page_{$page}_perPage_{$perPage}_search_" . md5($search);
 
         return Cache::remember($cacheKey, now()->addMinutes(60), function () use ($perPage, $search) {
             $query = Employee::query();
 
             if ($search) {
                 $query->where(function ($q) use ($search) {
-                    $q->whereRaw('LOWER(full_name) LIKE ?', ['%'.strtolower($search).'%']);
+                    $q->whereRaw('LOWER(full_name) LIKE ?', ['%' . strtolower($search) . '%']);
                 });
             }
 
@@ -42,7 +42,7 @@ class EmployeeController extends Controller
     public function store(EmployeeRequest $request)
     {
         $employee = Employee::create($request->validated());
-
+        Cache::flush();
         return new EmployeeResource($employee);
     }
 
@@ -60,7 +60,7 @@ class EmployeeController extends Controller
     public function update(EmployeeRequest $request, Employee $employee)
     {
         $employee->update($request->validated());
-
+        Cache::flush();
         return new EmployeeResource($employee);
     }
 
@@ -70,7 +70,7 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         $employee->delete();
-
+        Cache::flush();
         return response()->noContent();
     }
 }

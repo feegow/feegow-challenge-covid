@@ -2,9 +2,9 @@ import { Button } from '@radix-ui/themes';
 import { Trash2, X } from 'lucide-react';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { AlertDialog } from '../common/alert-dialog';
-import { toast } from 'react-toastify';
 import { MobileSearchButton } from '../header/mobile-search-button';
 import { SearchBar } from '../header/search-bar';
 import { List } from '../list';

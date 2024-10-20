@@ -12,12 +12,13 @@ import { Pagination } from '../list/pagination';
 import { ListTable, TableBody, TableHeader } from '../table';
 
 import { Create } from './create';
+import { Edit } from './edit';
+
 import { usePagination } from '@/hooks/usePagination';
+import dayjs from '@/lib/dayjs';
 import { api } from '@/services/api';
 import { Vaccine, PaginatedResponse } from '@/types';
-import dayjs from '@/lib/dayjs';
 
-import { Edit } from './edit';
 
 type ActionsProps = {
   refreshVaccines: () => void;
@@ -168,8 +169,6 @@ export function VaccineList() {
                 <List.Footer>
                   <Pagination
                     currentPage={currentPage}
-                    totalItems={vaccines.length}
-                    itemsPerPage={itemsPerPage}
                     totalPages={totalPages}
                     onPageChange={handlePageChange}
                   />

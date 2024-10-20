@@ -4,9 +4,9 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import { api } from '../../services/api';
+import { AddButton } from '../common/add-btn';
 import { ModalDialog } from '../common/modal-dialog';
 
-import { AddButton } from './components/add-btn';
 import { createEmployeeFormSchema, CreateEmployeeFormData } from './employee-form-schema';
 import { VaccineOption } from './hooks/useVaccineOptions';
 

@@ -6,9 +6,9 @@ import { toast } from 'react-toastify';
 import { formatToBrazilianDate } from '../../lib/dayjs';
 import { api } from '../../services/api';
 import { Employee } from '../../types';
+import { EditButton } from '../common/edit-btn';
 import { ModalDialog } from '../common/modal-dialog';
 
-import { EditButton } from './components/edit-btn';
 import { vaccineFormSchema, VaccineFormData } from './vaccine-form-schema';
 
 const LazyVaccineForm = lazy(() => import('./components/form').then((module) => ({ default: module.VaccineForm })));

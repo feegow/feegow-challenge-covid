@@ -4,9 +4,9 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import { api } from '../../services/api';
+import { AddButton } from '../common/add-btn';
 import { ModalDialog } from '../common/modal-dialog';
 
-import { AddButton } from './components/add-btn';
 import { vaccineFormSchema, VaccineFormData } from './vaccine-form-schema';
 
 const LazyVaccineForm = lazy(() => import('./components/form').then((module) => ({ default: module.VaccineForm })));

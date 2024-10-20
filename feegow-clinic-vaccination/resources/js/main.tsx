@@ -1,9 +1,12 @@
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import App from './App';
+
 import './bootstrap';
 import './preline';
 import 'react-toastify/dist/ReactToastify.css';
+
 function renderApp() {
   const rootElement = document.getElementById('root');
 
@@ -16,7 +19,11 @@ function renderApp() {
     return;
   }
 
-  createRoot(rootElement).render(<App />);
+  createRoot(rootElement).render(
+    <StrictMode>
+      <App />
+    </StrictMode>
+  );
 }
 
 document.addEventListener('DOMContentLoaded', renderApp);

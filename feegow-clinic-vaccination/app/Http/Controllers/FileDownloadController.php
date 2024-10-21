@@ -11,10 +11,12 @@ class FileDownloadController extends Controller
     {
         $originalFilename = $request->query('original');
 
-        if (!Storage::exists($originalFilename)) {
+        $remove_storage_prefix = str_replace('private/', '', $originalFilename);
+
+        if (!Storage::exists($remove_storage_prefix)) {
             abort(404);
         }
 
-        return Storage::download($originalFilename, 'report-' . now()->format('Y-m-d') . '.csv');
+        return Storage::download($remove_storage_prefix, 'report-' . now()->format('Y-m-d') . '.csv');
     }
 }

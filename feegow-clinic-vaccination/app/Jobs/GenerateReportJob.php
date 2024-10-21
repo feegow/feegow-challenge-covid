@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\ReportStatus;
 use App\Models\Employee;
 use App\Models\Report;
 use Illuminate\Bus\Queueable;
@@ -9,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class GenerateReportJob implements ShouldQueue
@@ -69,6 +71,9 @@ class GenerateReportJob implements ShouldQueue
             'file_path' => $filePath,
             'completed_at' => now(),
         ]);
+
+        broadcast(new ReportStatus($this->report, 'completed'));
+
     }
 
     /**
@@ -78,5 +83,7 @@ class GenerateReportJob implements ShouldQueue
     {
         // Send user notification of failure, etc...
         Log::error('GenerateReportJob failed: ' . $exception->getMessage());
+        broadcast(new ReportStatus($this->report, 'failed'));
+
     }
 }

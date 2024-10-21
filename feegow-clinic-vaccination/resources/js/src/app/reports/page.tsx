@@ -7,36 +7,13 @@ import ReportGenerator from '@/components/reports/generator';
 import { useAuth } from '@/context/AuthContext';
 import { formatDate } from '@/lib/dayjs';
 import { api } from '@/services/api';
-import { PaginatedResponse } from '@/types';
-
-interface Report {
-  id: number;
-  type: string;
-  status: string;
-  file_path: string | null;
-  user_id: number;
-  completed_at: string | null;
-  date: string | null;
-  download_link: string | null;
-  created_at: string;
-  updated_at: string;
-}
-
-enum ReportStatus {
-  Completed = 'completed',
-  Processing = 'processing',
-  Canceled = 'canceled',
-}
+import { PaginatedResponse, ReportStatus, ReportType } from '@/types';
 
 const reportStatusConfig: Record<ReportStatus, { text: string; color: string }> = {
   [ReportStatus.Completed]: { text: 'Concluído', color: 'text-green-500' },
   [ReportStatus.Processing]: { text: 'Processando', color: 'text-yellow-500' },
   [ReportStatus.Canceled]: { text: 'Cancelado', color: 'text-red-500' },
 };
-
-enum ReportType {
-  UnvaccinatedEmployees = 'unvaccinated_employees',
-}
 
 const reportTypeTranslations: Record<ReportType, string> = {
   [ReportType.UnvaccinatedEmployees]: 'Funcionários não vacinados',
@@ -59,7 +36,10 @@ const ReportPage = () => {
   }, []);
 
   useEffect(() => {
-    fetchReports();
+    fetchReports(); // Initial fetch
+    const intervalId = setInterval(fetchReports, 5000); // Poll every 5 seconds
+
+    return () => clearInterval(intervalId); // Cleanup on unmount
   }, [fetchReports]);
 
   const handleGenerateReport = async (params: { anonymizeCpf: boolean }) => {

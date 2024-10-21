@@ -38,6 +38,29 @@ export interface Vaccine {
   short_name: string;
 }
 
+export interface Report {
+  id: number;
+  type: string;
+  status: string;
+  file_path: string | null;
+  user_id: number;
+  completed_at: string | null;
+  date: string | null;
+  download_link: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export enum ReportStatus {
+  Completed = 'completed',
+  Processing = 'processing',
+  Canceled = 'canceled',
+}
+
+export enum ReportType {
+  UnvaccinatedEmployees = 'unvaccinated_employees',
+}
+
 export interface Links {
   first: string;
   last: string;

@@ -16,7 +16,7 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page', 10);
+        $perPage = $request->input('per_page', 50);
         $reports = Report::paginate($perPage);
 
         return ReportResource::collection($reports);

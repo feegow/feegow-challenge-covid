@@ -1,5 +1,5 @@
 import { Logo } from '@/components/header/logo';
-import { NotificationButton } from '@/components/header/notification-button';
+// import { NotificationButton } from '@/components/header/notification-button';
 import { UserDropdown } from '@/components/header/user-dropdown';
 import { useAuth } from '@/context/AuthContext';
 
@@ -13,7 +13,7 @@ export default function Header() {
         <Logo appName={APP_NAME} />
         <div className="w-full flex items-center justify-end ms-auto gap-x-1 md:gap-x-3">
           <div className="flex flex-row items-center justify-end gap-1">
-            <NotificationButton />
+            {/* <NotificationButton /> */}
             <UserDropdown user={user} />
           </div>
         </div>

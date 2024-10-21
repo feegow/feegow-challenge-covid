@@ -1,16 +1,18 @@
-import { UseFormRegister, FieldValues, FieldErrors, Control } from 'react-hook-form';
+import { UseFormRegister, FieldErrors, Control } from 'react-hook-form';
+
 
 import { FormCpfField } from '@/components/common/form-cpf-field';
 import { FormDateField } from '@/components/common/form-date-field';
 import { FormField } from '@/components/common/form-field';
 import { RadioGroup } from '@/components/common/radio-group';
+import { CreateEmployeeFormData } from '@/components/employee/employee-form-schema';
 import { VaccineOption } from '@/components/employee/hooks/useVaccineOptions';
 import { VaccineSelect } from '@/components/employee/vaccine-select';
 
 type EmployeeFormProps = {
-  register: UseFormRegister<FieldValues>;
-  errors: FieldErrors<FieldValues>;
-  control: Control<FieldValues>;
+  register: UseFormRegister<CreateEmployeeFormData>;
+  errors: FieldErrors<CreateEmployeeFormData>;
+  control: Control<CreateEmployeeFormData>;
   vaccineOptions: VaccineOption[];
   protectCPF: boolean;
 };

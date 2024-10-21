@@ -7,11 +7,13 @@ import { toast } from 'react-toastify';
 import { Create } from '@/app/vaccine/create';
 import { Edit } from '@/app/vaccine/edit';
 import { AlertDialog } from '@/components/common/alert-dialog';
+import { LoadingRow } from '@/components/common/loading-row';
 import { MobileSearchButton } from '@/components/header/mobile-search-button';
 import { SearchBar } from '@/components/header/search-bar';
 import { List } from '@/components/list';
 import { Pagination } from '@/components/list/pagination';
 import { ListTable, TableBody, TableHeader } from '@/components/table';
+import { RowItem } from '@/components/vaccine/row-item';
 import { usePagination } from '@/hooks/usePagination';
 import { formatDate } from '@/lib/dayjs';
 import { api } from '@/services/api';
@@ -39,43 +41,6 @@ const columns = [
   { name: 'Ações', colspan: 2 },
 ];
 
-type RowItemProps = {
-  item: Vaccine;
-  deleteVaccine: (id: number) => void;
-  refreshVaccines: () => void;
-};
-
-const RowItem = memo(({ item, deleteVaccine, refreshVaccines }: RowItemProps) => {
-  return (
-    <tr className="hover:bg-gray-100">
-      <td className="py-3 px-4" colSpan={2}>
-        {item.name}
-      </td>
-      <td className="py-3 px-4" colSpan={2}>
-        {item.short_name}
-      </td>
-      <td className="py-3 px-4">{item.lot_number}</td>
-      <td className="py-3 px-4">{formatDate(item.expiration_date)}</td>
-      <td className="py-3 px-4" colSpan={2}>
-        <div className="flex items-center justify-center h-full w-full gap-x-4">
-          <Edit vaccine={item} key={item.id} refreshVaccines={refreshVaccines} />
-          <AlertDialog
-            trigger={
-              <Button className="cursor-pointer w-6 h-6" title="Excluir" variant="soft">
-                <Trash2 />
-              </Button>
-            }
-            title="Tem certeza?"
-            description="Esta ação não pode ser desfeita."
-            confirmText="Sim, excluir vacina"
-            onConfirm={() => deleteVaccine(item.id)}
-          />
-        </div>
-      </td>
-    </tr>
-  );
-});
-
 const fetchVaccines = async (
   page: number,
   itemsPerPage: number,
@@ -89,24 +54,6 @@ const fetchVaccines = async (
     },
   });
   return response.data;
-};
-
-const LoadingRow = () => {
-  const columnsLength = useMemo(() => columns.reduce((total, column) => total + (column.colspan || 1), 0), []);
-  return (
-    <tr>
-      <td colSpan={columnsLength} className="text-center py-4">
-        <div
-          className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-          role="status"
-        >
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Carregando...
-          </span>
-        </div>
-      </td>
-    </tr>
-  );
 };
 
 export function VaccineList() {
@@ -197,7 +144,7 @@ export function VaccineList() {
                 <ListTable>
                   <TableHeader columns={columns} />
                   <TableBody>
-                    {isLoading ? <LoadingRow /> : vaccineRows}
+                    {isLoading ? <LoadingRow columns={columns} /> : vaccineRows}
                   </TableBody>
                 </ListTable>
                 <List.Footer>

@@ -1,12 +1,13 @@
-import { UseFormRegister, FieldValues, FieldErrors, Control } from 'react-hook-form';
+import { UseFormRegister, FieldErrors, Control } from 'react-hook-form';
 
 import { FormDateField } from '@/components/common/form-date-field';
 import { FormField } from '@/components/common/form-field';
+import { VaccineFormData } from '@/components/vaccine/vaccine-form-schema';
 
 type VaccineFormProps = {
-  register: UseFormRegister<FieldValues>;
-  errors: FieldErrors<FieldValues>;
-  control: Control<FieldValues>;
+  register: UseFormRegister<VaccineFormData>;
+  errors: FieldErrors<VaccineFormData>;
+  control: Control<VaccineFormData>;
 };
 
 export function VaccineForm({ register, errors, control }: VaccineFormProps) {

@@ -64,7 +64,7 @@ export function Create({ refreshEmployees, vaccineOptions }: CreateProps) {
       onOpenChange={setOpen}
     >
       <Suspense fallback={<div>Carregando formulário...</div>}>
-        <LazyEmployeeForm register={register} errors={errors} control={control} vaccineOptions={vaccineOptions} />
+        <LazyEmployeeForm register={register} errors={errors} control={control} vaccineOptions={vaccineOptions} protectCPF={false} />
       </Suspense>
     </ModalDialog>
   );

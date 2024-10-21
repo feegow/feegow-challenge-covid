@@ -1,20 +1,17 @@
-import { Button } from '@radix-ui/themes';
-import { Trash2, X } from 'lucide-react';
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { Create } from '@/app/employee/create';
-import { Edit } from '@/app/employee/edit';
-import { AlertDialog } from '@/components/common/alert-dialog';
+import { LoadingRow } from '@/components/common/loading-row';
 import { useVaccineOptions, VaccineOption } from '@/components/employee/hooks/useVaccineOptions';
+import { RowItem } from '@/components/employee/row-item';
 import { MobileSearchButton } from '@/components/header/mobile-search-button';
 import { SearchBar } from '@/components/header/search-bar';
 import { List } from '@/components/list';
 import { Pagination } from '@/components/list/pagination';
 import { ListTable, TableBody, TableHeader } from '@/components/table';
 import { usePagination } from '@/hooks/usePagination';
-import dayjs from '@/lib/dayjs';
 import { api } from '@/services/api';
 import { Employee, PaginatedResponse } from '@/types';
 
@@ -45,58 +42,6 @@ const columns = [
   { name: 'Ações', colspan: 2 },
 ];
 
-const formatDateOrShowNotVaccinated = (date: string | null) => {
-  if (!date)
-    return (
-      <span title="Não vacinou">
-        <X className="text-red-400 mx-auto" />
-      </span>
-    );
-  return dayjs(date).format('DD/MM/YYYY');
-};
-
-type RowItemProps = {
-  item: Employee;
-  deleteEmployee: (id: number) => void;
-  refreshEmployees: () => void;
-  vaccineOptions: VaccineOption[];
-};
-
-const RowItem = memo(({ item, deleteEmployee, refreshEmployees, vaccineOptions }: RowItemProps) => {
-  return (
-    <tr className="hover:bg-gray-100">
-      <td className="py-3 px-4" colSpan={2}>
-        {item.full_name}
-      </td>
-      <td className="py-3 px-4" colSpan={2}>
-        {item.cpf}
-      </td>
-      <td className="py-3 px-4">{formatDateOrShowNotVaccinated(item.birth_date)}</td>
-      <td className="py-3 px-4">{formatDateOrShowNotVaccinated(item.first_dose_date)}</td>
-      <td className="py-3 px-4">{formatDateOrShowNotVaccinated(item.second_dose_date)}</td>
-      <td className="py-3 px-4">{formatDateOrShowNotVaccinated(item.third_dose_date)}</td>
-      <td className="py-3 px-4">{item.vaccine_short_name || 'Não vacinou'}</td>
-      <td className="py-3 px-4">{item.has_comorbidity ? 'Sim' : 'Não'}</td>
-      <td className="py-3 px-4" colSpan={2}>
-        <div className="flex items-center justify-center h-full w-full gap-x-4">
-          <Edit employee={item} key={item.id} refreshEmployees={refreshEmployees} vaccineOptions={vaccineOptions} />
-          <AlertDialog
-            trigger={
-              <Button className="cursor-pointer w-6 h-6" title="Excluir" variant="soft">
-                <Trash2 />
-              </Button>
-            }
-            title="Tem certeza?"
-            description="Esta ação não pode ser desfeita."
-            confirmText="Sim, excluir colaborador"
-            onConfirm={() => deleteEmployee(item.id)}
-          />
-        </div>
-      </td>
-    </tr>
-  );
-});
-
 const fetchEmployees = async (
   page: number,
   itemsPerPage: number,
@@ -110,24 +55,6 @@ const fetchEmployees = async (
     },
   });
   return response.data;
-};
-
-const LoadingRow = () => {
-  const columnsLength = useMemo(() => columns.reduce((total, column) => total + (column.colspan || 1), 0), []);
-  return (
-    <tr>
-      <td colSpan={columnsLength} className="text-center py-4">
-        <div
-          className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-          role="status"
-        >
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Carregando...
-          </span>
-        </div>
-      </td>
-    </tr>
-  );
 };
 
 export function EmployeeList() {
@@ -221,7 +148,7 @@ export function EmployeeList() {
                 <ListTable>
                   <TableHeader columns={columns} />
                   <TableBody>
-                    {isLoading ? <LoadingRow /> : employeeRows}
+                    {isLoading ? <LoadingRow columns={columns} /> : employeeRows}
                   </TableBody>
                 </ListTable>
                 <List.Footer>

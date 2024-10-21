@@ -7,7 +7,7 @@ import { EditButton } from '@/components/common/edit-btn';
 import { ModalDialog } from '@/components/common/modal-dialog';
 import { employeeFormSchema, EmployeeFormData } from '@/components/employee/employee-form-schema';
 import { VaccineOption } from '@/components/employee/hooks/useVaccineOptions';
-import { formatToBrazilianDate } from '@/lib/dayjs';
+import { formatDate } from '@/lib/dayjs';
 import { api } from '@/services/api';
 import { Employee } from '@/types';
 
@@ -30,10 +30,10 @@ export function Edit({ employee, refreshEmployees, vaccineOptions }: EditProps) 
 
   const defaultValues: EmployeeFormData = {
     ...employee,
-    birth_date: employee.birth_date ? formatToBrazilianDate(String(employee.birth_date)) : '',
-    first_dose_date: employee.first_dose_date ? formatToBrazilianDate(String(employee.first_dose_date)) : '',
-    second_dose_date: employee.second_dose_date ? formatToBrazilianDate(String(employee.second_dose_date)) : '',
-    third_dose_date: employee.third_dose_date ? formatToBrazilianDate(String(employee.third_dose_date)) : '',
+    birth_date: employee.birth_date ? formatDate(String(employee.birth_date)) : '',
+    first_dose_date: employee.first_dose_date ? formatDate(String(employee.first_dose_date)) : '',
+    second_dose_date: employee.second_dose_date ? formatDate(String(employee.second_dose_date)) : '',
+    third_dose_date: employee.third_dose_date ? formatDate(String(employee.third_dose_date)) : '',
     has_comorbidity: employee.has_comorbidity === true ? 'true' : 'false',
   };
 

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { convertFromBrazilianFormDate, validateBrazilianDate } from '@/lib/dayjs';
+import { formatDate, validateBrazilianDate } from '@/lib/dayjs';
 
 export const vaccineFormSchema = z.object({
   name: z.string().min(1, { message: 'Nome é obrigatório' }),
@@ -10,7 +10,7 @@ export const vaccineFormSchema = z.object({
     .string()
     .refine((value) => !value || validateBrazilianDate(value), { message: 'Data de validade inválida' })
     .optional()
-    .transform((value) => (value ? convertFromBrazilianFormDate(value) : undefined)),
+    .transform((value) => (value ? formatDate(value, 'DD/MM/YYYY', 'YYYY-MM-DD') : undefined)),
 });
 
 export type VaccineFormData = z.infer<typeof vaccineFormSchema>;

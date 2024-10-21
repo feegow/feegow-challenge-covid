@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { convertFromBrazilianFormDate, validateBrazilianDate } from '@/lib/dayjs';
+import { formatDate, validateBrazilianDate } from '@/lib/dayjs';
 
 const cpfSchema = z.string().regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, { message: 'CPF inválido' });
 
@@ -10,22 +10,22 @@ export const employeeFormSchema = z.object({
     .string({ required_error: 'Data de nascimento é obrigatória' })
     .min(1, { message: 'Data de nascimento é obrigatória' })
     .refine(validateBrazilianDate, { message: 'Data de nascimento inválida' })
-    .transform(convertFromBrazilianFormDate),
+    .transform((str) => formatDate(str, 'DD/MM/YYYY', 'YYYY-MM-DD')),
   first_dose_date: z
     .string()
     .refine((value) => !value || validateBrazilianDate(value), { message: 'Data da primeira dose inválida' })
     .optional()
-    .transform((value) => (value ? convertFromBrazilianFormDate(value) : undefined)),
+    .transform((value) => (value ? formatDate(value, 'DD/MM/YYYY', 'YYYY-MM-DD') : undefined)),
   second_dose_date: z
     .string()
     .refine((value) => !value || validateBrazilianDate(value), { message: 'Data da segunda dose inválida' })
     .optional()
-    .transform((value) => (value ? convertFromBrazilianFormDate(value) : undefined)),
+    .transform((value) => (value ? formatDate(value, 'DD/MM/YYYY', 'YYYY-MM-DD') : undefined)),
   third_dose_date: z
     .string()
     .refine((value) => !value || validateBrazilianDate(value), { message: 'Data da terceira dose inválida' })
     .optional()
-    .transform((value) => (value ? convertFromBrazilianFormDate(value) : undefined)),
+    .transform((value) => (value ? formatDate(value, 'DD/MM/YYYY', 'YYYY-MM-DD') : undefined)),
   vaccine_id: z
     .number({ required_error: 'Escolha uma vacina' })
     .int()

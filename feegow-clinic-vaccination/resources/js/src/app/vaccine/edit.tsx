@@ -6,9 +6,9 @@ import { toast } from 'react-toastify';
 import { EditButton } from '@/components/common/edit-btn';
 import { ModalDialog } from '@/components/common/modal-dialog';
 import { vaccineFormSchema, VaccineFormData } from '@/components/vaccine/vaccine-form-schema';
-import { formatToBrazilianDate } from '@/lib/dayjs';
+import { formatDate } from '@/lib/dayjs';
 import { api } from '@/services/api';
-import { Employee } from '@/types';
+import { Vaccine } from '@/types';
 
 const LazyVaccineForm = lazy(() => import('@/components/vaccine/form').then((module) => ({ default: module.VaccineForm })));
 
@@ -19,8 +19,8 @@ const Description = () => (
 );
 
 type EditProps = {
-  employee: Employee;
-  refreshEmployees: () => void;
+  vaccine: Vaccine;
+  refreshVaccines: () => void;
 };
 
 export function Edit({ vaccine, refreshVaccines }: EditProps) {
@@ -28,7 +28,7 @@ export function Edit({ vaccine, refreshVaccines }: EditProps) {
 
   const defaultValues: VaccineFormData = {
     ...vaccine,
-    expiration_date: vaccine.expiration_date ? formatToBrazilianDate(String(vaccine.expiration_date)) : '',
+    expiration_date: vaccine.expiration_date ? formatDate(String(vaccine.expiration_date)) : '',
   };
 
   const {

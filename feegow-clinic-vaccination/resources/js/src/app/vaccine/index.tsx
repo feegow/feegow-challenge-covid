@@ -13,7 +13,7 @@ import { List } from '@/components/list';
 import { Pagination } from '@/components/list/pagination';
 import { ListTable, TableBody, TableHeader } from '@/components/table';
 import { usePagination } from '@/hooks/usePagination';
-import dayjs from '@/lib/dayjs';
+import { formatDate } from '@/lib/dayjs';
 import { api } from '@/services/api';
 import { Vaccine, PaginatedResponse } from '@/types';
 
@@ -38,16 +38,6 @@ const columns = [
   { name: 'Data de validade' },
   { name: 'Ações', colspan: 2 },
 ];
-
-const formatDate = (date: string) => {
-  if (!date)
-    return (
-      <span title="Não vacinou">
-        <X className="text-red-400 mx-auto" />
-      </span>
-    );
-  return dayjs(date).format('DD/MM/YYYY');
-};
 
 type RowItemProps = {
   item: Vaccine;

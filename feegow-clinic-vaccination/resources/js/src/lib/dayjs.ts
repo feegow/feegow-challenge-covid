@@ -9,14 +9,9 @@ export const validateBrazilianDate = (value: string) => {
   return dayjs(value, 'DD/MM/YYYY', true).isValid();
 };
 
-export const formatToBrazilianDate = (value: string) => {
+export const formatDate = (value: string, originalFormat: string = 'YYYY-MM-DD', outputFormat: string = 'DD/MM/YYYY') => {
   if (!value) return '';
-  return dayjs(value, 'YYYY-MM-DD', true).format('DD/MM/YYYY');
-};
-
-export const convertFromBrazilianFormDate = (value: string) => {
-  if (!value) return '';
-  return dayjs(value, 'DD/MM/YYYY', true).format('YYYY-MM-DD');
+  return dayjs(value, originalFormat, true).format(outputFormat);
 };
 
 export default dayjs;

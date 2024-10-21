@@ -45,7 +45,7 @@ const columns = [
   { name: 'Ações', colspan: 2 },
 ];
 
-const formatDate = (date: string | null) => {
+const formatDateOrShowNotVaccinated = (date: string | null) => {
   if (!date)
     return (
       <span title="Não vacinou">
@@ -71,10 +71,10 @@ const RowItem = memo(({ item, deleteEmployee, refreshEmployees, vaccineOptions }
       <td className="py-3 px-4" colSpan={2}>
         {item.cpf}
       </td>
-      <td className="py-3 px-4">{formatDate(item.birth_date)}</td>
-      <td className="py-3 px-4">{formatDate(item.first_dose_date)}</td>
-      <td className="py-3 px-4">{formatDate(item.second_dose_date)}</td>
-      <td className="py-3 px-4">{formatDate(item.third_dose_date)}</td>
+      <td className="py-3 px-4">{formatDateOrShowNotVaccinated(item.birth_date)}</td>
+      <td className="py-3 px-4">{formatDateOrShowNotVaccinated(item.first_dose_date)}</td>
+      <td className="py-3 px-4">{formatDateOrShowNotVaccinated(item.second_dose_date)}</td>
+      <td className="py-3 px-4">{formatDateOrShowNotVaccinated(item.third_dose_date)}</td>
       <td className="py-3 px-4">{item.vaccine_short_name || 'Não vacinou'}</td>
       <td className="py-3 px-4">{item.has_comorbidity ? 'Sim' : 'Não'}</td>
       <td className="py-3 px-4" colSpan={2}>

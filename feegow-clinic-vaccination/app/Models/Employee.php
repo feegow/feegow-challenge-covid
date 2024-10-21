@@ -26,8 +26,19 @@ class Employee extends Model
         return substr($value, 0, 3).'***.***-**';
     }
 
+    public function getFullCpf()
+    {
+        return $this->attributes['cpf'];
+    }
+
     public function vaccine()
     {
         return $this->belongsTo(Vaccine::class);
+    }
+
+    public function scopeUnvaccinated($query)
+    {
+        return $query->whereDoesntHave('vaccine')
+            ->orWhereNull('first_dose_date');
     }
 }

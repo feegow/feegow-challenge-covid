@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Concerns\HasEventTriggers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    use HasFactory;
+    use HasFactory, HasEventTriggers;
 
     protected $fillable = [
         'cpf',
@@ -23,7 +24,7 @@ class Employee extends Model
     // Accessor para anonimizar o CPF
     public function getCpfAttribute($value)
     {
-        return substr($value, 0, 3).'***.***-**';
+        return substr($value, 0, 3) . '***.***-**';
     }
 
     public function getFullCpf()
@@ -40,5 +41,12 @@ class Employee extends Model
     {
         return $query->whereDoesntHave('vaccine')
             ->orWhereNull('first_dose_date');
+    }
+
+    public function scopeVaccinationReport($query)
+    {
+        return $query->with('vaccine')
+            ->selectRaw('vaccine_id, COUNT (*) as total, SUM(CASE WHEN first_dose_date IS NOT NULL THEN 1 ELSE 0 END) as vaccinated_count')
+            ->groupBy('vaccine_id');
     }
 }

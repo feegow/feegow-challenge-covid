@@ -4,8 +4,8 @@ import { ToastContainer } from 'react-toastify';
 
 import AuthLayout from './src/app/auth/layout';
 import Login from './src/app/auth/login/page';
+import Dashboard from './src/app/dashboard/page';
 import { EmployeeList } from './src/app/employee';
-import Home from './src/app/home/page';
 import Layout from './src/app/layout';
 import { VaccineList } from './src/app/vaccine';
 import NotFound from './src/components/not-found';
@@ -43,7 +43,7 @@ export const router = createBrowserRouter([
         children: [
           {
             path: '/',
-            element: <Home />,
+            element: <Dashboard />,
           },
           {
             path: '/colaboradores',

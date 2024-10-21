@@ -39,7 +39,7 @@ export function VaccineForm({ register, errors, control }: VaccineFormProps) {
         placeholder="Digite o número do lote da vacina"
         required
       />
-      <FormDateField label="Data de Validade" name="expiration_date" control={control} errors={errors} required />
+      <FormDateField label="Data de Validade" name="expiration_date" control={control} errors={errors} required autoComplete="off" />
     </form>
   );
 }

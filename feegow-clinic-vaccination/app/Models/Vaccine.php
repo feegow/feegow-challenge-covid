@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Concerns\HasEventTriggers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Vaccine extends Model
 {
-    use HasFactory;
+    use HasFactory, HasEventTriggers;
 
     protected $fillable = [
         'name',

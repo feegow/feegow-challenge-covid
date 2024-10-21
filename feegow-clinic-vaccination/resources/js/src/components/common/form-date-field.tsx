@@ -1,20 +1,40 @@
-import { forwardRef } from 'react';
-import { FieldErrors, FieldValues, UseFormRegister, Controller, Control } from 'react-hook-form';
+import { forwardRef, useMemo, memo } from 'react';
+import { FieldErrors, FieldValues, Controller, Control } from 'react-hook-form';
 import { PatternFormat, PatternFormatProps } from 'react-number-format';
 
 type FormDateFieldProps = {
   name: string;
   label: string;
-  control: Control<FieldValues>; // Add this line
+  control: Control<FieldValues>;
   errors: FieldErrors<FieldValues>;
   required?: boolean;
+  inputProps?: PatternFormatProps;
 };
 
-const ForwardedPatternFormat = forwardRef<HTMLInputElement, PatternFormatProps>((props, ref) => (
+const ForwardedPatternFormat = memo(forwardRef<HTMLInputElement, PatternFormatProps>((props, ref) => (
   <PatternFormat {...props} getInputRef={ref} />
-));
+)));
 
-export function FormDateField({ name, label, control, errors, required = false }: FormDateFieldProps) {
+ForwardedPatternFormat.displayName = 'ForwardedPatternFormat';
+
+export const FormDateField = memo((props: FormDateFieldProps) => {
+  const { name, label, control, errors, required = false, inputProps } = props;
+  const renderInput = useMemo(() => {
+    return ({ field }: { field: FieldValues }) => (
+      <ForwardedPatternFormat
+        value={field.value}
+        onChange={field.onChange}
+        onBlur={field.onBlur}
+        name={field.name}
+        format="##/##/####"
+        placeholder="Digite a data"
+        allowEmptyFormatting={false}
+        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        {...inputProps}
+      />
+    );
+  }, []);
+
   return (
     <div>
       <label htmlFor={name} className="block text-md font-medium text-gray-700">
@@ -23,18 +43,11 @@ export function FormDateField({ name, label, control, errors, required = false }
       <Controller
         name={name}
         control={control}
-        render={({ field }) => (
-          <ForwardedPatternFormat
-            {...field}
-            format="##/##/####"
-            mask="_"
-            placeholder="Digite a data"
-            allowEmptyFormatting={false}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          />
-        )}
+        render={renderInput}
       />
       {errors[name] && <p className="text-red-500 text-xs mt-1">{errors[name]?.message as string}</p>}
     </div>
   );
-}
+});
+
+FormDateField.displayName = 'FormDateField';

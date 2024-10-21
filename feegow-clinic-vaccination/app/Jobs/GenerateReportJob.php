@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Throwable;
 
 class GenerateReportJob implements ShouldQueue
 {
@@ -68,5 +69,14 @@ class GenerateReportJob implements ShouldQueue
             'file_path' => $filePath,
             'completed_at' => now(),
         ]);
+    }
+
+    /**
+     * Handle a job failure.
+     */
+    public function failed(?Throwable $exception): void
+    {
+        // Send user notification of failure, etc...
+        Log::error('GenerateReportJob failed: ' . $exception->getMessage());
     }
 }

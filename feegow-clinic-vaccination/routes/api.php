@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\FileDownloadController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\StatsController;
 use App\Http\Controllers\VaccineController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,3 +35,7 @@ Route::post('/tokens/create', function (Request $request) {
 Route::get('/download', [FileDownloadController::class, 'download'])
     ->name('download.file')
     ->middleware(['auth', 'signed']);
+
+Route::get('/stats', [StatsController::class, 'index']);
+Route::get('/stats/vaccination-report', [StatsController::class, 'vaccinationReport']);
+Route::get('/stats/unvaccinated-report', [StatsController::class, 'unvaccinatedReport']);

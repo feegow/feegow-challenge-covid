@@ -20,3 +20,8 @@ For production
 ./vendor/bin/sail artisan config:cache
 
 ./vendor/bin/sail artisan queue:work
+
+./vendor/bin/sail php artisan reverb:start
+
+
+? i might need supervisor

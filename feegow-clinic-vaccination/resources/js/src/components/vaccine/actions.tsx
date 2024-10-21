@@ -12,7 +12,7 @@ export const Actions: React.FC<ActionsProps> = ({ refreshVaccines }) => {
   return (
     <>
       <SearchBar />
-      <MobileSearchButton />
+      {/* <MobileSearchButton /> */}
       <Create refreshVaccines={refreshVaccines} />
     </>
   );

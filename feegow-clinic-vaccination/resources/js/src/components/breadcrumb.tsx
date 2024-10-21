@@ -1,4 +1,9 @@
-export default function Breadcrumb() {
+interface BreadcrumbProps {
+  toggleSidebar: () => void;
+  isOpen: boolean;
+}
+
+export default function Breadcrumb({ toggleSidebar, isOpen }: BreadcrumbProps) {
   return (
     <div className="-mt-px">
       {/* Breadcrumb */}
@@ -7,12 +12,14 @@ export default function Breadcrumb() {
           {/* Navigation Toggle */}
           <button
             type="button"
+            onClick={toggleSidebar}
             className="size-8 flex justify-center items-center gap-x-2 border border-gray-200 text-gray-800 hover:text-gray-500 rounded-lg focus:outline-none focus:text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:border-neutral-700 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
             aria-haspopup="dialog"
-            aria-expanded="false"
+            aria-expanded={isOpen}
             aria-controls="hs-application-sidebar"
             aria-label="Toggle navigation"
             data-hs-overlay="#hs-application-sidebar"
+            id="toggle-sidebar"
           >
             <span className="sr-only">Toggle Navigation</span>
             <svg
@@ -35,7 +42,7 @@ export default function Breadcrumb() {
           {/* End Navigation Toggle */}
 
           {/* Breadcrumb */}
-          <ol className="ms-3 flex items-center whitespace-nowrap">
+          {/* <ol className="ms-3 flex items-center whitespace-nowrap">
             <li className="flex items-center text-sm text-gray-800 dark:text-neutral-400">
               Application Layout
               <svg
@@ -57,7 +64,7 @@ export default function Breadcrumb() {
             <li className="text-sm font-semibold text-gray-800 truncate dark:text-neutral-400" aria-current="page">
               Dashboard
             </li>
-          </ol>
+          </ol> */}
           {/* End Breadcrumb */}
         </div>
       </div>

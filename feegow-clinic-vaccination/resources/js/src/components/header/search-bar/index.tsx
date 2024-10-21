@@ -31,7 +31,7 @@ export function SearchBar() {
   }, [search, debouncedSetSearchParams]);
 
   return (
-    <div className="hidden md:block">
+    <div className="block">
       <div className="relative">
         <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none z-20 ps-3.5">
           <svg

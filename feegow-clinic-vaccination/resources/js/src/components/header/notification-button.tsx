@@ -11,11 +11,11 @@ interface ReportStatusEvent {
 
 export function NotificationButton() {
   useEffect(() => {
-    window.Echo.channel('reports')
-      .listen('ReportStatus', (event: ReportStatusEvent) => {
-        console.log('Job finished:', { ...event });
-        // Handle the notification on your frontend
-      });
+    // window.Echo.channel('reports')
+    //   .listen('ReportStatus', (event: ReportStatusEvent) => {
+    //     console.log('Job finished:', { ...event });
+    //     // Handle the notification on your frontend
+    //   });
   }, []);
 
   return (

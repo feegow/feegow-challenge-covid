@@ -17,7 +17,7 @@ const ReportGenerator: React.FC<ReportGeneratorProps> = ({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center mb-8 p-6 bg-white rounded-lg shadow-md relative z-50">
+    <div className="flex flex-col justify-center items-center mb-8 p-6 bg-white rounded-lg shadow-md relative z-40">
       <h2 className="text-2xl font-semibold mb-4">Gerar Novo Relatório</h2>
       <div className="flex items-center mb-4">
         <input

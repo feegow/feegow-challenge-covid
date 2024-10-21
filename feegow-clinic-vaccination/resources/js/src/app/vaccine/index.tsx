@@ -1,37 +1,17 @@
-import { Button } from '@radix-ui/themes';
-import { Trash2, X } from 'lucide-react';
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { Create } from '@/app/vaccine/create';
-import { Edit } from '@/app/vaccine/edit';
-import { AlertDialog } from '@/components/common/alert-dialog';
 import { LoadingRow } from '@/components/common/loading-row';
-import { MobileSearchButton } from '@/components/header/mobile-search-button';
-import { SearchBar } from '@/components/header/search-bar';
 import { List } from '@/components/list';
 import { Pagination } from '@/components/list/pagination';
 import { ListTable, TableBody, TableHeader } from '@/components/table';
+import { Actions } from '@/components/vaccine/actions';
 import { RowItem } from '@/components/vaccine/row-item';
 import { usePagination } from '@/hooks/usePagination';
-import { formatDate } from '@/lib/dayjs';
 import { api } from '@/services/api';
 import { Vaccine, PaginatedResponse } from '@/types';
-
-type ActionsProps = {
-  refreshVaccines: () => void;
-};
-
-const Actions = ({ refreshVaccines }: ActionsProps) => {
-  return (
-    <>
-      <SearchBar />
-      <MobileSearchButton />
-      <Create refreshVaccines={refreshVaccines} />
-    </>
-  );
-};
 
 const columns = [
   { name: 'Nome', colspan: 2 },

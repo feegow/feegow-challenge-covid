@@ -2,33 +2,16 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { Create } from '@/app/employee/create';
 import { LoadingRow } from '@/components/common/loading-row';
-import { useVaccineOptions, VaccineOption } from '@/components/employee/hooks/useVaccineOptions';
+import { Actions } from '@/components/employee/actions';
+import { useVaccineOptions } from '@/components/employee/hooks/useVaccineOptions';
 import { RowItem } from '@/components/employee/row-item';
-import { MobileSearchButton } from '@/components/header/mobile-search-button';
-import { SearchBar } from '@/components/header/search-bar';
 import { List } from '@/components/list';
 import { Pagination } from '@/components/list/pagination';
 import { ListTable, TableBody, TableHeader } from '@/components/table';
 import { usePagination } from '@/hooks/usePagination';
 import { api } from '@/services/api';
 import { Employee, PaginatedResponse } from '@/types';
-
-type ActionsProps = {
-  refreshEmployees: () => void;
-  vaccineOptions: VaccineOption[];
-};
-
-const Actions = ({ refreshEmployees, vaccineOptions }: ActionsProps) => {
-  return (
-    <>
-      <SearchBar />
-      <MobileSearchButton />
-      <Create refreshEmployees={refreshEmployees} vaccineOptions={vaccineOptions} />
-    </>
-  );
-};
 
 const columns = [
   { name: 'Nome', colspan: 2 },

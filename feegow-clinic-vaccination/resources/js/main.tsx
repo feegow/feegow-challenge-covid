@@ -5,7 +5,7 @@ import App from './App';
 
 import './bootstrap';
 import './preline';
-import './echo';
+// import './echo';
 import 'react-toastify/dist/ReactToastify.css';
 
 function renderApp() {

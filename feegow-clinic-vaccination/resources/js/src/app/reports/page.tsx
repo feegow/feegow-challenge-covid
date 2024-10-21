@@ -7,7 +7,7 @@ import ReportGenerator from '@/components/reports/generator';
 import { useAuth } from '@/context/AuthContext';
 import { formatDate } from '@/lib/dayjs';
 import { api } from '@/services/api';
-import { PaginatedResponse, ReportStatus, ReportType } from '@/types';
+import { PaginatedResponse, Report, ReportStatus, ReportType } from '@/types';
 
 const reportStatusConfig: Record<ReportStatus, { text: string; color: string }> = {
   [ReportStatus.Completed]: { text: 'Concluído', color: 'text-green-500' },

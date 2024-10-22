@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale', 'en') }}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'Laravel') }}</title>
     @vite(['resources/css/app.css'])
-</head>
-<body>
-    <div id="root"></div>
     @viteReactRefresh
     @vite(['resources/js/main.tsx'])
-    @vite(['node_modules/preline/dist/preline.js'])
+</head>
+
+<body>
+    <div id="root"></div>
     <script>
         var APP_LOCALE = {{ Illuminate\Support\Js::from(config('app.locale', 'en')) }};
         var APP_URL = {{ Illuminate\Support\Js::from(config('app.url')) }};
@@ -18,4 +19,5 @@
         var COMPANY_NAME = "Docplanner Tech";
     </script>
 </body>
+
 </html>

@@ -27,9 +27,8 @@ export const employeeFormSchema = z.object({
     .optional()
     .transform((value) => (value ? formatDate(value, 'DD/MM/YYYY', 'YYYY-MM-DD') : undefined)),
   vaccine_id: z
-    .number({ required_error: 'Escolha uma vacina' })
-    .int()
-    .positive({ message: 'Escolha uma vacina válida' }).optional(),
+    .union([z.number().int().positive({ message: 'Escolha uma vacina válida' }), z.null()])
+    .optional(),
   has_comorbidity: z
     .union([z.enum(['true', 'false']), z.boolean()])
     .refine((value) => value !== undefined, { message: 'Campo obrigatório' })

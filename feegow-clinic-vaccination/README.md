@@ -87,6 +87,11 @@ Após as migrações, execute os seeds para inserir dados de exemplo no banco de
 php artisan db:seed
 ```
 
+### Credenciais de Acesso
+Após a execução dos seeds, você pode acessar o sistema com as seguintes credenciais de usuário:
+- **Email**: exemplo@gmail.com
+- **Senha**: 12345678
+
 ## Funcionalidades Implementadas
 
 ### Cadastro de Funcionários
@@ -133,6 +138,34 @@ Para garantir a privacidade dos funcionários, apenas os três primeiros dígito
 A aplicação implementa validações no lado do cliente (frontend) e no lado do servidor (backend) para garantir a integridade dos dados inseridos. A principal funcionalidade de validação é:
 
 - **Preenchimento dos Campos Obrigatórios**: O sistema impede o envio de formulários até que todos os campos essenciais (como CPF, nome, datas de vacinação) sejam preenchidos corretamente. Essa validação é realizada tanto no frontend, proporcionando uma experiência de usuário fluida e imediata, quanto no backend, garantindo que apenas dados completos e válidos sejam persistidos no banco de dados.
+
+## Configuração para Produção
+
+Para configurar o sistema para um ambiente de produção, siga os passos abaixo:
+
+1. **Mude o arquivo `.env` para produção**:
+   - Renomeie ou copie o arquivo `.env.example` para `.env`.
+   - Atualize as variáveis de ambiente com as credenciais do banco de dados e outras configurações necessárias para o ambiente de produção, como `APP_ENV`, `APP_DEBUG` e `APP_URL`.
+
+2. **Compile os assets do frontend**:
+   - Execute o comando para gerar os arquivos de produção do frontend:
+     ```bash
+     npm run build
+     ```
+
+3. **Inicie o servidor de backend**:
+   - Para iniciar o servidor de desenvolvimento em um ambiente de produção, execute:
+     ```bash
+      php artisan serve --host=localhost --port=8000
+     ```
+   - **Nota**: Em produção, é recomendável usar um servidor web robusto, como Nginx ou Apache, em vez do `php artisan serve`.
+
+## Demonstração em Vídeo
+
+Para uma visão prática de como o sistema funciona, assista ao vídeo de demonstração abaixo. Ele oferece uma visão geral das principais funcionalidades, incluindo o cadastro de funcionários, gerenciamento de vacinas, geração de relatórios e muito mais.
+
+[Assista ao vídeo de demonstração no Loom](https://www.loom.com/share/c33f5b763fb14f9abc91daa85458159f?sid=4ff0eed8-3d1e-41ae-aaf8-92785f9675bd)
+
 
 ## Dicas de Uso para Usuários
 

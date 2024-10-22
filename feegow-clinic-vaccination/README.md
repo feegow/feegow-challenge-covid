@@ -1,71 +1,152 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistema de Gerenciamento de Vacinação para Colaboradores da Feegow
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Descrição do Projeto
+Este sistema web foi desenvolvido para a Feegow Clinic com o objetivo de cadastrar e controlar os colaboradores vacinados contra a COVID-19. Ele permite o cadastro de funcionários e suas respectivas doses de vacina, além de informações detalhadas sobre cada vacina aplicada. O sistema também implementa funcionalidades de anonimização de CPF, caching de dados de vacinas e fila para geração de relatórios de funcionários não vacinados.
 
-## About Laravel
+## Tecnologias Utilizadas
+- **Backend**: PHP com Laravel
+- **Frontend**: React com Tailwind CSS
+- **Banco de Dados**: PostgreSQL
+- **Cache**: Redis
+- **Fila**: Redis
+- **Containerização**: Docker
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requisitos para Execução
 
--   [Simple, fast routing engine](https://laravel.com/docs/routing).
--   [Powerful dependency injection container](https://laravel.com/docs/container).
--   Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
--   Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
--   Database agnostic [schema migrations](https://laravel.com/docs/migrations).
--   [Robust background job processing](https://laravel.com/docs/queues).
--   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Pré-requisitos
+Certifique-se de ter as seguintes tecnologias instaladas no seu ambiente de desenvolvimento:
+- PHP 8.2+ (ou versão superior)
+- Composer
+- PostgreSQL
+- Node.js
+- NPM ou gerenciador de pacote de preferência
+- Docker (caso queira utilizar containers)
+- Extensões PHP necessárias:
+  - `ctype`
+  - `curl`
+  - `dom`
+  - `fileinfo`
+  - `filter`
+  - `hash`
+  - `mbstring`
+  - `openssl`
+  - `pcre`
+  - `pdo`
+  - `session`
+  - `tokenizer`
+  - `xml`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Instalação e Configuração
 
-## Learning Laravel
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/Thivieira/feegow-challenge-covid
+   cd feegow-challenge-covid
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. **Instale as dependências do PHP:**
+   ```bash
+   composer install
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. **Instale as dependências do Node.js:**
+   ```bash
+   npm install
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. **Configure o arquivo `.env` com as credenciais do banco de dados e outras variáveis de ambiente necessárias.**
 
-## Laravel Sponsors
+5. **Execute as migrações do banco de dados:**
+   ```bash
+   php artisan migrate
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+6. **(Opcional) Caso tenha usado o Docker, suba os containers:**
+   ```bash
+   ./vendor/bin/sail up
+   ```
 
-### Premium Partners
+7. **Inicie o servidor de desenvolvimento:**
+   ```bash
+   php artisan serve
+   ```
 
--   **[Vehikl](https://vehikl.com/)**
--   **[Tighten Co.](https://tighten.co)**
--   **[WebReinvent](https://webreinvent.com/)**
--   **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
--   **[64 Robots](https://64robots.com)**
--   **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
--   **[Cyber-Duck](https://cyber-duck.co.uk)**
--   **[DevSquad](https://devsquad.com/hire-laravel-developers)**
--   **[Jump24](https://jump24.co.uk)**
--   **[Redberry](https://redberry.international/laravel/)**
--   **[Active Logic](https://activelogic.com)**
--   **[byte5](https://byte5.de)**
--   **[OP.GG](https://op.gg)**
+8. **Inicie o servidor de frontend:**
+   ```bash
+   npm run dev
+   ```
 
-## Contributing
+9. **Inicie a fila de processamento de jobs:**
+   ```bash
+   php artisan queue:work
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Populando o Banco de Dados
+Após as migrações, execute os seeds para inserir dados de exemplo no banco de dados:
+```bash
+php artisan db:seed
+```
 
-## Code of Conduct
+## Funcionalidades Implementadas
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Cadastro de Funcionários
+- CPF (anônimo, apenas os três primeiros dígitos são visíveis)
+- Nome completo
+- Data de nascimento
+- Data das doses da vacina (primeira, segunda e terceira)
+- Vacina aplicada
+- Comorbidades
 
-## Security Vulnerabilities
+### Cadastro de Vacinas
+- Nome da vacina
+- Lote
+- Data de validade
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Relatórios
+- Relatório de funcionários não vacinados (gerado através de uma fila de processamento)
+  - Exibe CPF (anônimo) e nome
 
-## License
+### Caching
+O sistema utiliza cache para dados de vacinas, melhorando a performance em consultas frequentes.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Fila para Geração de Relatório
+Foi implementada uma fila para a extração de relatórios de funcionários não vacinados. Para processar a fila, execute o seguinte comando:
+```bash
+php artisan queue:work
+```
 
-# Instruções de uso
+### Arquitetura SOLID
+O código foi estruturado seguindo os princípios SOLID, garantindo maior manutenibilidade, escalabilidade e clareza no código.
 
--   ./vendor/bin/sail up -d
--   ./vendor/bin/sail artisan migrate
+### Anonimização de CPF
+Para garantir a privacidade dos funcionários, apenas os três primeiros dígitos do CPF são exibidos. O restante dos números é mascarado.
+
+## Estrutura do Código
+- `app/Events`: Contém os eventos gerados pelo sistema para controle de limpeza do cache.
+- `app/Jobs`: Contém o Job de gerar o relatório dos não vacinados.
+- `app/Models`: Contém os modelos do sistema.
+- `app/Http/Controllers`: Contém os controladores que gerenciam a lógica do aplicativo.
+- `resources/views`: Contém as views do sistema.
+- `resources/js`: Contém os componentes React e lógica de frontend.
+
+## Testes
+A aplicação implementa validações no lado do cliente (frontend) e no lado do servidor (backend) para garantir a integridade dos dados inseridos. A principal funcionalidade de validação é:
+
+- **Preenchimento dos Campos Obrigatórios**: O sistema impede o envio de formulários até que todos os campos essenciais (como CPF, nome, datas de vacinação) sejam preenchidos corretamente. Essa validação é realizada tanto no frontend, proporcionando uma experiência de usuário fluida e imediata, quanto no backend, garantindo que apenas dados completos e válidos sejam persistidos no banco de dados.
+
+## Dicas de Uso para Usuários
+
+### Navegação no Sistema
+- **Menu Principal**: Utilize o menu principal para acessar rapidamente as seções de cadastro de funcionários e vacinas, além de relatórios.
+- **Barra de Pesquisa**: Use a barra de pesquisa para encontrar rapidamente funcionários ou vacinas específicas.
+
+### Cadastro de Funcionários
+- **Preenchimento de Dados**: Certifique-se de preencher todos os campos obrigatórios, como CPF, nome, comorbidade, datas de vacinação e vacina utilizada, para evitar erros no envio do formulário.
+- **Anonimização de CPF**: Lembre-se de que o CPF será parcialmente anonimizado para proteger a privacidade dos funcionários.
+
+### Relatórios
+- **Visualização no Dashboard**: Navegue até a seção do dashboard para consultar a quantidade de cada recurso e obter um relatório sobre o número de colaboradores vacinados por tipo de vacina, incluindo aqueles que não receberam nenhuma vacinação.
+- **Acesso a Relatórios**: Dirija-se à seção de relatórios para visualizar os últimos relatórios processados e gerar novos documentos utilizando o nome e CPF do colaborador não vacinado.
+
+### Cache e Performance
+- **Desempenho**: Aproveite o cache de dados de vacinas, colaboradores e estatísticas para uma experiência mais rápida ao consultar informações frequentemente acessadas.

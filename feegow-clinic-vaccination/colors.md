@@ -1,27 +1,27 @@
-# Color Palette
+# Paleta de Cores
 
-## Primary Colors
+## Cores Primárias
 
--   **Text Color**: `#1b2734`
--   **Accent Color**: `#3D83DF`
--   **Background Color**: `#FFFFFF`
+- **Cor do Texto**: `#1b2734`
+- **Cor de Destaque**: `#3D83DF`
+- **Cor de Fundo**: `#FFFFFF`
 
-## Secondary Colors
+## Cores Secundárias
 
--   **Gray**: `#1B2734`
--   **Secondary Background**: `#ebfcfa`
+- **Cinza**: `#1B2734`
+- **Fundo Secundário**: `#ebfcfa`
 
-## Additional Colors
+## Cores Adicionais
 
--   **Midnight Blue**: `#012c6d`
+- **Azul Meia-Noite**: `#012c6d`
 
-## Color Usage Guidelines
+## Diretrizes de Uso de Cores
 
-1. Use the text color (`#1b2734`) for main body text and headings.
-2. Apply the accent color (`#3D83DF`) for interactive elements, links, and highlights.
-3. The background color (`#FFFFFF`) should be used as the primary background for most pages.
-4. Use the gray color (`#1B2734`) for secondary text, borders, or subtle backgrounds.
-5. The secondary background color (`#ebfcfa`) can be used for alternating sections or to highlight specific content areas.
-6. Midnight blue (`#012c6d`) can be used for special emphasis or as an alternative accent color.
+1. Use a cor do texto (`#1b2734`) para o texto principal e cabeçalhos.
+2. Aplique a cor de destaque (`#3D83DF`) para elementos interativos, links e destaques.
+3. A cor de fundo (`#FFFFFF`) deve ser usada como o fundo principal para a maioria das páginas.
+4. Use a cor cinza (`#1B2734`) para texto secundário, bordas ou fundos sutis.
+5. A cor de fundo secundário (`#ebfcfa`) pode ser usada para seções alternadas ou para destacar áreas de conteúdo específicas.
+6. O azul meia-noite (`#012c6d`) pode ser usado para ênfase especial ou como uma cor de destaque alternativa.
 
-Note: Ensure proper contrast ratios when combining these colors for accessibility.
+Nota: Assegure-se de manter proporções de contraste adequadas ao combinar essas cores para acessibilidade.

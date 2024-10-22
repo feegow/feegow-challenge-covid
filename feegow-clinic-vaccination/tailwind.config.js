@@ -7,7 +7,7 @@ export default {
     './resources/**/*.jsx',
     './resources/**/*.ts',
     './resources/**/*.tsx',
-    './node_modules/preline/preline.js',
+    'node_modules/preline/dist/*.js',
   ],
   theme: {
     extend: {

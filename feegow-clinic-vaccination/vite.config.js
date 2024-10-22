@@ -24,4 +24,7 @@ export default defineConfig({
       host: 'localhost',
     },
   },
+  build: {
+    commonjsOptions: { transformMixedEsModules: true },
+  },
 });

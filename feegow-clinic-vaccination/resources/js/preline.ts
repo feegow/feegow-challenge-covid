@@ -1,13 +1,14 @@
 //github.com/htmlstreamofficial/preline/issues/315#issuecomment-2016769186
-import 'preline/preline';
-import { IStaticMethods } from 'preline/preline';
+import 'preline/dist/preline.js';
+
+import { HSStaticMethods, IStaticMethods } from 'preline';
+
 declare global {
   interface Window {
     HSStaticMethods: IStaticMethods;
   }
 }
 
-import { HSStaticMethods } from 'preline';
 
 HSStaticMethods.autoInit();
 

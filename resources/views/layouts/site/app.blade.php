@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', 'Blank title')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
 <body class="bg-body-tertiary">
     <header>
@@ -19,5 +20,6 @@
     <footer>
         @include('layouts.site.partials.footer')
     </footer>
+    @livewireScripts
 </body>
 </html>

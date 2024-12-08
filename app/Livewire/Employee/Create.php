@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Employee;
 
+use App\Models\User;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -20,7 +22,9 @@ class Create extends Component
     public bool $comorbidity = false;
 
     #[Validate]
-    public string $email;
+    public ?string $email = null;
+
+    public $dataUsers = null;
 
     #[Validate]
     public string $password;
@@ -28,13 +32,20 @@ class Create extends Component
     protected function rules()
     {
         return [
-            'email' => 'required|email:rfc,dns,filter|unique:users,email|min:1|max:100',
+            'user' => 'required|boolean',
+            'email' => 'required_if:user,false|email:rfc,dns,filter|unique:users,email|min:1|max:100',
         ];
     }
 
     public function updatedEmail()
     {
-        dd($this->email);
+        $user = User::where('email', 'like', "%$this->email%")->get(['email','name']);
+    }
+
+    #[Computed]
+    public function users()
+    {
+        return User::where('email', 'like', "%{$this->email}%")->get(['email', 'name']);
     }
 
     public function save()

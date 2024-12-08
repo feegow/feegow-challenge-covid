@@ -15,9 +15,9 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class, 'user_id')->constrained('users')->cascadeOnDelete();
-            $table->string('name', 100);
+            $table->string('CPF', 14)->unique();
             $table->date('birthday');
-            $table->boolean('comorbidity');
+            $table->boolean('comorbidity')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

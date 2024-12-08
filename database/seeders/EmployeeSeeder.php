@@ -16,7 +16,7 @@ class EmployeeSeeder extends Seeder
     {
         Employee::factory()->count(10)->create([
             'user_id' => User::inRandomOrder()->take(1)->id ?? User::factory(),
-            'name' => fake()->name(),
+            'CPF' => fake()->numerify('###.###.###-##'),
             'birthday' => fake()->dateTimeBetween('-40 years', '-19 years'),
             'comorbidity' => fake()->random_int(0,1),
         ]);

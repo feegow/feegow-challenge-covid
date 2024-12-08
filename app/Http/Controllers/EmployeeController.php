@@ -9,14 +9,14 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        $employees = Employee::all();
+        $employees = Employee::with('user')->paginate(15);
 
         return view('employee.index', compact('employees'));
     }
 
     public function create()
     {
-        //
+        return view('employee.create');
     }
 
     public function store(Request $request)

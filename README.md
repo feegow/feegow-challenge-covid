@@ -2,7 +2,7 @@
 
 ## Apresentação do problema
 
- A Feegow Clinic empresa do ramo de tecnologia para o segmento médico solicita um sistema web **desenvolvido na linguagem PHP**, para cadastro e controle dos seus colaboradores que foram vacinados contra a COVID-19.
+ A Feegow Clinic empresa do ramo de tecnologia para o segmento médico solicita um sistema web **desenvolvido na linguagem PHP ou Node.Js**, para cadastro e controle dos seus colaboradores que foram vacinados contra a COVID-19.
   O cadastro deve armazenar as seguintes informações:
 
 ### Funcionários
@@ -27,8 +27,8 @@
 ## Tecnologias usadas
 
 Os pré-requisitos para a aplicação:
-- Use o PHP como linguagem backend.
-- Usar Bootstrap ou algum framework front-end de sua preferência.
+- Use o PHP ou Node.js como linguagem backend.
+- Usar o framework front-end de sua preferência.
 - O Banco de dados deve ser relacional, damos preferência para MySQL/PostgreSQL.
 - Documentação sucinta e explicativa de como rodar seu código e levantar os ambientes (vídeo explicativo em um link acessível é aceito desde que o áudio e o vídeo estejam em boa qualidade).
 

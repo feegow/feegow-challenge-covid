@@ -28,7 +28,7 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, $fromEmployeePage = false): RedirectResponse|User
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -43,6 +43,10 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+
+        if($fromEmployeePage){
+            return $user;
+        }
 
         Auth::login($user);
 

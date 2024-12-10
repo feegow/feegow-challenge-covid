@@ -19,11 +19,6 @@ class EmployeeController extends Controller
         return view('employee.create');
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
-
     public function show(string $id)
     {
         //

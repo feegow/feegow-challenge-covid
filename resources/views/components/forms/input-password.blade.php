@@ -1,10 +1,10 @@
-@props(['name', 'label' => ''])
+@props(['name', 'label' => '', 'wireModel' => null])
 
-<div class="relative z-0 w-full mb-5" x-data="{show: false}" x-cloack>
-    <div class="flex items-center space-x-2 rounded-md p-2">
-        <input :type="(show) ? 'text' : 'password'" name="{{$name}}" placeholder=" " {{ $attributes }}
-            class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-black @error($name) 'border-red-600' @else 'border-gray-200' @enderror " />
-        <button type="button" class="block" @click="show = !show">
+<div class="relative z-0 w-full mb-5" x-data="{show: false}" x-cloak>
+    <div class="flex items-center rounded-md py-2">
+        <input :type="(show) ? 'text' : 'password'" wire:model.defer="{{ $wireModel }}" name="{{$name}}" placeholder=" "
+            class="pt-3 pb-2 block w-full px-0 mt-0 bg-transparent border-0 border-b-2 appearance-none focus:outline-none focus:ring-0 focus:border-gray-500 @error($name) border-red-600 @else border-gray-500 @enderror " />
+        <button type="button" class="block border-b-2 border-gray-500 py-2 mt-1 " @click="show = !show">
             <div x-show="show">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />

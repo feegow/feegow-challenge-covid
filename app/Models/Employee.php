@@ -11,6 +11,8 @@ class Employee extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'cpf', 'birthday', 'comorbidity'];
+
     public static function getTableColumnsName()
     {
         $columns = Schema::getColumnListing((new static)->getTable());

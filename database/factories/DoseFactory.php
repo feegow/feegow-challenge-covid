@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Employee;
 use App\Models\Vaccine;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,9 +19,9 @@ class DoseFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::factory(),
+            'employee_id' => Employee::factory(),
             'vaccine_id' => Vaccine::factory(),
-            'dose_data' => fake()->dateTimeBetween('-1 year'),
+            'dose_date' => fake()->dateTimeBetween('-1 year'),
         ];
     }
 }

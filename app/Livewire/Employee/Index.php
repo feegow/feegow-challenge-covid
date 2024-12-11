@@ -15,6 +15,8 @@ class Index extends Component
 
     public string $vaccineToApply;
 
+    public array $vaccines = [];
+
     public function setEmployee($id)
     {
         $this->employeeToApply = Employee::find($id)->user->name;
@@ -26,22 +28,16 @@ class Index extends Component
     }
 
     #[Computed]
-    public function vaccines()
-    {
-        return Vaccine::whereDate('expiry', '>', now())->get()->pluck('name');
-    }
-
-    #[Computed]
     public function employees()
     {
         if(strlen($this->search) > 2){
             $search = $this->search;
             return Employee::whereHas('user', function($query) use ($search) {
                 $query->where('name', 'like', "%$search%");
-            })->with('user')->paginate(5);
+            })->with('user')->withCount('doses')->paginate(15);
         }
 
-        return Employee::with('user')->paginate(5);
+        return Employee::with('user')->withCount('doses')->paginate(15);
     }
 
     public function render()

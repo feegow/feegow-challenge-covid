@@ -4,5 +4,9 @@
             {{ __('Apply vaccine') }}
         </h2>
     </x-slot>
-    <livewire:vaccine.apply :$id />
+    <div class="mt-4">
+        <div class="max-w-sm bg-white rounded-lg mx-auto px-2 py-4">
+            <livewire:vaccine.apply :$id />
+        </div>
+    </div>
 </x-app-layout>

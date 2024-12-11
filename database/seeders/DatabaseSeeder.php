@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             EmployeeSeeder::class,
             VaccineSeeder::class,
+            DoseSeeder::class,
         ]);
 
         User::factory()->create([

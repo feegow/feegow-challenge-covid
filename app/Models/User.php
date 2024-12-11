@@ -44,13 +44,6 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public static function getTableColumnsName()
-    {
-        $columns = Schema::getColumnListing((new static)->getTable());
-
-        return collect($columns);
-    }
-
     public function employee(): HasOne
     {
         return $this->hasOne(Employee::class);

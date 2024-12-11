@@ -87,7 +87,24 @@
                                     <p class="text-sm text-slate-500">{{$employee->comorbidity ? 'YES' : 'NO'}}</p>
                                 </td>
                                 <td class="p-4 py-5">
-                                    <p class="text-sm text-slate-500">#</p>
+                                    @if($employee->doses_count > 0)
+                                    <x-confirm-modal title="Doses information">
+                                        <x-slot name="button" >
+                                            <p class="text-sm text-slate-500 py-2 px-4 rounded-md hover:bg-slate-300">{{$employee->doses_count}}</p>
+                                        </x-slot>
+                                        <div class="flex flex-col space-y-4 ">
+                                            @foreach ($employee->doses as $dose)
+                                                <div class="flex flex-col p-4 space-x-2 w-full border shadow-md rounded-lg">
+                                                    <span>Pacient: {{ $employee->user->name }}</span>
+                                                    <span>Vaccine: {{ $dose->vaccine->name }}</span>
+                                                    <span>Date: {{ $dose->doseDateFormatted }}</span>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </x-confirm-modal>
+                                    @else
+                                        <p class="text-sm text-slate-500">0</p>
+                                    @endif
                                 </td>
                                 <td class="p-4 py-5">
                                     <div class="flex space-x-2 justify-center" x-data>

@@ -20,6 +20,7 @@
 - Check that the initial database has been created, and if so you can run the command "php artisan migrate --seed" to create the tables and populate them with the test data
 - Run the "npm run build" command so that the front-end code and assets are compiled and optimized when you run the application.
 - After, run the command "npm run dev" or "npm run watch" to start the application.
-- Start to use it.
+
+## Use the login "admin@test.com" and password "password" to access the system
 
 Note: The system was focused on doing only what was described in the read.me of the tenico case, not worrying about other functions

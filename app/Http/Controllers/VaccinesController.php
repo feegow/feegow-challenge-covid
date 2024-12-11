@@ -7,59 +7,34 @@ use Illuminate\Http\Request;
 
 class VaccinesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return view('vaccine.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('vaccine.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function apply($id = null)
     {
-        //
+        return view('vaccine.apply', compact('id'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Vaccine $vaccine)
+    public function edit(string $id)
     {
-        //
+        $vaccine = Vaccine::find($id);
+
+        return view('vaccine.update', compact('vaccine'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Vaccine $vaccine)
+    public function destroy(string $id)
     {
-        //
-    }
+        $vaccine = Vaccine::find($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Vaccine $vaccine)
-    {
-        //
-    }
+        $vaccine->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Vaccine $vaccine)
-    {
-        //
+        return redirect()->route('vaccine.index');
     }
 }

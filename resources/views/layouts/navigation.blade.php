@@ -16,7 +16,7 @@
                     <x-nav-link :href="route('employee.index')">
                         {{__('Employees')}}
                     </x-nav-link>
-                    <x-nav-link :href="route('employee.index')">
+                    <x-nav-link :href="route('vaccine.index')">
                         {{__('Vaccines')}}
                     </x-nav-link>
                 </div>

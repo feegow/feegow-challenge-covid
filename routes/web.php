@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VaccinesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/employees/update/{id}/', [EmployeeController::class, 'edit'])->name('employee.update');
     Route::delete('/employees/delete/{id}/', [EmployeeController::class, 'destroy'])->name('employee.delete');
 
+    Route::get('/vaccines', [VaccinesController::class, 'index'])->name('vaccine.index');
+    Route::get('/vaccines/create', [VaccinesController::class, 'create'])->name('vaccine.create');
+    Route::get('/vaccines/update/{id}/', [VaccinesController::class, 'edit'])->name('vaccine.update');
+    Route::delete('/vaccines/delete/{id}/', [VaccinesController::class, 'destroy'])->name('vaccine.delete');
+
+    Route::get('/vaccines/apply/{id}/', [VaccinesController::class, 'apply'])->name('vaccine.apply');
 });
 
 require __DIR__.'/auth.php';

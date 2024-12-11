@@ -9,9 +9,7 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        $employees = Employee::with('user')->paginate(20);
-
-        return view('employee.index', compact('employees'));
+        return view('employee.index');
     }
 
     public function create()
@@ -31,5 +29,7 @@ class EmployeeController extends Controller
         $employee = Employee::find($id);
 
         $employee->delete();
+
+        return redirect()->route('employee.index');
     }
 }

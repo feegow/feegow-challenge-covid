@@ -1,12 +1,12 @@
 <div class="min-h-screen">
     <div class="antialiased bg-gray-100 dark-mode:bg-gray-900">
-        <div class="w-full text-gray-700 bg-green-200 dark-mode:text-gray-200 dark-mode:bg-gray-800">
+        <div class="w-full text-white bg-gray-800">
             <div x-data="{ open: true }"
                 class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8">
                 <div class="flex flex-row items-center justify-between space-x-3 p-4">
                     <img class="rounded-lg shadow-lg" src="{{ asset('imgs/logo.png') }}" alt="logo"/>
                     <a href="#"
-                        class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">Feegow
+                        class="text-lg font-semibold tracking-widest uppercase rounded-lg text-white focus:outline-none focus:shadow-outline">Feegow
                         Clinic</a>
                     <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
                         <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">

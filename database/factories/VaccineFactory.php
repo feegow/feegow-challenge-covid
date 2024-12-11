@@ -17,7 +17,9 @@ class VaccineFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->word(),
+            'batch' => fake()->regexify('[A-Z]{5}[0-4]{4}'),
+            'expiry' => fake()->dateTimeBetween('+2 years', '+5 years'),
         ];
     }
 }

@@ -9,7 +9,7 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        $employees = Employee::with('user')->paginate(15);
+        $employees = Employee::with('user')->paginate(20);
 
         return view('employee.index', compact('employees'));
     }
@@ -19,23 +19,17 @@ class EmployeeController extends Controller
         return view('employee.create');
     }
 
-    public function show(string $id)
-    {
-        //
-    }
-
     public function edit(string $id)
     {
-        //
-    }
+        $employee = Employee::with('user')->find($id);
 
-    public function update(Request $request, string $id)
-    {
-        //
+        return view('employee.update', compact('employee'));
     }
 
     public function destroy(string $id)
     {
-        //
+        $employee = Employee::find($id);
+
+        $employee->delete();
     }
 }

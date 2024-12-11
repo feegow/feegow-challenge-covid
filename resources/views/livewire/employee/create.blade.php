@@ -1,6 +1,5 @@
 <div class="mx-auto px-6 py-12 bg-white border-0 shadow-lg sm:rounded-3xl">
     <form id="form" class="flex flex-col justify-center items-center" wire:submit='save'>
-        @dump($errors->get('password'))
         <x-forms.group-radio-button wireModel="user" name="account" :options="['I already have an account' => 1, 'I haven`t an account yet' => 0]" />
 
         @if(!$user)
